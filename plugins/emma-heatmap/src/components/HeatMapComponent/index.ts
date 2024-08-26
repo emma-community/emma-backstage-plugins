@@ -1,0 +1,1 @@
+export { HeatMapComponent } from './HeatMapComponent';
