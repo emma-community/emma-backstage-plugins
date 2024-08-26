@@ -1,6 +1,7 @@
 import React from 'react';
-import { Icon } from 'leaflet'
+import { Icon, LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { HeatmapLayer } from 'react-leaflet-heatmap-layer-v3'
 import {
   Progress,
   ResponseErrorPanel,
@@ -17,7 +18,10 @@ export const dataCenters = {
     "region_code": "eastus",
     "longitude": -79.4209,
     "latitude": 37.4316,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "East US 2",
@@ -26,7 +30,10 @@ export const dataCenters = {
     "region_code": "eastus2",
     "longitude": -78.6569,
     "latitude": 36.8529,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Central US",
@@ -35,7 +42,10 @@ export const dataCenters = {
     "region_code": "centralus",
     "longitude": -93.6091,
     "latitude": 41.5868,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "North Central US",
@@ -44,7 +54,10 @@ export const dataCenters = {
     "region_code": "northcentralus",
     "longitude": -89.3985,
     "latitude": 40.6331,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "South Central US",
@@ -53,7 +66,10 @@ export const dataCenters = {
     "region_code": "southcentralus",
     "longitude": -98.4936,
     "latitude": 29.4241,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "West US",
@@ -62,7 +78,10 @@ export const dataCenters = {
     "region_code": "westus",
     "longitude": -121.8947,
     "latitude": 37.3382,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "West US 2",
@@ -71,7 +90,10 @@ export const dataCenters = {
     "region_code": "westus2",
     "longitude": -122.3321,
     "latitude": 47.6062,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Canada Central",
@@ -80,7 +102,10 @@ export const dataCenters = {
     "region_code": "canadacentral",
     "longitude": -79.3832,
     "latitude": 43.6532,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Canada East",
@@ -89,7 +114,10 @@ export const dataCenters = {
     "region_code": "canadaeast",
     "longitude": -71.2074,
     "latitude": 46.8139,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Brazil South",
@@ -98,7 +126,10 @@ export const dataCenters = {
     "region_code": "brazilsouth",
     "longitude": -46.6333,
     "latitude": -23.5505,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "North Europe",
@@ -107,7 +138,10 @@ export const dataCenters = {
     "region_code": "northeurope",
     "longitude": -6.2603,
     "latitude": 53.3498,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "West Europe",
@@ -116,7 +150,10 @@ export const dataCenters = {
     "region_code": "westeurope",
     "longitude": 4.9041,
     "latitude": 52.3676,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "UK South",
@@ -125,7 +162,10 @@ export const dataCenters = {
     "region_code": "uksouth",
     "longitude": -0.1276,
     "latitude": 51.5074,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "UK West",
@@ -134,7 +174,10 @@ export const dataCenters = {
     "region_code": "ukwest",
     "longitude": -3.1791,
     "latitude": 51.4816,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "France Central",
@@ -143,7 +186,10 @@ export const dataCenters = {
     "region_code": "francecentral",
     "longitude": 2.3522,
     "latitude": 48.8566,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "France South",
@@ -152,7 +198,10 @@ export const dataCenters = {
     "region_code": "francesouth",
     "longitude": 5.3698,
     "latitude": 43.2965,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Germany Central",
@@ -161,7 +210,10 @@ export const dataCenters = {
     "region_code": "germanycentral",
     "longitude": 8.6821,
     "latitude": 50.1109,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Germany Northeast",
@@ -170,7 +222,10 @@ export const dataCenters = {
     "region_code": "germanynortheast",
     "longitude": 13.405,
     "latitude": 52.5200,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Norway East",
@@ -179,7 +234,10 @@ export const dataCenters = {
     "region_code": "norwayeast",
     "longitude": 10.7522,
     "latitude": 59.9139,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Norway West",
@@ -188,7 +246,10 @@ export const dataCenters = {
     "region_code": "norwaywest",
     "longitude": 5.7331,
     "latitude": 58.969975,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Switzerland North",
@@ -197,7 +258,10 @@ export const dataCenters = {
     "region_code": "switzerlandnorth",
     "longitude": 8.5417,
     "latitude": 47.3769,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Switzerland West",
@@ -206,7 +270,10 @@ export const dataCenters = {
     "region_code": "switzerlandwest",
     "longitude": 6.1432,
     "latitude": 46.2044,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "UAE North",
@@ -215,7 +282,10 @@ export const dataCenters = {
     "region_code": "uaenorth",
     "longitude": 55.2708,
     "latitude": 25.2048,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "UAE Central",
@@ -224,7 +294,10 @@ export const dataCenters = {
     "region_code": "uaecentral",
     "longitude": 54.3773,
     "latitude": 24.4539,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "South Africa North",
@@ -233,7 +306,10 @@ export const dataCenters = {
     "region_code": "southafricanorth",
     "longitude": 28.0473,
     "latitude": -26.2041,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "South Africa West",
@@ -242,7 +318,10 @@ export const dataCenters = {
     "region_code": "southafricawest",
     "longitude": 18.4241,
     "latitude": -33.9249,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "East Asia",
@@ -251,7 +330,10 @@ export const dataCenters = {
     "region_code": "eastasia",
     "longitude": 114.1694,
     "latitude": 22.3193,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Southeast Asia",
@@ -260,7 +342,10 @@ export const dataCenters = {
     "region_code": "southeastasia",
     "longitude": 103.8198,
     "latitude": 1.3521,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Japan East",
@@ -269,7 +354,10 @@ export const dataCenters = {
     "region_code": "japaneast",
     "longitude": 139.6917,
     "latitude": 35.6895,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Japan West",
@@ -278,7 +366,10 @@ export const dataCenters = {
     "region_code": "japanwest",
     "longitude": 135.5022,
     "latitude": 34.6937,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Korea Central",
@@ -287,7 +378,10 @@ export const dataCenters = {
     "region_code": "koreacentral",
     "longitude": 126.978,
     "latitude": 37.5665,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Korea South",
@@ -296,7 +390,10 @@ export const dataCenters = {
     "region_code": "koreasouth",
     "longitude": 129.0756,
     "latitude": 35.1796,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Australia East",
@@ -305,7 +402,10 @@ export const dataCenters = {
     "region_code": "australiaeast",
     "longitude": 151.2093,
     "latitude": -33.8688,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Australia Southeast",
@@ -314,7 +414,10 @@ export const dataCenters = {
     "region_code": "australiasoutheast",
     "longitude": 144.9631,
     "latitude": -37.8136,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "Australia Central",
@@ -323,7 +426,10 @@ export const dataCenters = {
     "region_code": "australiacentral",
     "longitude": 149.1300,
     "latitude": -35.2809,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "India Central",
@@ -332,7 +438,10 @@ export const dataCenters = {
     "region_code": "centralindia",
     "longitude": 73.8567,
     "latitude": 18.5204,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "India South",
@@ -341,7 +450,10 @@ export const dataCenters = {
     "region_code": "southindia",
     "longitude": 80.2707,
     "latitude": 13.0827,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "India West",
@@ -350,7 +462,10 @@ export const dataCenters = {
     "region_code": "westindia",
     "longitude": 72.8777,
     "latitude": 19.076,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "China East",
@@ -359,7 +474,10 @@ export const dataCenters = {
     "region_code": "chinaeast",
     "longitude": 121.4737,
     "latitude": 31.2304,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "China North",
@@ -368,7 +486,10 @@ export const dataCenters = {
     "region_code": "chinanorth",
     "longitude": 116.4074,
     "latitude": 39.9042,
-    "provider": "AZURE"
+    "provider": "AZURE",
+    "price": 123 * Math.random(),
+    "intensity": 0.15,
+    "radius": 0.25
   },
   {
     "name": "us-central1",
@@ -377,7 +498,10 @@ export const dataCenters = {
     "region_code": "us-central1",
     "longitude": -95.8608,
     "latitude": 41.2619,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "us-west1",
@@ -386,7 +510,10 @@ export const dataCenters = {
     "region_code": "us-west1",
     "longitude": -121.1796,
     "latitude": 45.5946,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "us-west2",
@@ -395,7 +522,10 @@ export const dataCenters = {
     "region_code": "us-west2",
     "longitude": -118.2437,
     "latitude": 34.0522,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "us-west3",
@@ -404,7 +534,10 @@ export const dataCenters = {
     "region_code": "us-west3",
     "longitude": -111.8910,
     "latitude": 40.7608,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "us-west4",
@@ -413,7 +546,10 @@ export const dataCenters = {
     "region_code": "us-west4",
     "longitude": -115.1398,
     "latitude": 36.1699,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "us-east1",
@@ -422,7 +558,10 @@ export const dataCenters = {
     "region_code": "us-east1",
     "longitude": -79.9987,
     "latitude": 33.199,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "us-east4",
@@ -431,7 +570,10 @@ export const dataCenters = {
     "region_code": "us-east4",
     "longitude": -77.4875,
     "latitude": 39.0438,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "northamerica-northeast1",
@@ -440,7 +582,10 @@ export const dataCenters = {
     "region_code": "northamerica-northeast1",
     "longitude": -73.5673,
     "latitude": 45.5017,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "southamerica-east1",
@@ -449,7 +594,10 @@ export const dataCenters = {
     "region_code": "southamerica-east1",
     "longitude": -46.6333,
     "latitude": -23.5505,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "europe-west1",
@@ -458,7 +606,10 @@ export const dataCenters = {
     "region_code": "europe-west1",
     "longitude": 3.8192,
     "latitude": 50.4543,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "europe-west2",
@@ -467,7 +618,10 @@ export const dataCenters = {
     "region_code": "europe-west2",
     "longitude": -0.1276,
     "latitude": 51.5074,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "europe-west3",
@@ -476,7 +630,10 @@ export const dataCenters = {
     "region_code": "europe-west3",
     "longitude": 8.6821,
     "latitude": 50.1109,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "europe-west4",
@@ -485,7 +642,10 @@ export const dataCenters = {
     "region_code": "europe-west4",
     "longitude": 6.8317,
     "latitude": 53.4273,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "europe-west6",
@@ -494,7 +654,10 @@ export const dataCenters = {
     "region_code": "europe-west6",
     "longitude": 8.5417,
     "latitude": 47.3769,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "europe-north1",
@@ -503,7 +666,10 @@ export const dataCenters = {
     "region_code": "europe-north1",
     "longitude": 27.1976,
     "latitude": 60.5693,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "europe-central2",
@@ -512,7 +678,10 @@ export const dataCenters = {
     "region_code": "europe-central2",
     "longitude": 21.0122,
     "latitude": 52.2297,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-east1",
@@ -521,7 +690,10 @@ export const dataCenters = {
     "region_code": "asia-east1",
     "longitude": 120.5327,
     "latitude": 23.9924,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-east2",
@@ -530,7 +702,10 @@ export const dataCenters = {
     "region_code": "asia-east2",
     "longitude": 114.1694,
     "latitude": 22.3193,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-northeast1",
@@ -539,7 +714,10 @@ export const dataCenters = {
     "region_code": "asia-northeast1",
     "longitude": 139.6917,
     "latitude": 35.6895,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-northeast2",
@@ -548,7 +726,10 @@ export const dataCenters = {
     "region_code": "asia-northeast2",
     "longitude": 135.5022,
     "latitude": 34.6937,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-northeast3",
@@ -557,7 +738,10 @@ export const dataCenters = {
     "region_code": "asia-northeast3",
     "longitude": 126.978,
     "latitude": 37.5665,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-south1",
@@ -566,7 +750,10 @@ export const dataCenters = {
     "region_code": "asia-south1",
     "longitude": 72.8777,
     "latitude": 19.076,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-south2",
@@ -575,7 +762,10 @@ export const dataCenters = {
     "region_code": "asia-south2",
     "longitude": 77.1025,
     "latitude": 28.7041,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-southeast1",
@@ -584,7 +774,10 @@ export const dataCenters = {
     "region_code": "asia-southeast1",
     "longitude": 103.6959,
     "latitude": 1.3409,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "asia-southeast2",
@@ -593,7 +786,10 @@ export const dataCenters = {
     "region_code": "asia-southeast2",
     "longitude": 106.8456,
     "latitude": -6.2088,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "australia-southeast1",
@@ -602,7 +798,10 @@ export const dataCenters = {
     "region_code": "australia-southeast1",
     "longitude": 151.2093,
     "latitude": -33.8688,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "australia-southeast2",
@@ -611,7 +810,10 @@ export const dataCenters = {
     "region_code": "australia-southeast2",
     "longitude": 144.9631,
     "latitude": -37.8136,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "newzealand-north1",
@@ -620,7 +822,10 @@ export const dataCenters = {
     "region_code": "newzealand-north1",
     "longitude": 174.7633,
     "latitude": -36.8485,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "me-west1",
@@ -629,7 +834,10 @@ export const dataCenters = {
     "region_code": "me-west1",
     "longitude": 34.7818,
     "latitude": 32.0853,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "me-central1",
@@ -638,7 +846,10 @@ export const dataCenters = {
     "region_code": "me-central1",
     "longitude": 51.5310,
     "latitude": 25.2861,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "africa-south1",
@@ -647,7 +858,10 @@ export const dataCenters = {
     "region_code": "africa-south1",
     "longitude": 28.0473,
     "latitude": -26.2041,
-    "provider": "GCP"
+    "provider": "GCP",
+    "price": 321 * Math.random(),
+    "intensity": 0.4,
+    "radius": 0.35
   },
   {
     "name": "US East (N. Virginia)",
@@ -656,7 +870,10 @@ export const dataCenters = {
     "region_code": "us-east-1",
     "longitude": -77.4875,
     "latitude": 39.0438,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "US East (Ohio)",
@@ -665,7 +882,10 @@ export const dataCenters = {
     "region_code": "us-east-2",
     "longitude": -82.9988,
     "latitude": 39.9612,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "US West (N. California)",
@@ -674,7 +894,10 @@ export const dataCenters = {
     "region_code": "us-west-1",
     "longitude": -122.4194,
     "latitude": 37.7749,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "US West (Oregon)",
@@ -683,7 +906,10 @@ export const dataCenters = {
     "region_code": "us-west-2",
     "longitude": -119.692,
     "latitude": 45.8399,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Canada (Central)",
@@ -692,7 +918,10 @@ export const dataCenters = {
     "region_code": "ca-central-1",
     "longitude": -73.5673,
     "latitude": 45.5017,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "South America (São Paulo)",
@@ -701,7 +930,10 @@ export const dataCenters = {
     "region_code": "sa-east-1",
     "longitude": -46.6333,
     "latitude": -23.5505,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Europe (Ireland)",
@@ -710,7 +942,10 @@ export const dataCenters = {
     "region_code": "eu-west-1",
     "longitude": -6.2603,
     "latitude": 53.3498,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Europe (London)",
@@ -719,7 +954,10 @@ export const dataCenters = {
     "region_code": "eu-west-2",
     "longitude": -0.1276,
     "latitude": 51.5074,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Europe (Paris)",
@@ -728,7 +966,10 @@ export const dataCenters = {
     "region_code": "eu-west-3",
     "longitude": 2.3522,
     "latitude": 48.8566,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Europe (Frankfurt)",
@@ -737,7 +978,10 @@ export const dataCenters = {
     "region_code": "eu-central-1",
     "longitude": 8.6821,
     "latitude": 50.1109,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Europe (Milan)",
@@ -746,7 +990,10 @@ export const dataCenters = {
     "region_code": "eu-south-1",
     "longitude": 9.1895,
     "latitude": 45.4642,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Europe (Stockholm)",
@@ -755,7 +1002,10 @@ export const dataCenters = {
     "region_code": "eu-north-1",
     "longitude": 18.0686,
     "latitude": 59.3293,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Middle East (Bahrain)",
@@ -764,7 +1014,10 @@ export const dataCenters = {
     "region_code": "me-south-1",
     "longitude": 50.5832,
     "latitude": 26.2285,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Africa (Cape Town)",
@@ -773,7 +1026,10 @@ export const dataCenters = {
     "region_code": "af-south-1",
     "longitude": 18.4241,
     "latitude": -33.9249,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Asia Pacific (Mumbai)",
@@ -782,7 +1038,10 @@ export const dataCenters = {
     "region_code": "ap-south-1",
     "longitude": 72.8777,
     "latitude": 19.076,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Asia Pacific (Hong Kong)",
@@ -791,7 +1050,10 @@ export const dataCenters = {
     "region_code": "ap-east-1",
     "longitude": 114.1694,
     "latitude": 22.3193,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Asia Pacific (Osaka)",
@@ -800,7 +1062,10 @@ export const dataCenters = {
     "region_code": "ap-northeast-3",
     "longitude": 135.5022,
     "latitude": 34.6937,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Asia Pacific (Seoul)",
@@ -809,7 +1074,10 @@ export const dataCenters = {
     "region_code": "ap-northeast-2",
     "longitude": 126.978,
     "latitude": 37.5665,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Asia Pacific (Singapore)",
@@ -818,7 +1086,10 @@ export const dataCenters = {
     "region_code": "ap-southeast-1",
     "longitude": 103.8198,
     "latitude": 1.3521,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Asia Pacific (Sydney)",
@@ -827,7 +1098,10 @@ export const dataCenters = {
     "region_code": "ap-southeast-2",
     "longitude": 151.2093,
     "latitude": -33.8688,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "Asia Pacific (Tokyo)",
@@ -836,7 +1110,10 @@ export const dataCenters = {
     "region_code": "ap-northeast-1",
     "longitude": 139.6917,
     "latitude": 35.6895,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "China (Beijing)",
@@ -845,7 +1122,10 @@ export const dataCenters = {
     "region_code": "cn-north-1",
     "longitude": 116.4074,
     "latitude": 39.9042,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   },
   {
     "name": "China (Ningxia)",
@@ -854,7 +1134,10 @@ export const dataCenters = {
     "region_code": "cn-northwest-1",
     "longitude": 106.2587,
     "latitude": 37.5097,
-    "provider": "AWS"
+    "provider": "AWS",
+    "price": 222 * Math.random(),
+    "intensity": 0.8,
+    "radius": 0.15
   }
   ],
 };
@@ -867,24 +1150,49 @@ type DataCenter = {
   country_code: string;
   region_code: string;
   provider: string;
+  price: number;
+  intensity: number;
+  radius: number;
 }
 
 export type HeatMapProps = {
   width: string;
   height: string;
+  center: LatLngTuple;
+  zoom: number;
+  maxZoom: number;
+  scrollWheelZoom: boolean;
   entries: DataCenter[];
+  maxBounds?: [number, number][];
 };
 
 const heatMapIcon = new Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png'
 });
 
-export const HeatMap = ({width, height, entries }: HeatMapProps) => {
+export const HeatMap = ({width, height, center, zoom, maxZoom, scrollWheelZoom, entries, maxBounds }: HeatMapProps) => {
+  const points = entries.map((dataCenter) => ({
+    lat: dataCenter.latitude,
+    lng: dataCenter.longitude,
+    intensity: dataCenter.intensity,
+    radius: dataCenter.radius
+  }));
+
   return (
-    <MapContainer style={{height: height, width: width}} center={[20, 0]} zoom={2} maxZoom={18} maxBoundsViscosity={1.0} maxBounds={[[-90, -180], [90, 180] ]} scrollWheelZoom={true}>
+    <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <HeatmapLayer
+        fitBoundsOnLoad
+        fitBoundsOnUpdate
+        points={points}
+        longitudeExtractor={(point: any) => point.lng}
+        latitudeExtractor={(point: any) => point.lat}
+        intensityExtractor={(point: any) => point.intensity}
+        radiusExtractor={(point: any) => point.radius}
+        max={1.0}
       />
       {entries.map((dataCenter) => (
         <Marker
@@ -895,7 +1203,8 @@ export const HeatMap = ({width, height, entries }: HeatMapProps) => {
           <Popup>
             <strong>{dataCenter.name}</strong><br />
             {dataCenter.address}<br />
-            Provider: {dataCenter.provider}
+            Provider: {dataCenter.provider}<br />
+            Price: {dataCenter.price}
           </Popup>
         </Marker>
       ))}
@@ -905,7 +1214,7 @@ export const HeatMap = ({width, height, entries }: HeatMapProps) => {
 
 export const HeatMapComponent = () => {
   const { value, loading, error } = useAsync(async (): Promise<DataCenter[]> => {
-    // Would use fetch in a real world example
+    // TODO: Fetch data from API
     return dataCenters.results;
   }, []);
 
@@ -915,5 +1224,5 @@ export const HeatMapComponent = () => {
     return <ResponseErrorPanel error={error} />;
   }
 
-  return <HeatMap width={"80vw"} height={"50vw"} entries={value || []} />;
+  return <HeatMap width={"80vw"} height={"50vw"} center={[20, 0]} zoom={2} maxZoom={18} scrollWheelZoom={true} entries={value || []} maxBounds={[[-90, -180], [90, 180] ]} />;
 };
