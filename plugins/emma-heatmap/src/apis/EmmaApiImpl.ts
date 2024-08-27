@@ -22,8 +22,8 @@ import {
           "latitude": 37.4316,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "East US 2",
@@ -34,8 +34,8 @@ import {
           "latitude": 36.8529,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Central US",
@@ -46,8 +46,8 @@ import {
           "latitude": 41.5868,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "North Central US",
@@ -58,8 +58,8 @@ import {
           "latitude": 40.6331,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "South Central US",
@@ -70,8 +70,8 @@ import {
           "latitude": 29.4241,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "West US",
@@ -82,8 +82,8 @@ import {
           "latitude": 37.3382,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "West US 2",
@@ -94,8 +94,8 @@ import {
           "latitude": 47.6062,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Canada Central",
@@ -106,8 +106,8 @@ import {
           "latitude": 43.6532,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Canada East",
@@ -118,8 +118,8 @@ import {
           "latitude": 46.8139,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Brazil South",
@@ -130,8 +130,8 @@ import {
           "latitude": -23.5505,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "North Europe",
@@ -142,8 +142,8 @@ import {
           "latitude": 53.3498,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "West Europe",
@@ -154,8 +154,8 @@ import {
           "latitude": 52.3676,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "UK South",
@@ -166,8 +166,8 @@ import {
           "latitude": 51.5074,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "UK West",
@@ -178,8 +178,8 @@ import {
           "latitude": 51.4816,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "France Central",
@@ -190,8 +190,8 @@ import {
           "latitude": 48.8566,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "France South",
@@ -202,8 +202,8 @@ import {
           "latitude": 43.2965,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Germany Central",
@@ -214,8 +214,8 @@ import {
           "latitude": 50.1109,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Germany Northeast",
@@ -226,8 +226,8 @@ import {
           "latitude": 52.5200,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Norway East",
@@ -238,8 +238,8 @@ import {
           "latitude": 59.9139,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Norway West",
@@ -250,8 +250,8 @@ import {
           "latitude": 58.969975,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Switzerland North",
@@ -262,8 +262,8 @@ import {
           "latitude": 47.3769,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Switzerland West",
@@ -274,8 +274,8 @@ import {
           "latitude": 46.2044,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "UAE North",
@@ -286,8 +286,8 @@ import {
           "latitude": 25.2048,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "UAE Central",
@@ -298,8 +298,8 @@ import {
           "latitude": 24.4539,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "South Africa North",
@@ -310,8 +310,8 @@ import {
           "latitude": -26.2041,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "South Africa West",
@@ -322,8 +322,8 @@ import {
           "latitude": -33.9249,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "East Asia",
@@ -334,8 +334,8 @@ import {
           "latitude": 22.3193,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Southeast Asia",
@@ -346,8 +346,8 @@ import {
           "latitude": 1.3521,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Japan East",
@@ -358,8 +358,8 @@ import {
           "latitude": 35.6895,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Japan West",
@@ -370,8 +370,8 @@ import {
           "latitude": 34.6937,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Korea Central",
@@ -382,8 +382,8 @@ import {
           "latitude": 37.5665,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Korea South",
@@ -394,8 +394,8 @@ import {
           "latitude": 35.1796,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Australia East",
@@ -406,8 +406,8 @@ import {
           "latitude": -33.8688,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Australia Southeast",
@@ -418,8 +418,8 @@ import {
           "latitude": -37.8136,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "Australia Central",
@@ -430,8 +430,8 @@ import {
           "latitude": -35.2809,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "India Central",
@@ -442,8 +442,8 @@ import {
           "latitude": 18.5204,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "India South",
@@ -454,8 +454,8 @@ import {
           "latitude": 13.0827,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "India West",
@@ -466,8 +466,8 @@ import {
           "latitude": 19.076,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "China East",
@@ -478,8 +478,8 @@ import {
           "latitude": 31.2304,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "China North",
@@ -490,8 +490,8 @@ import {
           "latitude": 39.9042,
           "provider": "AZURE",
           "price": 123 * Math.random(),
-          "intensity": 0.15,
-          "radius": 0.25
+          "intensity": 0.5,
+          "radius": 0.5
         },
         {
           "name": "us-central1",
@@ -502,8 +502,8 @@ import {
           "latitude": 41.2619,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "us-west1",
@@ -514,8 +514,8 @@ import {
           "latitude": 45.5946,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "us-west2",
@@ -526,8 +526,8 @@ import {
           "latitude": 34.0522,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "us-west3",
@@ -538,8 +538,8 @@ import {
           "latitude": 40.7608,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "us-west4",
@@ -550,8 +550,8 @@ import {
           "latitude": 36.1699,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "us-east1",
@@ -562,8 +562,8 @@ import {
           "latitude": 33.199,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "us-east4",
@@ -574,8 +574,8 @@ import {
           "latitude": 39.0438,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "northamerica-northeast1",
@@ -586,8 +586,8 @@ import {
           "latitude": 45.5017,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "southamerica-east1",
@@ -598,8 +598,8 @@ import {
           "latitude": -23.5505,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "europe-west1",
@@ -610,8 +610,8 @@ import {
           "latitude": 50.4543,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "europe-west2",
@@ -622,8 +622,8 @@ import {
           "latitude": 51.5074,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "europe-west3",
@@ -634,8 +634,8 @@ import {
           "latitude": 50.1109,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "europe-west4",
@@ -646,8 +646,8 @@ import {
           "latitude": 53.4273,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "europe-west6",
@@ -658,8 +658,8 @@ import {
           "latitude": 47.3769,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "europe-north1",
@@ -670,8 +670,8 @@ import {
           "latitude": 60.5693,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "europe-central2",
@@ -682,8 +682,8 @@ import {
           "latitude": 52.2297,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-east1",
@@ -694,8 +694,8 @@ import {
           "latitude": 23.9924,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-east2",
@@ -706,8 +706,8 @@ import {
           "latitude": 22.3193,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-northeast1",
@@ -718,8 +718,8 @@ import {
           "latitude": 35.6895,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-northeast2",
@@ -730,8 +730,8 @@ import {
           "latitude": 34.6937,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-northeast3",
@@ -742,8 +742,8 @@ import {
           "latitude": 37.5665,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-south1",
@@ -754,8 +754,8 @@ import {
           "latitude": 19.076,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-south2",
@@ -766,8 +766,8 @@ import {
           "latitude": 28.7041,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-southeast1",
@@ -778,8 +778,8 @@ import {
           "latitude": 1.3409,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "asia-southeast2",
@@ -790,8 +790,8 @@ import {
           "latitude": -6.2088,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "australia-southeast1",
@@ -802,8 +802,8 @@ import {
           "latitude": -33.8688,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "australia-southeast2",
@@ -814,8 +814,8 @@ import {
           "latitude": -37.8136,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "newzealand-north1",
@@ -826,8 +826,8 @@ import {
           "latitude": -36.8485,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "me-west1",
@@ -838,8 +838,8 @@ import {
           "latitude": 32.0853,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "me-central1",
@@ -850,8 +850,8 @@ import {
           "latitude": 25.2861,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "africa-south1",
@@ -862,8 +862,8 @@ import {
           "latitude": -26.2041,
           "provider": "GCP",
           "price": 321 * Math.random(),
-          "intensity": 0.4,
-          "radius": 0.35
+          "intensity": 1,
+          "radius": 1
         },
         {
           "name": "US East (N. Virginia)",
@@ -874,8 +874,8 @@ import {
           "latitude": 39.0438,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "US East (Ohio)",
@@ -886,8 +886,8 @@ import {
           "latitude": 39.9612,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "US West (N. California)",
@@ -898,8 +898,8 @@ import {
           "latitude": 37.7749,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "US West (Oregon)",
@@ -910,8 +910,8 @@ import {
           "latitude": 45.8399,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Canada (Central)",
@@ -922,8 +922,8 @@ import {
           "latitude": 45.5017,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "South America (São Paulo)",
@@ -934,8 +934,8 @@ import {
           "latitude": -23.5505,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Europe (Ireland)",
@@ -946,8 +946,8 @@ import {
           "latitude": 53.3498,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Europe (London)",
@@ -958,8 +958,8 @@ import {
           "latitude": 51.5074,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Europe (Paris)",
@@ -970,8 +970,8 @@ import {
           "latitude": 48.8566,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Europe (Frankfurt)",
@@ -982,8 +982,8 @@ import {
           "latitude": 50.1109,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Europe (Milan)",
@@ -994,8 +994,8 @@ import {
           "latitude": 45.4642,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Europe (Stockholm)",
@@ -1006,8 +1006,8 @@ import {
           "latitude": 59.3293,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Middle East (Bahrain)",
@@ -1018,8 +1018,8 @@ import {
           "latitude": 26.2285,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Africa (Cape Town)",
@@ -1030,8 +1030,8 @@ import {
           "latitude": -33.9249,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Asia Pacific (Mumbai)",
@@ -1042,8 +1042,8 @@ import {
           "latitude": 19.076,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Asia Pacific (Hong Kong)",
@@ -1054,8 +1054,8 @@ import {
           "latitude": 22.3193,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Asia Pacific (Osaka)",
@@ -1066,8 +1066,8 @@ import {
           "latitude": 34.6937,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Asia Pacific (Seoul)",
@@ -1078,8 +1078,8 @@ import {
           "latitude": 37.5665,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Asia Pacific (Singapore)",
@@ -1090,8 +1090,8 @@ import {
           "latitude": 1.3521,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Asia Pacific (Sydney)",
@@ -1102,8 +1102,8 @@ import {
           "latitude": -33.8688,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "Asia Pacific (Tokyo)",
@@ -1114,8 +1114,8 @@ import {
           "latitude": 35.6895,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "China (Beijing)",
@@ -1126,8 +1126,8 @@ import {
           "latitude": 39.9042,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         },
         {
           "name": "China (Ningxia)",
@@ -1138,8 +1138,8 @@ import {
           "latitude": 37.5097,
           "provider": "AWS",
           "price": 222 * Math.random(),
-          "intensity": 0.8,
-          "radius": 0.15
+          "intensity": 2,
+          "radius": 2
         }];
     }
   }

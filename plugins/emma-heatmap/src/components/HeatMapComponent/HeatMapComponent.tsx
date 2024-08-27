@@ -32,6 +32,7 @@ export type HeatMapProps = {
   height: string;
   center: LatLngTuple;
   zoom: number;
+  minZoom: number;
   maxZoom: number;
   scrollWheelZoom: boolean;
   entries: DataCenter[];
@@ -42,7 +43,7 @@ const heatMapIcon = new Icon({
   iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png'
 });
 
-export const HeatMap = ({width, height, center, zoom, maxZoom, scrollWheelZoom, entries, maxBounds }: HeatMapProps) => {
+export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, entries, maxBounds }: HeatMapProps) => {
   const points = entries.map((dataCenter) => ({
     lat: dataCenter.latitude,
     lng: dataCenter.longitude,
@@ -51,7 +52,7 @@ export const HeatMap = ({width, height, center, zoom, maxZoom, scrollWheelZoom, 
   }));
 
   return (
-    <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
+    <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} minZoom={minZoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -64,7 +65,6 @@ export const HeatMap = ({width, height, center, zoom, maxZoom, scrollWheelZoom, 
         latitudeExtractor={(point: any) => point.lat}
         intensityExtractor={(point: any) => point.intensity}
         radiusExtractor={(point: any) => point.radius}
-        max={1.0}
       />
       {entries.map((dataCenter) => (
         <Marker
@@ -76,7 +76,9 @@ export const HeatMap = ({width, height, center, zoom, maxZoom, scrollWheelZoom, 
             <strong>{dataCenter.name}</strong><br />
             {dataCenter.address}<br />
             Provider: {dataCenter.provider}<br />
-            Price: {dataCenter.price}
+            Price: {dataCenter.price}<br />
+            Intensity: {dataCenter.intensity}<br />
+            Radius: {dataCenter.radius}
           </Popup>
         </Marker>
       ))}
@@ -97,5 +99,5 @@ export const HeatMapComponent = () => {
     return <ResponseErrorPanel error={error} />;
   }
 
-  return <HeatMap width={"80vw"} height={"50vw"} center={[20, 0]} zoom={2} maxZoom={18} scrollWheelZoom={true} entries={value || []} maxBounds={[[-90, -180], [90, 180] ]} />;
+  return <HeatMap width={"60vw"} height={"30vw"} center={[20, 0]} zoom={3} minZoom={3} maxZoom={18} scrollWheelZoom={true} entries={value || []} maxBounds={[[-90, -180], [90, 180] ]} />;
 };
