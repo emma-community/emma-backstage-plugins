@@ -1,0 +1,32 @@
+import { 
+  createFrontendPlugin,
+  PageBlueprint,
+  NavItemBlueprint,
+} from '@backstage/frontend-plugin-api';
+import { rootRouteRef } from './routes';
+import { emmaApi } from './apis/EmmaApiImpl';
+import HeatMapIcon from '@material-ui/icons/Whatshot';
+
+const heatMapPage = PageBlueprint.make({
+  params: {
+    routeRef: rootRouteRef,
+    defaultPath: '/emma-heatmap',
+    loader: () => import('./components/HeatMapPageComponent').then(module => module.HeatMapPageComponent()),
+  },
+});
+
+const heatMapNavItem = NavItemBlueprint.make({
+   params: {
+     routeRef: rootRouteRef,
+     title: 'Emma Heatmap',
+     icon: HeatMapIcon,
+   },
+});
+
+export const emmaHeatmapPlugin = createFrontendPlugin({
+  id: 'emma-heatmap',
+  extensions: [heatMapPage, heatMapNavItem, emmaApi],
+  routes: {
+    root: rootRouteRef,
+  },
+});
