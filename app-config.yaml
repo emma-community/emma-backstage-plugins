@@ -2,6 +2,9 @@ app:
   title: Scaffolded Backstage App
   baseUrl: http://localhost:3000
 
+emma:
+  apiKey: "1234"
+
 organization:
   name: My Company
 
