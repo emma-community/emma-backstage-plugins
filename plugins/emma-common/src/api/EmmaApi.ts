@@ -1,11 +1,12 @@
 import { createApiRef } from '@backstage/core-plugin-api';
+import { EmmaDataCenter } from '../types';
 
 /**
  * The API interface for the Emma-backend plugin.
  * @public
  */
 export interface EmmaApi {
-  getDataCenters(): Promise<any>;
+  getDataCenters(): Promise<EmmaDataCenter[]>;
 }
 
 /**

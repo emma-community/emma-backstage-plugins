@@ -1,5 +1,6 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
-import { EmmaApi } from '@internal/backstage-plugin-emma-common';
+import { EmmaApi, EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
+import { ResponseError } from '@backstage/errors';
 
 /** @public */
 export class EmmaClient implements EmmaApi {
@@ -9,12 +10,12 @@ export class EmmaClient implements EmmaApi {
   constructor(options: { discoveryApi: DiscoveryApi; fetchApi: FetchApi; }) {
     this.discoveryApi = options.discoveryApi;
     this.fetchApi = options.fetchApi;
-
-    console.log(this.discoveryApi, this.fetchApi);
   }
   
-  async getDataCenters(): Promise<any> {
-    //TODO: Replace with actual API call via SDK
+  async getDataCenters(): Promise<EmmaDataCenter[]> {
+    //TODO: Replace with actual API call and move data to backend api
+    console.log(this.get);
+
     return [
       {
         "name": "East US",
@@ -1144,5 +1145,17 @@ export class EmmaClient implements EmmaApi {
         "intensity": 2,
         "radius": 2
       }];
+  }
+
+  private async get<T>(path: string): Promise<T> {
+    const baseUrl = `${await this.discoveryApi.getBaseUrl('emma')}/`;
+    const url = new URL(path, baseUrl);
+
+    const response = await this.fetchApi.fetch(url.toString());
+
+    if (!response.ok)
+      throw await ResponseError.fromResponse(response);
+    
+    return response.json() as Promise<T>;
   }
 }
