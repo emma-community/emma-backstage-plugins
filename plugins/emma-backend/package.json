@@ -11,7 +11,8 @@
     "types": "dist/index.d.ts"
   },
   "backstage": {
-    "role": "backend-plugin"
+    "role": "backend-plugin",
+    "plugin-id": "emma"
   },
   "scripts": {
     "start": "backstage-cli package start",
