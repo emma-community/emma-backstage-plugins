@@ -1,6 +1,6 @@
 {
   "name": "@internal/backstage-plugin-emma-common",
-  "description": "Web library for the emma plugin",
+  "description": "Common library for the emma plugin",
   "version": "0.1.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
@@ -12,7 +12,8 @@
     "types": "dist/index.d.ts"
   },
   "backstage": {
-    "role": "web-library"
+    "role": "common-library",
+    "pluginId": "emma"
   },
   "sideEffects": false,
   "scripts": {
@@ -26,20 +27,11 @@
   },
   "dependencies": {
     "@backstage/core-plugin-api": "^1.9.3",
-    "@material-ui/core": "^4.9.13",
+    "@backstage/plugin-catalog-common": "^1.0.26",
+    "@backstage/plugin-permission-common": "^0.8.1",
     "@zaradarbh/emma-typescript-sdk": "^0.0.2"
   },
-  "peerDependencies": {
-    "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
-  },
   "devDependencies": {
-    "@backstage/cli": "^0.27.0",
-    "@backstage/test-utils": "^1.5.10",
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^14.0.0",
-    "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
-  },
-  "files": [
-    "dist"
-  ]
+    "@backstage/cli": "^0.27.0"
+  }
 }

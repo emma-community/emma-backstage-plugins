@@ -1,4 +1,4 @@
-import { createApiRef } from '@backstage/frontend-plugin-api';
+import { createApiRef } from '@backstage/core-plugin-api';
 
 /**
  * The API interface for the Emma-backend plugin.

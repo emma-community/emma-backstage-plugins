@@ -1,6 +1,6 @@
 /***/
 /**
- * Web library for the emma plugin.
+ * Common library for the emma plugin.
  *
  * @packageDocumentation
  */
