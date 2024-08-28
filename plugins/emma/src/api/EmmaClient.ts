@@ -1,9 +1,16 @@
+import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
 import { EmmaApi } from '@internal/backstage-plugin-emma-react';
-  
-export class EmmaApiImpl implements EmmaApi {
-  constructor(options: { apiKey: string }) {
-    //TODO: Initialize SDK client
-    console.log(options);
+
+/** @public */
+export class EmmaClient implements EmmaApi {
+  private readonly discoveryApi: DiscoveryApi;
+  private readonly fetchApi: FetchApi;
+
+  constructor(options: { discoveryApi: DiscoveryApi; fetchApi: FetchApi; }) {
+    this.discoveryApi = options.discoveryApi;
+    this.fetchApi = options.fetchApi;
+
+    console.log(this.discoveryApi, this.fetchApi);
   }
   
   async getDataCenters(): Promise<any> {

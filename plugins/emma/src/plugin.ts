@@ -2,10 +2,11 @@ import {
   createPlugin,
   createRoutableExtension,
   createApiFactory,
-  configApiRef,
+  discoveryApiRef,
+  fetchApiRef
 } from '@backstage/core-plugin-api';
 import { rootRouteRef } from './routes';
-import { EmmaApiImpl } from './api/EmmaApiImpl';
+import { EmmaClient } from './api/EmmaClient';
 import { emmaApiRef } from '@internal/backstage-plugin-emma-react';
 
 export const emmaHeatmapPlugin = createPlugin({
@@ -13,13 +14,9 @@ export const emmaHeatmapPlugin = createPlugin({
   apis: [
     createApiFactory({
       api: emmaApiRef,
-      deps: { configApi: configApiRef },
-      factory: ({configApi}) => {
-        console.log(configApi)
-        console.log(configApi.getOptionalString('emma.baseUrl'));
-        console.log(configApi.getOptionalString('emma.apiKey'));
-
-        return new EmmaApiImpl({ apiKey: '1234' });
+      deps: { discoveryApi: discoveryApiRef, fetchApi: fetchApiRef },
+      factory: ({ discoveryApi, fetchApi }) => {
+        return new EmmaClient({ discoveryApi, fetchApi });
       },
     }),
   ],
