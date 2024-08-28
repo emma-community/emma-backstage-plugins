@@ -1,6 +1,4 @@
-import { ApiBlueprint } from '@backstage/frontend-plugin-api';
-import { createApiFactory } from '@backstage/core-plugin-api';
-import { EmmaApi, emmaApiRef } from '@internal/backstage-plugin-emma-react';
+import { EmmaApi } from '@internal/backstage-plugin-emma-react';
   
 export class EmmaApiImpl implements EmmaApi {
   constructor(options: { apiKey: string }) {
@@ -1141,25 +1139,3 @@ export class EmmaApiImpl implements EmmaApi {
       }];
   }
 }
-
-export const emmaApiExtension = ApiBlueprint.makeWithOverrides({
-  name: 'emma',
-  config: {
-    schema: {
-      apiKey: z => z.string(),
-    },
-  },
-  factory(originalFactory, { config }) {
-    return originalFactory({
-      factory: createApiFactory({
-        api: emmaApiRef,
-        deps: { },
-        factory: () => {
-          return new EmmaApiImpl({
-            apiKey: config.apiKey,
-          });
-        },
-      }),
-    });
-  },
-});

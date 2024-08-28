@@ -5,11 +5,11 @@ import {
   configApiRef,
 } from '@backstage/core-plugin-api';
 import { rootRouteRef } from './routes';
-import { EmmaApiImpl } from './apis/EmmaApiImpl';
+import { EmmaApiImpl } from './api/EmmaApiImpl';
 import { emmaApiRef } from '@internal/backstage-plugin-emma-react';
 
 export const emmaHeatmapPlugin = createPlugin({
-  id: 'emma-heatmap',
+  id: 'emma',
   apis: [
     createApiFactory({
       api: emmaApiRef,

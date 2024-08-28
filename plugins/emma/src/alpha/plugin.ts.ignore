@@ -10,7 +10,7 @@ import HeatMapIcon from '@material-ui/icons/Whatshot';
 const heatMapPage = PageBlueprint.make({
   params: {
     routeRef: rootRouteRef,
-    defaultPath: '/emma-heatmap',
+    defaultPath: '/emma',
     loader: () => import('./components/HeatMapPageComponent').then(module => module.HeatMapPageComponent()),
   },
 });
@@ -24,7 +24,7 @@ const heatMapNavItem = NavItemBlueprint.make({
 });
 
 export const emmaHeatmapPlugin = createFrontendPlugin({
-  id: 'emma-heatmap',
+  id: 'emma',
   extensions: [heatMapPage, heatMapNavItem, emmaApi],
   routes: {
     root: rootRouteRef,

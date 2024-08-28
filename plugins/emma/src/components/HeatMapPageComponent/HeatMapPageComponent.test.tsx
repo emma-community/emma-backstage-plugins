@@ -23,7 +23,7 @@ describe('ExampleComponent', () => {
   it('should render', async () => {
     await renderInTestApp(<HeatMapPageComponent />);
     expect(
-      screen.getByText('Welcome to emma-heatmap!'),
+      screen.getByText('Welcome to emma!'),
     ).toBeInTheDocument();
   });
 });

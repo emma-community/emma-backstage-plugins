@@ -7,6 +7,6 @@ createDevApp()
   .addPage({
     element: <EmmaHeatmapPage />,
     title: 'Root Page',
-    path: '/emma-heatmap',
+    path: '/emma',
   })
   .render();

@@ -99,5 +99,5 @@ export const HeatMapComponent = () => {
     return <ResponseErrorPanel error={error} />;
   }
 
-  return <HeatMap width={"60vw"} height={"30vw"} center={[20, 0]} zoom={3} minZoom={3} maxZoom={18} scrollWheelZoom={true} entries={value || []} maxBounds={[[-90, -180], [90, 180] ]} />;
+  return <HeatMap width={"1025px"} height={"550px"} center={[0, 0]} zoom={2} minZoom={2} maxZoom={18} scrollWheelZoom={true} entries={value || []} maxBounds={[[-90, -180], [90, 180] ]} />;
 };
