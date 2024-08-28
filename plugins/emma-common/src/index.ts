@@ -4,5 +4,6 @@
  *
  * @packageDocumentation
  */
-export { emmaApiRef } from './apis/EmmaApi';
-export type { EmmaApi } from './apis/EmmaApi';
+export { emmaApiRef } from './api/EmmaApi';
+export type { EmmaApi } from './api/EmmaApi';
+export * from './types';

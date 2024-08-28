@@ -2,8 +2,7 @@ import React from 'react';
 import { Icon, LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useApi } from '@backstage/frontend-plugin-api';
-import { emmaApiRef } from '@internal/backstage-plugin-emma-common';
-import { DataCenter } from '@zaradarbh/emma-typescript-sdk';
+import { emmaApiRef, EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
 
 //@ts-ignore
 import { HeatmapLayer } from 'react-leaflet-heatmap-layer-v3'
@@ -15,18 +14,6 @@ import {
 import 'leaflet/dist/leaflet.css';
 import useAsync from 'react-use/lib/useAsync';
 
-type HeatMapDataCenter = DataCenter & {
-  latitude: number;
-  longitude: number;
-  address: string;
-  country_code: string;
-  region_code: string;
-  provider: string;
-  price: number;
-  intensity: number;
-  radius: number;
-}
-
 export type HeatMapProps = {
   width: string;
   height: string;
@@ -35,7 +22,7 @@ export type HeatMapProps = {
   minZoom: number;
   maxZoom: number;
   scrollWheelZoom: boolean;
-  entries: HeatMapDataCenter[];
+  entries: EmmaDataCenter[];
   maxBounds?: [number, number][];
 };
 
@@ -89,7 +76,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
 export const HeatMapComponent = () => {
   const emmaApi = useApi(emmaApiRef);
 
-  const { value, loading, error } = useAsync(async (): Promise<HeatMapDataCenter[]> => {
+  const { value, loading, error } = useAsync(async (): Promise<EmmaDataCenter[]> => {
     return await emmaApi.getDataCenters();
   }, []);
 
