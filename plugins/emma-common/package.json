@@ -1,5 +1,5 @@
 {
-  "name": "@internal/backstage-plugin-emma-react",
+  "name": "@internal/backstage-plugin-emma-common",
   "description": "Web library for the emma plugin",
   "version": "0.1.0",
   "main": "src/index.ts",

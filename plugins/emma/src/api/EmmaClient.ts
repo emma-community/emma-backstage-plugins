@@ -1,5 +1,5 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
-import { EmmaApi } from '@internal/backstage-plugin-emma-react';
+import { EmmaApi } from '@internal/backstage-plugin-emma-common';
 
 /** @public */
 export class EmmaClient implements EmmaApi {

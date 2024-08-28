@@ -1,4 +1,4 @@
-# @internal/backstage-plugin-emma-react
+# @internal/backstage-plugin-emma-common
 
 Welcome to the web library package for the emma plugin!
 

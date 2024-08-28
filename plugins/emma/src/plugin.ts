@@ -7,7 +7,7 @@ import {
 } from '@backstage/core-plugin-api';
 import { rootRouteRef } from './routes';
 import { EmmaClient } from './api/EmmaClient';
-import { emmaApiRef } from '@internal/backstage-plugin-emma-react';
+import { emmaApiRef } from '@internal/backstage-plugin-emma-common';
 
 export const emmaHeatmapPlugin = createPlugin({
   id: 'emma',
