@@ -16,6 +16,7 @@ export const emmaHeatmapPlugin = createPlugin({
       deps: { configApi: configApiRef },
       factory: ({configApi}) => {
         console.log(configApi)
+        console.log(configApi.getOptionalString('emma.baseUrl'));
         console.log(configApi.getOptionalString('emma.apiKey'));
 
         return new EmmaApiImpl({ apiKey: '1234' });

@@ -3,6 +3,7 @@ app:
   baseUrl: http://localhost:3000
 
 emma:
+  baseUrl: https://emma.example.com
   apiKey: "1234"
 
 organization:
