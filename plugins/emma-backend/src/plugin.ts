@@ -17,17 +17,17 @@ export const emmaPlugin = createBackendPlugin({
       deps: {
         httpRouter: coreServices.httpRouter,
         logger: coreServices.logger,
-        config: coreServices.rootConfig,
+        config: coreServices.rootConfig
       },
       async init({
         httpRouter,
-        logger,
         config,
+        logger,
       }) {
         httpRouter.use(
           await createRouter({
-            logger,
             config,
+            logger
           }),
         );
         httpRouter.addAuthPolicy({
