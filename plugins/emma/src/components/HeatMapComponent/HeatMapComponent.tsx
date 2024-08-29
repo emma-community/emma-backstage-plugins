@@ -32,8 +32,8 @@ const heatMapIcon = new Icon({
 
 export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, entries, maxBounds }: HeatMapProps) => {
   const points = entries.map((dataCenter) => ({
-    lat: dataCenter.latitude,
-    lng: dataCenter.longitude,
+    lat: dataCenter.location.latitude,
+    lng: dataCenter.location.longitude,
     intensity: dataCenter.intensity,
     radius: dataCenter.radius
   }));
@@ -56,7 +56,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
       {entries.map((dataCenter) => (
         <Marker
           key={dataCenter.region_code}
-          position={[dataCenter.latitude, dataCenter.longitude]}
+          position={[dataCenter.location.latitude, dataCenter.location.longitude]}
           icon={heatMapIcon}
         >
           <Popup>
