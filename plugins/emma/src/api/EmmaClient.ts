@@ -1,5 +1,5 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
-import { EmmaApi, EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
+import { EmmaApi, EmmaDataCenter, EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
 import { ResponseError } from '@backstage/errors';
 
 /** @public */
@@ -1148,7 +1148,7 @@ export class EmmaClient implements EmmaApi {
   }
 
   private async get<T>(path: string): Promise<T> {
-    const baseUrl = `${await this.discoveryApi.getBaseUrl('emma')}/`;
+    const baseUrl = `${await this.discoveryApi.getBaseUrl(EMMA_PLUGIN_ID)}/`;
     const url = new URL(path, baseUrl);
 
     const response = await this.fetchApi.fetch(url.toString());

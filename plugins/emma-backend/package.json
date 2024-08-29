@@ -29,7 +29,8 @@
     "@backstage/backend-plugin-api": "^0.8.0",
     "express": "^4.17.1",
     "express-promise-router": "^4.1.0",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "@internal/backstage-plugin-emma-common": "^0.1.0"
   },
   "devDependencies": {
     "@backstage/backend-test-utils": "^0.5.0",
