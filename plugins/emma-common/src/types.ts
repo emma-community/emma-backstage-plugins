@@ -2,8 +2,7 @@ import { DataCenter } from '@zaradarbh/emma-typescript-sdk';
 
 /** @public */
 export type EmmaDataCenter = DataCenter & {
-    latitude: number;
-    longitude: number;
+    location: GeoLocation
     address: string;
     country_code: string;
     region_code: string;
@@ -11,4 +10,17 @@ export type EmmaDataCenter = DataCenter & {
     price: number;
     intensity: number;
     radius: number;
+}
+
+/** @public */
+export type GeoLocation = {
+    latitude: number;
+    longitude: number;
+    label?: string;
+}
+
+/** @public */
+export type GeoBounds = {
+    topRight: GeoLocation;
+    bottomLeft: GeoLocation;
 }

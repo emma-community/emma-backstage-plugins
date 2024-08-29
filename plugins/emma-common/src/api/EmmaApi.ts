@@ -1,12 +1,12 @@
 import { createApiRef } from '@backstage/core-plugin-api';
-import { EmmaDataCenter } from '../types';
+import { EmmaDataCenter, GeoBounds } from '../types';
 
 /**
  * The API interface for the Emma-backend plugin.
  * @public
  */
 export interface EmmaApi {
-  getDataCenters(): Promise<EmmaDataCenter[]>;
+  getDataCenters(maxBounds?: GeoBounds): Promise<EmmaDataCenter[]>;
 }
 
 /**
