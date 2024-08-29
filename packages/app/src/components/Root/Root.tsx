@@ -27,6 +27,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { MyGroupsSidebarItem } from '@backstage/plugin-org';
 import GroupIcon from '@material-ui/icons/People';
+import MapIcon from '@material-ui/icons/Map';
 
 const useSidebarLogoStyles = makeStyles({
   root: {
@@ -77,8 +78,8 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
         {/* End global nav */}
         <SidebarDivider />
-        <SidebarScrollWrapper>
-          {/* Items in this group will be scrollable if they run out of space */}
+        <SidebarScrollWrapper>          
+          <SidebarItem icon={MapIcon} to="emma" text="Emma" />
         </SidebarScrollWrapper>
       </SidebarGroup>
       <SidebarSpace />
