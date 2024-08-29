@@ -13,7 +13,22 @@ export class EmmaClient implements EmmaApi {
   }
   
   async getDataCenters(): Promise<EmmaDataCenter[]> {
-    //TODO: Replace with actual API call and move data to backend api
+    // TODO: Debug backend hang issue https://github.com/backstage/backstage/issues/20680
+    // const queryString = new URLSearchParams();
+    
+    // console.log(maxBounds);
+
+    // if (maxBounds) {
+    //   queryString.append('latMax', maxBounds.topRight.latitude.toString());
+    //   queryString.append('lonMax', maxBounds.topRight.longitude.toString());
+    //   queryString.append('latMin', maxBounds.bottomLeft.latitude.toString());
+    //   queryString.append('lonMin', maxBounds.bottomLeft.longitude.toString());
+    // }
+    
+    // const urlSegment = `datacenters/?${queryString}`;
+
+    // return await this.get<EmmaDataCenter[]>(urlSegment);
+    // TODO: Remove this once issue is resolved
     console.log(this.get);
 
     return [
@@ -22,10 +37,13 @@ export class EmmaClient implements EmmaApi {
         "address": "Virginia, USA",
         "country_code": "US",
         "region_code": "eastus",
-        "longitude": -79.4209,
-        "latitude": 37.4316,
+        "location": {
+          "longitude": -79.4209,
+          "latitude": 37.4316,
+          
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -34,10 +52,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Virginia, USA",
         "country_code": "US",
         "region_code": "eastus2",
-        "longitude": -78.6569,
-        "latitude": 36.8529,
+        "location": {
+          "longitude": -78.6569,
+          "latitude": 36.8529
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -46,10 +66,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Iowa, USA",
         "country_code": "US",
         "region_code": "centralus",
-        "longitude": -93.6091,
-        "latitude": 41.5868,
+        "location": {
+          "longitude": -93.6091,
+          "latitude": 41.5868
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -58,10 +80,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Illinois, USA",
         "country_code": "US",
         "region_code": "northcentralus",
-        "longitude": -89.3985,
-        "latitude": 40.6331,
+        "location": {
+          "longitude": -89.3985,
+          "latitude": 40.6331
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -70,10 +94,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Texas, USA",
         "country_code": "US",
         "region_code": "southcentralus",
-        "longitude": -98.4936,
-        "latitude": 29.4241,
+        "location": {
+          "longitude": -98.4936,
+          "latitude": 29.4241
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -82,10 +108,12 @@ export class EmmaClient implements EmmaApi {
         "address": "California, USA",
         "country_code": "US",
         "region_code": "westus",
-        "longitude": -121.8947,
-        "latitude": 37.3382,
+        "location": {
+          "longitude": -121.8947,
+          "latitude": 37.3382
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -94,10 +122,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Washington, USA",
         "country_code": "US",
         "region_code": "westus2",
-        "longitude": -122.3321,
-        "latitude": 47.6062,
+        "location": {
+          "longitude": -122.3321,
+          "latitude": 47.6062
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -106,10 +136,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Toronto, Ontario, Canada",
         "country_code": "CA",
         "region_code": "canadacentral",
-        "longitude": -79.3832,
-        "latitude": 43.6532,
+        "location": {
+          "longitude": -79.3832,
+          "latitude": 43.6532
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -118,10 +150,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Quebec City, Quebec, Canada",
         "country_code": "CA",
         "region_code": "canadaeast",
-        "longitude": -71.2074,
-        "latitude": 46.8139,
+        "location": {
+          "longitude": -71.2074,
+          "latitude": 46.8139
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -130,10 +164,12 @@ export class EmmaClient implements EmmaApi {
         "address": "São Paulo, Brazil",
         "country_code": "BR",
         "region_code": "brazilsouth",
-        "longitude": -46.6333,
-        "latitude": -23.5505,
+        "location": {
+          "longitude": -46.6333,
+          "latitude": -23.5505
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -142,10 +178,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Dublin, Ireland",
         "country_code": "IE",
         "region_code": "northeurope",
-        "longitude": -6.2603,
-        "latitude": 53.3498,
+        "location": {
+          "longitude": -6.2603,
+          "latitude": 53.3498
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -154,10 +192,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Amsterdam, Netherlands",
         "country_code": "NL",
         "region_code": "westeurope",
-        "longitude": 4.9041,
-        "latitude": 52.3676,
+        "location": {
+          "longitude": 4.9041,
+          "latitude": 52.3676
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -166,10 +206,12 @@ export class EmmaClient implements EmmaApi {
         "address": "London, England, UK",
         "country_code": "GB",
         "region_code": "uksouth",
-        "longitude": -0.1276,
-        "latitude": 51.5074,
+        "location": {
+          "longitude": -0.1276,
+          "latitude": 51.5074
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -178,10 +220,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Cardiff, Wales, UK",
         "country_code": "GB",
         "region_code": "ukwest",
-        "longitude": -3.1791,
-        "latitude": 51.4816,
+        "location": {
+          "longitude": -3.1791,
+          "latitude": 51.4816
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -190,10 +234,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Paris, France",
         "country_code": "FR",
         "region_code": "francecentral",
-        "longitude": 2.3522,
-        "latitude": 48.8566,
+        "location": {
+          "longitude": 2.3522,
+          "latitude": 48.8566
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -202,10 +248,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Marseille, France",
         "country_code": "FR",
         "region_code": "francesouth",
-        "longitude": 5.3698,
-        "latitude": 43.2965,
+        "location": {
+          "longitude": 5.3698,
+          "latitude": 43.2965
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -214,10 +262,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Frankfurt, Germany",
         "country_code": "DE",
         "region_code": "germanycentral",
-        "longitude": 8.6821,
-        "latitude": 50.1109,
+        "location": {
+          "longitude": 8.6821,
+          "latitude": 50.1109
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -226,10 +276,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Berlin, Germany",
         "country_code": "DE",
         "region_code": "germanynortheast",
-        "longitude": 13.405,
-        "latitude": 52.5200,
+        "location": {
+          "longitude": 13.405,
+          "latitude": 52.5200
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -238,10 +290,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Oslo, Norway",
         "country_code": "NO",
         "region_code": "norwayeast",
-        "longitude": 10.7522,
-        "latitude": 59.9139,
+        "location": {
+          "longitude": 10.7522,
+          "latitude": 59.9139
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -250,10 +304,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Stavanger, Norway",
         "country_code": "NO",
         "region_code": "norwaywest",
-        "longitude": 5.7331,
-        "latitude": 58.969975,
+        "location": {
+          "longitude": 5.7331,
+          "latitude": 58.969975
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -262,10 +318,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Zurich, Switzerland",
         "country_code": "CH",
         "region_code": "switzerlandnorth",
-        "longitude": 8.5417,
-        "latitude": 47.3769,
+        "location": {
+          "longitude": 8.5417,
+          "latitude": 47.3769
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -274,10 +332,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Geneva, Switzerland",
         "country_code": "CH",
         "region_code": "switzerlandwest",
-        "longitude": 6.1432,
-        "latitude": 46.2044,
+        "location": {
+          "longitude": 6.1432,
+          "latitude": 46.2044
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -286,10 +346,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Dubai, United Arab Emirates",
         "country_code": "AE",
         "region_code": "uaenorth",
-        "longitude": 55.2708,
-        "latitude": 25.2048,
+        "location": {
+          "longitude": 55.2708,
+          "latitude": 25.2048
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -298,10 +360,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Abu Dhabi, United Arab Emirates",
         "country_code": "AE",
         "region_code": "uaecentral",
-        "longitude": 54.3773,
-        "latitude": 24.4539,
+        "location": {
+          "longitude": 54.3773,
+          "latitude": 24.4539
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -310,10 +374,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Johannesburg, South Africa",
         "country_code": "ZA",
         "region_code": "southafricanorth",
-        "longitude": 28.0473,
-        "latitude": -26.2041,
+        "location": {
+          "longitude": 28.0473,
+          "latitude": -26.2041
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -322,10 +388,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Cape Town, South Africa",
         "country_code": "ZA",
         "region_code": "southafricawest",
-        "longitude": 18.4241,
-        "latitude": -33.9249,
+        "location": {
+          "longitude": 18.4241,
+          "latitude": -33.9249
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -334,10 +402,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Hong Kong",
         "country_code": "HK",
         "region_code": "eastasia",
-        "longitude": 114.1694,
-        "latitude": 22.3193,
+        "location": {
+          "longitude": 114.1694,
+          "latitude": 22.3193
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -346,10 +416,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Singapore",
         "country_code": "SG",
         "region_code": "southeastasia",
-        "longitude": 103.8198,
-        "latitude": 1.3521,
+        "location": {
+          "longitude": 103.8198,
+          "latitude": 1.3521
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -358,10 +430,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Tokyo, Japan",
         "country_code": "JP",
         "region_code": "japaneast",
-        "longitude": 139.6917,
-        "latitude": 35.6895,
+        "location": {
+          "longitude": 139.6917,
+          "latitude": 35.6895
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -370,10 +444,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Osaka, Japan",
         "country_code": "JP",
         "region_code": "japanwest",
-        "longitude": 135.5022,
-        "latitude": 34.6937,
+        "location": {
+          "longitude": 135.5022,
+          "latitude": 34.6937
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -382,10 +458,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Seoul, South Korea",
         "country_code": "KR",
         "region_code": "koreacentral",
-        "longitude": 126.978,
-        "latitude": 37.5665,
+        "location": {
+          "longitude": 126.978,
+          "latitude": 37.5665
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -394,10 +472,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Busan, South Korea",
         "country_code": "KR",
         "region_code": "koreasouth",
-        "longitude": 129.0756,
-        "latitude": 35.1796,
+        "location": {
+          "longitude": 129.0756,
+          "latitude": 35.1796
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -406,10 +486,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Sydney, Australia",
         "country_code": "AU",
         "region_code": "australiaeast",
-        "longitude": 151.2093,
-        "latitude": -33.8688,
+        "location": {
+          "longitude": 151.2093,
+          "latitude": -33.8688
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -418,10 +500,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Melbourne, Australia",
         "country_code": "AU",
         "region_code": "australiasoutheast",
-        "longitude": 144.9631,
-        "latitude": -37.8136,
+        "location": {
+          "longitude": 144.9631,
+          "latitude": -37.8136
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -430,10 +514,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Canberra, Australia",
         "country_code": "AU",
         "region_code": "australiacentral",
-        "longitude": 149.1300,
-        "latitude": -35.2809,
+        "location": {
+          "longitude": 149.1300,
+          "latitude": -35.2809
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -442,10 +528,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Pune, India",
         "country_code": "IN",
         "region_code": "centralindia",
-        "longitude": 73.8567,
-        "latitude": 18.5204,
+        "location": {
+          "longitude": 73.8567,
+          "latitude": 18.5204
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -454,10 +542,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Chennai, India",
         "country_code": "IN",
         "region_code": "southindia",
-        "longitude": 80.2707,
-        "latitude": 13.0827,
+        "location": {
+          "longitude": 80.2707,
+          "latitude": 13.0827
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -466,10 +556,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Mumbai, India",
         "country_code": "IN",
         "region_code": "westindia",
-        "longitude": 72.8777,
-        "latitude": 19.076,
+        "location": {
+          "longitude": 72.8777,
+          "latitude": 19.076
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -478,10 +570,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Shanghai, China",
         "country_code": "CN",
         "region_code": "chinaeast",
-        "longitude": 121.4737,
-        "latitude": 31.2304,
+        "location": {
+          "longitude": 121.4737,
+          "latitude": 31.2304
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -490,10 +584,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Beijing, China",
         "country_code": "CN",
         "region_code": "chinanorth",
-        "longitude": 116.4074,
-        "latitude": 39.9042,
+        "location": {
+          "longitude": 116.4074,
+          "latitude": 39.9042
+        },
         "provider": "AZURE",
-        "price": 123 * Math.random(),
+        "price": 123*Math.random(),
         "intensity": 0.5,
         "radius": 0.5
       },
@@ -502,10 +598,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Council Bluffs, Iowa, USA",
         "country_code": "US",
         "region_code": "us-central1",
-        "longitude": -95.8608,
-        "latitude": 41.2619,
+        "location": {
+          "longitude": -95.8608,
+          "latitude": 41.2619
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -514,10 +612,12 @@ export class EmmaClient implements EmmaApi {
         "address": "The Dalles, Oregon, USA",
         "country_code": "US",
         "region_code": "us-west1",
-        "longitude": -121.1796,
-        "latitude": 45.5946,
+        "location": {
+          "longitude": -121.1796,
+          "latitude": 45.5946
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -526,10 +626,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Los Angeles, California, USA",
         "country_code": "US",
         "region_code": "us-west2",
-        "longitude": -118.2437,
-        "latitude": 34.0522,
+        "location": {
+          "longitude": -118.2437,
+          "latitude": 34.0522
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -538,10 +640,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Salt Lake City, Utah, USA",
         "country_code": "US",
         "region_code": "us-west3",
-        "longitude": -111.8910,
-        "latitude": 40.7608,
+        "location": {
+          "longitude": -111.8910,
+          "latitude": 40.7608
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -550,10 +654,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Las Vegas, Nevada, USA",
         "country_code": "US",
         "region_code": "us-west4",
-        "longitude": -115.1398,
-        "latitude": 36.1699,
+        "location": {
+          "longitude": -115.1398,
+          "latitude": 36.1699
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -562,10 +668,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Moncks Corner, South Carolina, USA",
         "country_code": "US",
         "region_code": "us-east1",
-        "longitude": -79.9987,
-        "latitude": 33.199,
+        "location": {
+          "longitude": -79.9987,
+          "latitude": 33.199
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -574,10 +682,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Ashburn, Virginia, USA",
         "country_code": "US",
         "region_code": "us-east4",
-        "longitude": -77.4875,
-        "latitude": 39.0438,
+        "location": {
+          "longitude": -77.4875,
+          "latitude": 39.0438
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -586,10 +696,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Montréal, Quebec, Canada",
         "country_code": "CA",
         "region_code": "northamerica-northeast1",
-        "longitude": -73.5673,
-        "latitude": 45.5017,
+        "location": {
+          "longitude": -73.5673,
+          "latitude": 45.5017
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -598,10 +710,12 @@ export class EmmaClient implements EmmaApi {
         "address": "São Paulo, Brazil",
         "country_code": "BR",
         "region_code": "southamerica-east1",
-        "longitude": -46.6333,
-        "latitude": -23.5505,
+        "location": {
+          "longitude": -46.6333,
+          "latitude": -23.5505
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -610,10 +724,12 @@ export class EmmaClient implements EmmaApi {
         "address": "St. Ghislain, Belgium",
         "country_code": "BE",
         "region_code": "europe-west1",
-        "longitude": 3.8192,
-        "latitude": 50.4543,
+        "location": {
+          "longitude": 3.8192,
+          "latitude": 50.4543
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -622,10 +738,12 @@ export class EmmaClient implements EmmaApi {
         "address": "London, England, UK",
         "country_code": "GB",
         "region_code": "europe-west2",
-        "longitude": -0.1276,
-        "latitude": 51.5074,
+        "location": {
+          "longitude": -0.1276,
+          "latitude": 51.5074
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -634,10 +752,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Frankfurt, Germany",
         "country_code": "DE",
         "region_code": "europe-west3",
-        "longitude": 8.6821,
-        "latitude": 50.1109,
+        "location": {
+          "longitude": 8.6821,
+          "latitude": 50.1109
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -646,10 +766,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Eemshaven, Netherlands",
         "country_code": "NL",
         "region_code": "europe-west4",
-        "longitude": 6.8317,
-        "latitude": 53.4273,
+        "location": {
+          "longitude": 6.8317,
+          "latitude": 53.4273
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -658,10 +780,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Zurich, Switzerland",
         "country_code": "CH",
         "region_code": "europe-west6",
-        "longitude": 8.5417,
-        "latitude": 47.3769,
+        "location": {
+          "longitude": 8.5417,
+          "latitude": 47.3769
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -670,10 +794,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Hamina, Finland",
         "country_code": "FI",
         "region_code": "europe-north1",
-        "longitude": 27.1976,
-        "latitude": 60.5693,
+        "location": {
+          "longitude": 27.1976,
+          "latitude": 60.5693
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -682,10 +808,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Warsaw, Poland",
         "country_code": "PL",
         "region_code": "europe-central2",
-        "longitude": 21.0122,
-        "latitude": 52.2297,
+        "location": {
+          "longitude": 21.0122,
+          "latitude": 52.2297
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -694,10 +822,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Changhua County, Taiwan",
         "country_code": "TW",
         "region_code": "asia-east1",
-        "longitude": 120.5327,
-        "latitude": 23.9924,
+        "location": {
+          "longitude": 120.5327,
+          "latitude": 23.9924
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -706,10 +836,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Hong Kong",
         "country_code": "HK",
         "region_code": "asia-east2",
-        "longitude": 114.1694,
-        "latitude": 22.3193,
+        "location": {
+          "longitude": 114.1694,
+          "latitude": 22.3193
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -718,10 +850,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Tokyo, Japan",
         "country_code": "JP",
         "region_code": "asia-northeast1",
-        "longitude": 139.6917,
-        "latitude": 35.6895,
+        "location": {
+          "longitude": 139.6917,
+          "latitude": 35.6895
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -730,10 +864,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Osaka, Japan",
         "country_code": "JP",
         "region_code": "asia-northeast2",
-        "longitude": 135.5022,
-        "latitude": 34.6937,
+        "location": {
+          "longitude": 135.5022,
+          "latitude": 34.6937
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -742,10 +878,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Seoul, South Korea",
         "country_code": "KR",
         "region_code": "asia-northeast3",
-        "longitude": 126.978,
-        "latitude": 37.5665,
+        "location": {
+          "longitude": 126.978,
+          "latitude": 37.5665
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -754,10 +892,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Mumbai, India",
         "country_code": "IN",
         "region_code": "asia-south1",
-        "longitude": 72.8777,
-        "latitude": 19.076,
+        "location": {
+          "longitude": 72.8777,
+          "latitude": 19.076
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -766,10 +906,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Delhi, India",
         "country_code": "IN",
         "region_code": "asia-south2",
-        "longitude": 77.1025,
-        "latitude": 28.7041,
+        "location": {
+          "longitude": 77.1025,
+          "latitude": 28.7041
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -778,10 +920,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Jurong West, Singapore",
         "country_code": "SG",
         "region_code": "asia-southeast1",
-        "longitude": 103.6959,
-        "latitude": 1.3409,
+        "location": {
+          "longitude": 103.6959,
+          "latitude": 1.3409
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -790,10 +934,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Jakarta, Indonesia",
         "country_code": "ID",
         "region_code": "asia-southeast2",
-        "longitude": 106.8456,
-        "latitude": -6.2088,
+        "location": {
+          "longitude": 106.8456,
+          "latitude": -6.2088
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -802,10 +948,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Sydney, Australia",
         "country_code": "AU",
         "region_code": "australia-southeast1",
-        "longitude": 151.2093,
-        "latitude": -33.8688,
+        "location": {
+          "longitude": 151.2093,
+          "latitude": -33.8688
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -814,10 +962,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Melbourne, Australia",
         "country_code": "AU",
         "region_code": "australia-southeast2",
-        "longitude": 144.9631,
-        "latitude": -37.8136,
+        "location": {
+          "longitude": 144.9631,
+          "latitude": -37.8136
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -826,10 +976,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Auckland, New Zealand",
         "country_code": "NZ",
         "region_code": "newzealand-north1",
-        "longitude": 174.7633,
-        "latitude": -36.8485,
+        "location": {
+          "longitude": 174.7633,
+          "latitude": -36.8485
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -838,10 +990,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Tel Aviv, Israel",
         "country_code": "IL",
         "region_code": "me-west1",
-        "longitude": 34.7818,
-        "latitude": 32.0853,
+        "location": {
+          "longitude": 34.7818,
+          "latitude": 32.0853
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -850,10 +1004,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Doha, Qatar",
         "country_code": "QA",
         "region_code": "me-central1",
-        "longitude": 51.5310,
-        "latitude": 25.2861,
+        "location": {
+          "longitude": 51.5310,
+          "latitude": 25.2861
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -862,10 +1018,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Johannesburg, South Africa",
         "country_code": "ZA",
         "region_code": "africa-south1",
-        "longitude": 28.0473,
-        "latitude": -26.2041,
+        "location": {
+          "longitude": 28.0473,
+          "latitude": -26.2041
+        },
         "provider": "GCP",
-        "price": 321 * Math.random(),
+        "price": 321*Math.random(),
         "intensity": 1,
         "radius": 1
       },
@@ -874,10 +1032,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Ashburn, Virginia, USA",
         "country_code": "US",
         "region_code": "us-east-1",
-        "longitude": -77.4875,
-        "latitude": 39.0438,
+        "location": {
+          "longitude": -77.4875,
+          "latitude": 39.0438
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -886,10 +1046,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Columbus, Ohio, USA",
         "country_code": "US",
         "region_code": "us-east-2",
-        "longitude": -82.9988,
-        "latitude": 39.9612,
+        "location": {
+          "longitude": -82.9988,
+          "latitude": 39.9612
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -898,10 +1060,12 @@ export class EmmaClient implements EmmaApi {
         "address": "San Francisco, California, USA",
         "country_code": "US",
         "region_code": "us-west-1",
-        "longitude": -122.4194,
-        "latitude": 37.7749,
+        "location": {
+          "longitude": -122.4194,
+          "latitude": 37.7749
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -910,10 +1074,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Boardman, Oregon, USA",
         "country_code": "US",
         "region_code": "us-west-2",
-        "longitude": -119.692,
-        "latitude": 45.8399,
+        "location": {
+          "longitude": -119.692,
+          "latitude": 45.8399
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -922,10 +1088,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Montreal, Quebec, Canada",
         "country_code": "CA",
         "region_code": "ca-central-1",
-        "longitude": -73.5673,
-        "latitude": 45.5017,
+        "location": {
+          "longitude": -73.5673,
+          "latitude": 45.5017
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -934,10 +1102,12 @@ export class EmmaClient implements EmmaApi {
         "address": "São Paulo, Brazil",
         "country_code": "BR",
         "region_code": "sa-east-1",
-        "longitude": -46.6333,
-        "latitude": -23.5505,
+        "location": {
+          "longitude": -46.6333,
+          "latitude": -23.5505
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -946,10 +1116,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Dublin, Ireland",
         "country_code": "IE",
         "region_code": "eu-west-1",
-        "longitude": -6.2603,
-        "latitude": 53.3498,
+        "location": {
+          "longitude": -6.2603,
+          "latitude": 53.3498
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -958,10 +1130,12 @@ export class EmmaClient implements EmmaApi {
         "address": "London, England, UK",
         "country_code": "GB",
         "region_code": "eu-west-2",
-        "longitude": -0.1276,
-        "latitude": 51.5074,
+        "location": {
+          "longitude": -0.1276,
+          "latitude": 51.5074
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -970,10 +1144,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Paris, France",
         "country_code": "FR",
         "region_code": "eu-west-3",
-        "longitude": 2.3522,
-        "latitude": 48.8566,
+        "location": {
+          "longitude": 2.3522,
+          "latitude": 48.8566
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -982,10 +1158,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Frankfurt, Germany",
         "country_code": "DE",
         "region_code": "eu-central-1",
-        "longitude": 8.6821,
-        "latitude": 50.1109,
+        "location": {
+          "longitude": 8.6821,
+          "latitude": 50.1109
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -994,10 +1172,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Milan, Italy",
         "country_code": "IT",
         "region_code": "eu-south-1",
-        "longitude": 9.1895,
-        "latitude": 45.4642,
+        "location": {
+          "longitude": 9.1895,
+          "latitude": 45.4642
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1006,10 +1186,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Stockholm, Sweden",
         "country_code": "SE",
         "region_code": "eu-north-1",
-        "longitude": 18.0686,
-        "latitude": 59.3293,
+        "location": {
+          "longitude": 18.0686,
+          "latitude": 59.3293
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1018,10 +1200,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Manama, Bahrain",
         "country_code": "BH",
         "region_code": "me-south-1",
-        "longitude": 50.5832,
-        "latitude": 26.2285,
+        "location": {
+          "longitude": 50.5832,
+          "latitude": 26.2285
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1030,10 +1214,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Cape Town, South Africa",
         "country_code": "ZA",
         "region_code": "af-south-1",
-        "longitude": 18.4241,
-        "latitude": -33.9249,
+        "location": {
+          "longitude": 18.4241,
+          "latitude": -33.9249
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1042,10 +1228,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Mumbai, India",
         "country_code": "IN",
         "region_code": "ap-south-1",
-        "longitude": 72.8777,
-        "latitude": 19.076,
+        "location": {
+          "longitude": 72.8777,
+          "latitude": 19.076
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1054,10 +1242,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Hong Kong",
         "country_code": "HK",
         "region_code": "ap-east-1",
-        "longitude": 114.1694,
-        "latitude": 22.3193,
+        "location": {
+          "longitude": 114.1694,
+          "latitude": 22.3193
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1066,10 +1256,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Osaka, Japan",
         "country_code": "JP",
         "region_code": "ap-northeast-3",
-        "longitude": 135.5022,
-        "latitude": 34.6937,
+        "location": {
+          "longitude": 135.5022,
+          "latitude": 34.6937
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1078,10 +1270,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Seoul, South Korea",
         "country_code": "KR",
         "region_code": "ap-northeast-2",
-        "longitude": 126.978,
-        "latitude": 37.5665,
+        "location": {
+          "longitude": 126.978,
+          "latitude": 37.5665
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1090,10 +1284,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Singapore",
         "country_code": "SG",
         "region_code": "ap-southeast-1",
-        "longitude": 103.8198,
-        "latitude": 1.3521,
+        "location": {
+          "longitude": 103.8198,
+          "latitude": 1.3521
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1102,10 +1298,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Sydney, Australia",
         "country_code": "AU",
         "region_code": "ap-southeast-2",
-        "longitude": 151.2093,
-        "latitude": -33.8688,
+        "location": {
+          "longitude": 151.2093,
+          "latitude": -33.8688
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1114,10 +1312,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Tokyo, Japan",
         "country_code": "JP",
         "region_code": "ap-northeast-1",
-        "longitude": 139.6917,
-        "latitude": 35.6895,
+        "location": {
+          "longitude": 139.6917,
+          "latitude": 35.6895
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1126,10 +1326,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Beijing, China",
         "country_code": "CN",
         "region_code": "cn-north-1",
-        "longitude": 116.4074,
-        "latitude": 39.9042,
+        "location": {
+          "longitude": 116.4074,
+          "latitude": 39.9042
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       },
@@ -1138,10 +1340,12 @@ export class EmmaClient implements EmmaApi {
         "address": "Ningxia, China",
         "country_code": "CN",
         "region_code": "cn-northwest-1",
-        "longitude": 106.2587,
-        "latitude": 37.5097,
+        "location": {
+          "longitude": 106.2587,
+          "latitude": 37.5097
+        },
         "provider": "AWS",
-        "price": 222 * Math.random(),
+        "price": 222*Math.random(),
         "intensity": 2,
         "radius": 2
       }];
