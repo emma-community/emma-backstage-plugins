@@ -47,7 +47,5 @@ export async function createRouter(
 
   router.use(middleware.error());
 
-  console.log(router);
-
   return router;
 }
