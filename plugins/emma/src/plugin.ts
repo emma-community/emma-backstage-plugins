@@ -2,12 +2,17 @@ import {
   createPlugin,
   createRoutableExtension,
   createApiFactory,
+  createApiRef,
   discoveryApiRef,
   fetchApiRef
 } from '@backstage/core-plugin-api';
 import { rootRouteRef } from './routes';
 import { EmmaClient } from './api/EmmaClient';
-import { emmaApiRef, EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
+import { EmmaApi, EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
+
+export const emmaApiRef = createApiRef<EmmaApi>({
+  id: 'plugin.emma.api',
+});
 
 export const emmaHeatmapPlugin = createPlugin({
   id: EMMA_PLUGIN_ID,

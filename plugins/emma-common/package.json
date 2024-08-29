@@ -26,7 +26,6 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@backstage/core-plugin-api": "^1.9.3",
     "@backstage/plugin-catalog-common": "^1.0.26",
     "@backstage/plugin-permission-common": "^0.8.1",
     "@zaradarbh/emma-typescript-sdk": "^0.0.2"

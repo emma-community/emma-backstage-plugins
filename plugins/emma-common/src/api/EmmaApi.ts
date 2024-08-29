@@ -1,4 +1,3 @@
-import { createApiRef } from '@backstage/core-plugin-api';
 import { EmmaDataCenter, GeoBounds } from '../types';
 
 /**
@@ -8,11 +7,3 @@ import { EmmaDataCenter, GeoBounds } from '../types';
 export interface EmmaApi {
   getDataCenters(maxBounds?: GeoBounds): Promise<EmmaDataCenter[]>;
 }
-
-/**
- * API Reference for {@link EmmaApi}.
- * @public
- */
-export const emmaApiRef = createApiRef<EmmaApi>({
-  id: 'plugin.emma.api',
-});
