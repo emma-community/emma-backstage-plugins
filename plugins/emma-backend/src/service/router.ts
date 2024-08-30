@@ -15,7 +15,7 @@ export async function createRouter(
   options: RouterOptions,
 ): Promise<express.Router> {
   const { logger, config } = options;
-  const emmaApi = options.emmaApi ?? new EmmaApiImpl();
+  const emmaApi = options.emmaApi ?? EmmaApiImpl.fromConfig(config, options);
 
   const router = Router();
   router.use(express.json());

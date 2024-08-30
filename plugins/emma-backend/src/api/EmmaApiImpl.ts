@@ -1,7 +1,32 @@
+import { Config } from '@backstage/config';
+import { LoggerService  } from '@backstage/backend-plugin-api';
 import { EmmaApi, EmmaDataCenter, GeoBounds, GeoLocation } from '@internal/backstage-plugin-emma-common';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
+    private readonly logger: LoggerService;
+    private readonly config: Config;
+  
+    private constructor(
+      config: Config,
+      logger: LoggerService
+    ) {
+      this.logger = logger;
+      this.config = config;
+
+      this.logger.info(this.config.get('emma'));
+    }
+
+    static fromConfig(
+      config: Config,
+      options: { logger: LoggerService },
+    ) {
+      return new EmmaApiImpl(
+        config,
+        options.logger
+      );
+    }
+
     public async getDataCenters(maxBounds?: GeoBounds): Promise<EmmaDataCenter[]> 
     {
         let results = [
