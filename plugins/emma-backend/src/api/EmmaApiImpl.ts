@@ -1,7 +1,7 @@
 import { Config } from '@backstage/config';
 import { LoggerService  } from '@backstage/backend-plugin-api';
 import { EmmaApi, EmmaDataCenter, GeoBounds, GeoLocation } from '@internal/backstage-plugin-emma-common';
-import { createConfiguration, Configuration, DataCentersApi } from '@zaradarbh/emma-typescript-sdk';
+import { createConfiguration, Configuration, DataCentersApi, AuthenticationApi } from '@zaradarbh/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -16,7 +16,8 @@ export class EmmaApiImpl implements EmmaApi {
     ) {
       this.logger = logger;
       this.config = config;
-      this.apiConfiguration = createConfiguration({ authMethods: { bearerAuth: { tokenProvider: { getToken: () => this.getBearerToken() } } } });
+      this.apiConfiguration = createConfiguration({ authMethods: { bearerAuth: { tokenProvider: { getToken: () => this.issueToken() } } } });
+      this.apis[typeof(AuthenticationApi)] = new AuthenticationApi(this.apiConfiguration);
       this.apis[typeof(DataCentersApi)] = new DataCentersApi(this.apiConfiguration);
     }
 
@@ -30,14 +31,24 @@ export class EmmaApiImpl implements EmmaApi {
       );
     }
 
-    private async getBearerToken(): Promise<string> {
-      //TODO: Implement token retrieval
-      return this.config.getString('emma.clientId') + this.config.getString('emma.clientSecret');
+    private async issueToken(): Promise<string> {
+      const authApi: AuthenticationApi = this.apis[typeof(AuthenticationApi)]
+      
+      this.logger.info('Issuing token');
+
+      const token = '';
+      // TODO: Debug why issueToken is not a function      
+      //const token = await authApi.issueToken({ clientId: this.config.getString('emma.clientId'), clientSecret: this.config.getString('emma.clientSecret') });
+
+      return token;
     }
 
     public async getDataCenters(maxBounds?: GeoBounds): Promise<EmmaDataCenter[]> 
     {
       this.logger.info('Fetching data centers');
+
+      // TODO: Enable this when issueToken is fixed
+      //this.logger.info(this.apis[typeof(DataCentersApi)].getDataCenters());
 
       let results = [
           {
