@@ -20,7 +20,7 @@ export type GeoLocation = {
 }
 
 /** @public */
-export type GeoBounds = {
+export type GeoFence = {
     topRight: GeoLocation;
     bottomLeft: GeoLocation;
 }

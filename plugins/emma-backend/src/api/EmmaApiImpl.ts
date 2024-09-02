@@ -1,8 +1,7 @@
 import { Config } from '@backstage/config';
 import { LoggerService  } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaDataCenter, GeoBounds, GeoLocation } from '@internal/backstage-plugin-emma-common';
-import { Authentication, HttpBearerAuth, Token, DataCentersApi, AuthenticationApi } from '@zaradarbh/emma-typescript-sdk';
-import { a } from 'msw/lib/glossary-de6278a9';
+import { EmmaApi, EmmaDataCenter, GeoFence, GeoLocation } from '@internal/backstage-plugin-emma-common';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi } from '@zaradarbh/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -44,7 +43,7 @@ export class EmmaApiImpl implements EmmaApi {
       return token.body;
     }
 
-    public async getDataCenters(maxBounds?: GeoBounds): Promise<EmmaDataCenter[]> 
+    public async getDataCenters(geoFence?: GeoFence): Promise<EmmaDataCenter[]> 
     {
       this.logger.info('Fetching data centers');
 
@@ -1377,10 +1376,10 @@ export class EmmaApiImpl implements EmmaApi {
             "radius": 2
           }];
 
-      if(maxBounds) {        
-        this.logger.info('Filtering data centers based on bounds', maxBounds);
+      if(geoFence) {        
+        this.logger.info('Filtering data centers based on bounds', geoFence);
 
-        results = results.filter(result => this.isWithinBounds(result.location, maxBounds));
+        results = results.filter(result => this.isWithinBounds(result.location, geoFence));
       }
 
       this.logger.info('Returning filtered data centers');
@@ -1388,10 +1387,10 @@ export class EmmaApiImpl implements EmmaApi {
       return results;
     }
 
-    private isWithinBounds(location: GeoLocation, bounds: GeoBounds): boolean {
-        return bounds.bottomLeft.latitude <= location.latitude && 
-                location.latitude <= bounds.topRight.latitude && 
-                bounds.bottomLeft.longitude <= location.longitude && 
-                location.longitude <= bounds.topRight.longitude;
+    private isWithinBounds(location: GeoLocation, geoFence: GeoFence): boolean {
+        return geoFence.bottomLeft.latitude <= location.latitude && 
+                location.latitude <= geoFence.topRight.latitude && 
+                geoFence.bottomLeft.longitude <= location.longitude && 
+                location.longitude <= geoFence.topRight.longitude;
     }
 }

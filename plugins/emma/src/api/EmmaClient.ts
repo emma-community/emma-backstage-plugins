@@ -1,5 +1,5 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
-import { EmmaApi, EmmaDataCenter, GeoBounds, EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
+import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
 import { ResponseError } from '@backstage/errors';
 
 /** @public */
@@ -12,14 +12,14 @@ export class EmmaClient implements EmmaApi {
     this.fetchApi = options.fetchApi;
   }
   
-  async getDataCenters(maxBounds?: GeoBounds): Promise<EmmaDataCenter[]> {
+  async getDataCenters(geoFence?: GeoFence): Promise<EmmaDataCenter[]> {
     const queryString = new URLSearchParams();
 
-    if (maxBounds) {
-      queryString.append('latMax', maxBounds.topRight.latitude.toString());
-      queryString.append('lonMax', maxBounds.topRight.longitude.toString());
-      queryString.append('latMin', maxBounds.bottomLeft.latitude.toString());
-      queryString.append('lonMin', maxBounds.bottomLeft.longitude.toString());
+    if (geoFence) {
+      queryString.append('latMax', geoFence.topRight.latitude.toString());
+      queryString.append('lonMax', geoFence.topRight.longitude.toString());
+      queryString.append('latMin', geoFence.bottomLeft.latitude.toString());
+      queryString.append('lonMin', geoFence.bottomLeft.longitude.toString());
     }
     
     const urlSegment = `datacenters/?${queryString}`;

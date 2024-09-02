@@ -1,9 +1,8 @@
-import { EmmaDataCenter, GeoBounds } from '../types';
+import { EmmaDataCenter, GeoFence } from '../types';
 
 /**
- * The API interface for the Emma-backend plugin.
  * @public
  */
 export interface EmmaApi {
-  getDataCenters(maxBounds?: GeoBounds): Promise<EmmaDataCenter[]>;
+  getDataCenters(geoFence?: GeoFence): Promise<EmmaDataCenter[]>;
 }
