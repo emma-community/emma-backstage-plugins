@@ -10125,14 +10125,13 @@
     js-yaml "^3.10.0"
     tslib "^2.4.0"
 
-"@zaradarbh/emma-typescript-sdk@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@zaradarbh/emma-typescript-sdk/-/emma-typescript-sdk-0.0.2.tgz#97088529de5ef29318ad6dd8dc93b629f3d760a8"
-  integrity sha512-LGTHvssP1SCfQAa/EeZySbolY+CbCO6i5rpJqdmMZ96YOZA3lGaWgy8DzDvcVEfoi76sZNWMqnXyfch8Pr83AA==
+"@zaradarbh/emma-typescript-sdk@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@zaradarbh/emma-typescript-sdk/-/emma-typescript-sdk-0.0.3.tgz#2b42ad85a43726c753998b1621df65582bc0ab46"
+  integrity sha512-SDymiVXcTwpLZJ4UfZkXN/a4ZdtDMbF/aKEPAh5ojryTIYGz6jeqvDCcqZ12QJQDy3029UX9mt5ioFTQ5GY73Q==
   dependencies:
-    es6-promise "^4.2.4"
-    url-parse "^1.4.3"
-    whatwg-fetch "^3.0.0"
+    bluebird "^3.7.2"
+    request "^2.88.2"
 
 "@zkochan/js-yaml@0.0.6":
   version "0.0.6"
@@ -13724,11 +13723,6 @@ es6-error@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/es6-error/-/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
   integrity sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
-
-es6-promise@^4.2.4:
-  version "4.2.8"
-  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
-  integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
 
 esbuild-loader@^4.0.0:
   version "4.2.2"
@@ -22202,7 +22196,7 @@ replace-in-file@^7.1.0:
     glob "^8.1.0"
     yargs "^17.7.2"
 
-request@^2.88.0:
+request@^2.88.0, request@^2.88.2:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -24747,7 +24741,7 @@ urijs@^1.19.10, urijs@^1.19.11:
   resolved "https://registry.yarnpkg.com/urijs/-/urijs-1.19.11.tgz#204b0d6b605ae80bea54bea39280cdb7c9f923cc"
   integrity sha512-HXgFDgDommxn5/bIv0cnQZsPhHDA90NPHD6+c/v21U5+Sx5hoP8+dP9IZXBU1gIfvdRfhG8cel9QNPeionfcCQ==
 
-url-parse@^1.4.3, url-parse@^1.5.10, url-parse@^1.5.3:
+url-parse@^1.5.10, url-parse@^1.5.3:
   version "1.5.10"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.10.tgz#9d3c2f736c1d75dd3bd2be507dcc111f1e2ea9c1"
   integrity sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==
@@ -25219,11 +25213,6 @@ whatwg-encoding@^2.0.0:
   integrity sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==
   dependencies:
     iconv-lite "0.6.3"
-
-whatwg-fetch@^3.0.0:
-  version "3.6.20"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.20.tgz#580ce6d791facec91d37c72890995a0b48d31c70"
-  integrity sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==
 
 whatwg-mimetype@^2.3.0:
   version "2.3.0"

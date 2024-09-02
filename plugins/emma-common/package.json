@@ -28,7 +28,7 @@
   "dependencies": {
     "@backstage/plugin-catalog-common": "^1.0.26",
     "@backstage/plugin-permission-common": "^0.8.1",
-    "@zaradarbh/emma-typescript-sdk": "^0.0.2"
+    "@zaradarbh/emma-typescript-sdk": "^0.0.3"
   },
   "devDependencies": {
     "@backstage/cli": "^0.27.0"

@@ -1,14 +1,16 @@
 import { Config } from '@backstage/config';
 import { LoggerService  } from '@backstage/backend-plugin-api';
 import { EmmaApi, EmmaDataCenter, GeoBounds, GeoLocation } from '@internal/backstage-plugin-emma-common';
-import { createConfiguration, Configuration, DataCentersApi, AuthenticationApi } from '@zaradarbh/emma-typescript-sdk';
+import { Authentication, HttpBearerAuth, Token, DataCentersApi, AuthenticationApi } from '@zaradarbh/emma-typescript-sdk';
+import { a } from 'msw/lib/glossary-de6278a9';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
     private readonly logger: LoggerService;
     private readonly config: Config;
-    private readonly apiConfiguration: Configuration;
-    private readonly apis: { [key: string]: any } = {};
+    private readonly authenticationApi: AuthenticationApi;
+    private readonly authHandler: HttpBearerAuth = new HttpBearerAuth();
+    private readonly dataCentersApi: DataCentersApi;
   
     private constructor(
       config: Config,
@@ -16,9 +18,14 @@ export class EmmaApiImpl implements EmmaApi {
     ) {
       this.logger = logger;
       this.config = config;
-      this.apiConfiguration = createConfiguration({ authMethods: { bearerAuth: { tokenProvider: { getToken: () => this.issueToken() } } } });
-      this.apis[typeof(AuthenticationApi)] = new AuthenticationApi(this.apiConfiguration);
-      this.apis[typeof(DataCentersApi)] = new DataCentersApi(this.apiConfiguration);
+      this.authenticationApi = new AuthenticationApi();
+      this.dataCentersApi = new DataCentersApi();
+      this.dataCentersApi.setDefaultAuthentication(this.authHandler);
+
+      this.issueToken().then((token) => {
+        if(token.accessToken !== undefined) 
+          this.authHandler.accessToken = token.accessToken;
+      });
     }
 
     static fromConfig(
@@ -31,24 +38,25 @@ export class EmmaApiImpl implements EmmaApi {
       );
     }
 
-    private async issueToken(): Promise<string> {
-      const authApi: AuthenticationApi = this.apis[typeof(AuthenticationApi)]
-      
-      this.logger.info('Issuing token');
+    private async issueToken(): Promise<Token> {
+      const token = await this.authenticationApi.issueToken({ clientId: this.config.getString('emma.clientId'), clientSecret: this.config.getString('emma.clientSecret') });
 
-      const token = '';
-      // TODO: Debug why issueToken is not a function      
-      //const token = await authApi.issueToken({ clientId: this.config.getString('emma.clientId'), clientSecret: this.config.getString('emma.clientSecret') });
-
-      return token;
+      return token.body;
     }
 
     public async getDataCenters(maxBounds?: GeoBounds): Promise<EmmaDataCenter[]> 
     {
       this.logger.info('Fetching data centers');
 
-      // TODO: Enable this when issueToken is fixed
-      //this.logger.info(this.apis[typeof(DataCentersApi)].getDataCenters());
+      // TODO: Process and map remoteResults to results geolocations.
+      let remoteResults = await this.dataCentersApi.getDataCenters();
+
+      remoteResults.body.forEach((dc) => {
+        this.logger.info('ID: ' + dc.id);
+        this.logger.info('NAME: ' + dc.name + '');
+        this.logger.info('LOCATION: ' + dc.locationName + '');
+        this.logger.info('PROVIDER: ' + dc.providerName + '');
+      });
 
       let results = [
           {
