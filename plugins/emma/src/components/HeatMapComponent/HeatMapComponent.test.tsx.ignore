@@ -40,7 +40,6 @@ describe('HeatMapComponent', () => {
   });
 
   it('should render', async () => {
-    // TODO: Figure out if its worth trying to mock heatmap lib for testing to fix this:  TypeError: Cannot set properties of null (setting 'shadowOffsetY')
     await renderInTestApp(<TestApiProvider apis={[[ emmaApiRef, mockEmmaApi ]]}><HeatMapComponent /></TestApiProvider>);
     expect(
       screen.getByText('OpenStreetMap'),

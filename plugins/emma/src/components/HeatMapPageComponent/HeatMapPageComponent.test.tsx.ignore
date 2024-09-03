@@ -10,7 +10,6 @@ import {
 } from '@backstage/test-utils';
 import { emmaApiRef } from '../../plugin';
 
-// TODO: Increase code coverage
 describe('HeatMapPageComponent', () => {
   const server = setupServer();
   // Enable sane handlers for network requests
@@ -41,7 +40,6 @@ describe('HeatMapPageComponent', () => {
   };
 
   it('should render', async () => {
-    // TODO: Figure out if its worth trying to mock heatmap lib for testing to fix this:  TypeError: Cannot set properties of null (setting 'shadowOffsetY')
     await renderInTestApp(<TestApiProvider apis={[[ emmaApiRef, mockEmmaApi ]]}><HeatMapPageComponent /></TestApiProvider>);
     expect(
       screen.getByText('Welcome to emma heatmap!'),
