@@ -79,20 +79,20 @@ export class EmmaApiImpl implements EmmaApi {
       return mapped;
     }
     
-    public async getComputeConfigs(...computeType: EmmaComputeType[]): Promise<VmConfiguration[]> {
+    public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<VmConfiguration[]> {
         const api = this.apiFactory.create(ComputeInstancesConfigurationsApi);
         let vmConfigs: VmConfiguration[] = [];
             
         this.logger.info('Fetching compute configs');
         
         if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.VirtualMachine) > -1)
-          vmConfigs = vmConfigs.concat((await api.getVmConfigs()).body.content ?? []);
+          vmConfigs = vmConfigs.concat((await api.getVmConfigs(providerId, locationId, dataCenterId)).body.content ?? []);
 
         if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.SpotInstance) > -1)
-          vmConfigs = vmConfigs.concat((await api.getSpotConfigs()).body.content ?? []);
+          vmConfigs = vmConfigs.concat((await api.getSpotConfigs(providerId, locationId, dataCenterId)).body.content ?? []);
 
         if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.KubernetesNode) > -1)
-          vmConfigs = vmConfigs.concat((await api.getKuberNodesConfigs()).body.content ?? []);
+          vmConfigs = vmConfigs.concat((await api.getKuberNodesConfigs(providerId, locationId, dataCenterId)).body.content ?? []);
         
         this.logger.info('Returning filtered compute configs');
 

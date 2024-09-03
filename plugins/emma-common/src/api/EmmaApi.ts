@@ -6,5 +6,5 @@ import { EmmaDataCenter, GeoFence, EmmaComputeType } from '../types';
  */
 export interface EmmaApi {
   getDataCenters(geoFence?: GeoFence): Promise<EmmaDataCenter[]>;
-  getComputeConfigs(...computeType: EmmaComputeType[]): Promise<VmConfiguration[]>;
+  getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<VmConfiguration[]>;
 }

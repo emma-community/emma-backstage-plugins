@@ -28,10 +28,19 @@ export class EmmaClient implements EmmaApi {
     return await this.get<EmmaDataCenter[]>(urlSegment);
   }
 
-  public async getComputeConfigs(...computeType: EmmaComputeType[]): Promise<VmConfiguration[]> {
+  public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<VmConfiguration[]> {
     const queryString = new URLSearchParams();
 
     computeType.forEach(type => queryString.append('computeType', type));
+
+    if(providerId)
+      queryString.append('providerId', providerId.toString());
+
+    if(locationId)
+      queryString.append('locationId', locationId.toString());
+
+    if(dataCenterId)
+      queryString.append('dataCenterId', dataCenterId);
 
     const urlSegment = `computeconfigs/?${queryString}`;
 

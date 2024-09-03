@@ -45,12 +45,27 @@ export async function createRouter(
 
   router.get('/computeconfigs', async (req, res) => {
     let requestedComputeTypes: EmmaComputeType[] = [];
+    let providerId: number | undefined;
+    let locationId: number | undefined;
+    let dataCenterId: string | undefined;
 
     if(req.query.computeType) {
       requestedComputeTypes = Array.isArray(req.query.computeType) ? req.query.computeType.map(value => EmmaComputeType[value as keyof typeof EmmaComputeType]) : [EmmaComputeType[req.query.computeType as keyof typeof EmmaComputeType]];
     }
 
-    const computeConfigs = await emmaApi.getComputeConfigs(...requestedComputeTypes);
+    if(req.query.providerId) {
+      providerId = Number(req.query.providerId);
+    }
+
+    if(req.query.locationId) {
+      locationId = Number(req.query.locationId);
+    }
+
+    if(req.query.dataCenterId) {
+      dataCenterId = req.query.dataCenterId as string;
+    }
+
+    const computeConfigs = await emmaApi.getComputeConfigs(providerId, locationId, dataCenterId, ...requestedComputeTypes);
 
     res.status(200).json(computeConfigs);
   });

@@ -108,7 +108,7 @@ describe('EmmaClient', () => {
         json: async () => mockVmConfigurations,
       } as Response);
 
-      const result = await emmaClient.getComputeConfigs(EmmaComputeType.VirtualMachine);
+      const result = await emmaClient.getComputeConfigs(undefined, undefined, undefined, EmmaComputeType.VirtualMachine);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
       expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/computeconfigs/?computeType=VirtualMachine');
