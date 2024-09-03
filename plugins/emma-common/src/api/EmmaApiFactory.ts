@@ -1,7 +1,6 @@
 
 import { Authentication, ComputeInstancesConfigurationsApi, DataCentersApi, LocationsApi, KubernetesClustersApi, OperatingSystemsApi, SecurityGroupsApi, ProvidersApi, SpotInstancesApi, SSHKeysApi, StatisticsApi, SubnetworksApi, VirtualMachinesApi  } from '@zaradarbh/emma-typescript-sdk';
 
-// TODO: Implement unit test
 /** @public */
 export class EmmaApiFactory {
     private readonly authHandler: Authentication;
