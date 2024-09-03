@@ -3,7 +3,7 @@ import { LoggerService, RootConfigService } from '@backstage/backend-plugin-api'
 import express from 'express';
 import Router from 'express-promise-router';
 import { EmmaApiImpl } from '../api';
-import { EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
 
 export interface RouterOptions {
   logger: LoggerService;
@@ -41,6 +41,18 @@ export async function createRouter(
     }
 
     res.status(200).json(dataCenters);
+  });
+
+  router.get('/computeconfigs', async (req, res) => {
+    let requestedComputeTypes: EmmaComputeType[] = [];
+
+    if(req.query.computeType) {
+      requestedComputeTypes = Array.isArray(req.query.computeType) ? req.query.computeType.map(value => EmmaComputeType[value as keyof typeof EmmaComputeType]) : [EmmaComputeType[req.query.computeType as keyof typeof EmmaComputeType]];
+    }
+
+    const computeConfigs = await emmaApi.getComputeConfigs(...requestedComputeTypes);
+
+    res.status(200).json(computeConfigs);
   });
 
   const middleware = MiddlewareFactory.create({ logger, config });

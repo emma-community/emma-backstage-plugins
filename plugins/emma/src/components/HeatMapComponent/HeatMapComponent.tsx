@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useApi } from '@backstage/frontend-plugin-api';
-import { EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
+import { EmmaDataCenter, EmmaComputeType } from '@internal/backstage-plugin-emma-common';
 import { emmaApiRef } from '../../plugin';
 
 //@ts-ignore

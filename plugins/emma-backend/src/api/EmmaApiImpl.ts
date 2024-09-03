@@ -1,7 +1,7 @@
 import { Config } from '@backstage/config';
 import { LoggerService  } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, GeoFence, GeoLocation } from '@internal/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi } from '@zaradarbh/emma-typescript-sdk';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, GeoFence, GeoLocation, EmmaComputeType } from '@internal/backstage-plugin-emma-common';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
 import fs from 'fs';
 import path from 'path';
 
@@ -41,6 +41,7 @@ export class EmmaApiImpl implements EmmaApi {
     private loadKnownGeoLocations(): EmmaDataCenter[] {
       const filePath = path.resolve(__dirname, 'knownGeoLocations.json');
       const data = fs.readFileSync(filePath, 'utf-8');
+
       return JSON.parse(data);
     }
 
@@ -54,10 +55,10 @@ export class EmmaApiImpl implements EmmaApi {
     public async getDataCenters(geoFence?: GeoFence): Promise<EmmaDataCenter[]> 
     {
       const api = this.apiFactory.create(DataCentersApi);
-      let mapped: EmmaDataCenter[] = [];
-      
+            
       this.logger.info('Fetching data centers');
 
+      let mapped: EmmaDataCenter[] = [];
       let remoteResults = await api.getDataCenters();
 
       remoteResults.body.forEach(dataCenter => {
@@ -76,6 +77,26 @@ export class EmmaApiImpl implements EmmaApi {
       this.logger.info('Returning filtered data centers');
 
       return mapped;
+    }
+    
+    public async getComputeConfigs(...computeType: EmmaComputeType[]): Promise<VmConfiguration[]> {
+        const api = this.apiFactory.create(ComputeInstancesConfigurationsApi);
+        let vmConfigs: VmConfiguration[] = [];
+            
+        this.logger.info('Fetching compute configs');
+        
+        if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.VirtualMachine) > -1)
+          vmConfigs = vmConfigs.concat((await api.getVmConfigs()).body.content ?? []);
+
+        if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.SpotInstance) > -1)
+          vmConfigs = vmConfigs.concat((await api.getSpotConfigs()).body.content ?? []);
+
+        if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.KubernetesNode) > -1)
+          vmConfigs = vmConfigs.concat((await api.getKuberNodesConfigs()).body.content ?? []);
+        
+        this.logger.info('Returning filtered compute configs');
+
+        return vmConfigs;
     }
 
     private isWithinBounds(location: GeoLocation, geoFence: GeoFence): boolean {

@@ -13,6 +13,13 @@ export type EmmaDataCenter = DataCenter & {
 }
 
 /** @public */
+export enum EmmaComputeType {
+    VirtualMachine = 'VirtualMachine',
+    SpotInstance = 'SpotInstance',
+    KubernetesNode = 'KubernetesNode'
+}
+
+/** @public */
 export type GeoLocation = {
     latitude: number;
     longitude: number;
