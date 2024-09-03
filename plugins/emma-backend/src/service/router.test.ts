@@ -11,6 +11,7 @@ describe('createRouter', () => {
   beforeAll(async () => {
     const router = await createRouter({
       logger: mockServices.logger.mock(),
+      // TODO: Figure out why rootConfig does not include the required emma fields?
       config: mockServices.rootConfig(),
     });
     app = express().use(router);
