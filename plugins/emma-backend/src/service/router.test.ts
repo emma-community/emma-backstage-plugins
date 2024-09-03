@@ -4,7 +4,6 @@ import request from 'supertest';
 
 import { createRouter } from './router';
 
-// TODO: Increase code coverage
 describe('createRouter', () => {
   let app: express.Express;
 
@@ -27,6 +26,24 @@ describe('createRouter', () => {
 
       expect(response.status).toEqual(200);
       expect(response.body).toEqual({ status: 'ok' });
+    });
+  });
+
+  describe('GET /datacenters', () => {
+    it('returns ok', async () => {
+      const response = await request(app).get('/datacenters');
+
+      //TODO: Change to 200 / OK when auth config is working
+      expect(response.status).toEqual(401);
+    });
+  });
+
+  describe('GET /computeconfigs', () => {
+    it('returns ok', async () => {
+      const response = await request(app).get('/computeconfigs');
+
+      //TODO: Change to 200 / OK when auth config is working
+      expect(response.status).toEqual(401);
     });
   });
 });
