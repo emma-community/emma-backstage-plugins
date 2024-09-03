@@ -65,7 +65,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
           <Popup>
             <strong>{dataCenter.name}</strong><br />
             {dataCenter.address}<br />
-            Provider: {dataCenter.provider}<br />
+            Provider: {dataCenter.providerName}<br />
             Price: {dataCenter.price}<br />
             Intensity: {dataCenter.intensity}<br />
             Radius: {dataCenter.radius}
@@ -80,9 +80,42 @@ export const HeatMapComponent = () => {
   const emmaApi = useApi(emmaApiRef);
 
   const { value, loading, error } = useAsync(async (): Promise<EmmaDataCenter[]> => {
-    // TODO: Fetch compute configs and map cheapest VM price to each data center.
-    // TODO: Figure out how we want to compute the intensity and radius for each data center. Could be based on price relative to the median price or something like that.
-    return await emmaApi.getDataCenters();
+    const dataCenters = await emmaApi.getDataCenters();
+    const allComputeConfigs = await emmaApi.getComputeConfigs();
+
+    // TODO: Price are the same currency, but different units. We need to take this into account and convert them to a common unit.
+    const filteredPrices = allComputeConfigs.map(config => config.cost?.pricePerUnit).filter(price => price !== undefined) as number[]; 
+    const globalMedianPrice = filteredPrices.reduce((acc, price) => acc + price, 0) / (filteredPrices.length > 0 ? filteredPrices.length : 1);
+    
+    dataCenters.forEach(dataCenter => {
+      const computeConfigs = allComputeConfigs.filter(config => config.dataCenterId === dataCenter.id);
+
+      // TODO: There seems to be a very low number of compute resources for some data centers. We need to figure out why.
+      console.log(computeConfigs, dataCenter);
+
+      if (computeConfigs.length > 0) {
+        computeConfigs.sort((a, b) => {
+          const priceA = a.cost?.pricePerUnit;
+          const priceB = b.cost?.pricePerUnit;
+      
+          if (priceA !== undefined && priceB !== undefined) {
+              return priceA - priceB;
+          } else if (priceA === undefined && priceB === undefined) {
+              return 0;
+          } else if (priceA === undefined) {
+              return 1;
+          } else {
+              return -1;
+          }
+        });
+
+        dataCenter.price = computeConfigs[0].cost?.pricePerUnit as number
+        dataCenter.intensity = dataCenter.price / globalMedianPrice;
+        dataCenter.radius = dataCenter.price * 10 / globalMedianPrice;
+      }
+    });
+
+    return dataCenters;
   }, []);
 
   if (loading) {

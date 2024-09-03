@@ -8,10 +8,7 @@
         "longitude": -79.4209,
         "latitude": 37.4316        
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "East US 2",
@@ -22,10 +19,7 @@
         "longitude": -78.6569,
         "latitude": 36.8529
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Central US",
@@ -36,10 +30,7 @@
         "longitude": -93.6091,
         "latitude": 41.5868
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "North Central US",
@@ -50,10 +41,7 @@
         "longitude": -89.3985,
         "latitude": 40.6331
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "South Central US",
@@ -64,10 +52,7 @@
         "longitude": -98.4936,
         "latitude": 29.4241
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "West US",
@@ -78,10 +63,7 @@
         "longitude": -121.8947,
         "latitude": 37.3382
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "West US 2",
@@ -92,10 +74,7 @@
         "longitude": -122.3321,
         "latitude": 47.6062
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Canada Central",
@@ -106,10 +85,7 @@
         "longitude": -79.3832,
         "latitude": 43.6532
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Canada East",
@@ -120,10 +96,7 @@
         "longitude": -71.2074,
         "latitude": 46.8139
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Brazil South",
@@ -134,10 +107,7 @@
         "longitude": -46.6333,
         "latitude": -23.5505
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "North Europe",
@@ -148,10 +118,7 @@
         "longitude": -6.2603,
         "latitude": 53.3498
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "West Europe",
@@ -162,10 +129,7 @@
         "longitude": 4.9041,
         "latitude": 52.3676
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "UK South",
@@ -176,10 +140,7 @@
         "longitude": -0.1276,
         "latitude": 51.5074
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "UK West",
@@ -190,10 +151,7 @@
         "longitude": -3.1791,
         "latitude": 51.4816
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "France Central",
@@ -204,10 +162,7 @@
         "longitude": 2.3522,
         "latitude": 48.8566
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "France South",
@@ -218,10 +173,7 @@
         "longitude": 5.3698,
         "latitude": 43.2965
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Germany Central",
@@ -232,10 +184,7 @@
         "longitude": 8.6821,
         "latitude": 50.1109
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Germany Northeast",
@@ -246,10 +195,7 @@
         "longitude": 13.405,
         "latitude": 52.5200
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Norway East",
@@ -260,10 +206,7 @@
         "longitude": 10.7522,
         "latitude": 59.9139
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Norway West",
@@ -274,10 +217,7 @@
         "longitude": 5.7331,
         "latitude": 58.969975
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Switzerland North",
@@ -288,10 +228,7 @@
         "longitude": 8.5417,
         "latitude": 47.3769
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Switzerland West",
@@ -302,10 +239,7 @@
         "longitude": 6.1432,
         "latitude": 46.2044
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "UAE North",
@@ -316,10 +250,7 @@
         "longitude": 55.2708,
         "latitude": 25.2048
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "UAE Central",
@@ -330,10 +261,7 @@
         "longitude": 54.3773,
         "latitude": 24.4539
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "South Africa North",
@@ -344,10 +272,7 @@
         "longitude": 28.0473,
         "latitude": -26.2041
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "South Africa West",
@@ -358,10 +283,7 @@
         "longitude": 18.4241,
         "latitude": -33.9249
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "East Asia",
@@ -372,10 +294,7 @@
         "longitude": 114.1694,
         "latitude": 22.3193
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Southeast Asia",
@@ -386,10 +305,7 @@
         "longitude": 103.8198,
         "latitude": 1.3521
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Japan East",
@@ -400,10 +316,7 @@
         "longitude": 139.6917,
         "latitude": 35.6895
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Japan West",
@@ -414,10 +327,7 @@
         "longitude": 135.5022,
         "latitude": 34.6937
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Korea Central",
@@ -428,10 +338,7 @@
         "longitude": 126.978,
         "latitude": 37.5665
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Korea South",
@@ -442,10 +349,7 @@
         "longitude": 129.0756,
         "latitude": 35.1796
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Australia East",
@@ -456,10 +360,7 @@
         "longitude": 151.2093,
         "latitude": -33.8688
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Australia Southeast",
@@ -470,10 +371,7 @@
         "longitude": 144.9631,
         "latitude": -37.8136
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "Australia Central",
@@ -484,10 +382,7 @@
         "longitude": 149.1300,
         "latitude": -35.2809
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "India Central",
@@ -498,10 +393,7 @@
         "longitude": 73.8567,
         "latitude": 18.5204
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "India South",
@@ -512,10 +404,7 @@
         "longitude": 80.2707,
         "latitude": 13.0827
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "India West",
@@ -526,10 +415,7 @@
         "longitude": 72.8777,
         "latitude": 19.076
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "China East",
@@ -540,10 +426,7 @@
         "longitude": 121.4737,
         "latitude": 31.2304
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "China North",
@@ -554,10 +437,7 @@
         "longitude": 116.4074,
         "latitude": 39.9042
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     },
     {
         "name": "us-central1",
@@ -568,10 +448,7 @@
         "longitude": -95.8608,
         "latitude": 41.2619
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "us-west1",
@@ -582,10 +459,7 @@
         "longitude": -121.1796,
         "latitude": 45.5946
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "us-west2",
@@ -596,10 +470,7 @@
         "longitude": -118.2437,
         "latitude": 34.0522
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "us-west3",
@@ -610,10 +481,7 @@
         "longitude": -111.8910,
         "latitude": 40.7608
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "us-west4",
@@ -624,10 +492,7 @@
         "longitude": -115.1398,
         "latitude": 36.1699
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "us-east1",
@@ -638,10 +503,7 @@
         "longitude": -79.9987,
         "latitude": 33.199
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "us-east4",
@@ -652,10 +514,7 @@
         "longitude": -77.4875,
         "latitude": 39.0438
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "northamerica-northeast1",
@@ -666,10 +525,7 @@
         "longitude": -73.5673,
         "latitude": 45.5017
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "southamerica-east1",
@@ -680,10 +536,7 @@
         "longitude": -46.6333,
         "latitude": -23.5505
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "europe-west1",
@@ -694,10 +547,7 @@
         "longitude": 3.8192,
         "latitude": 50.4543
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "europe-west2",
@@ -708,10 +558,7 @@
         "longitude": -0.1276,
         "latitude": 51.5074
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "europe-west3",
@@ -722,10 +569,7 @@
         "longitude": 8.6821,
         "latitude": 50.1109
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "europe-west4",
@@ -736,10 +580,7 @@
         "longitude": 6.8317,
         "latitude": 53.4273
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "europe-west6",
@@ -750,10 +591,7 @@
         "longitude": 8.5417,
         "latitude": 47.3769
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "europe-north1",
@@ -764,10 +602,7 @@
         "longitude": 27.1976,
         "latitude": 60.5693
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "europe-central2",
@@ -778,10 +613,7 @@
         "longitude": 21.0122,
         "latitude": 52.2297
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-east1",
@@ -792,10 +624,7 @@
         "longitude": 120.5327,
         "latitude": 23.9924
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-east2",
@@ -806,10 +635,7 @@
         "longitude": 114.1694,
         "latitude": 22.3193
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-northeast1",
@@ -820,10 +646,7 @@
         "longitude": 139.6917,
         "latitude": 35.6895
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-northeast2",
@@ -834,10 +657,7 @@
         "longitude": 135.5022,
         "latitude": 34.6937
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-northeast3",
@@ -848,10 +668,7 @@
         "longitude": 126.978,
         "latitude": 37.5665
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-south1",
@@ -862,10 +679,7 @@
         "longitude": 72.8777,
         "latitude": 19.076
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-south2",
@@ -876,10 +690,7 @@
         "longitude": 77.1025,
         "latitude": 28.7041
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-southeast1",
@@ -890,10 +701,7 @@
         "longitude": 103.6959,
         "latitude": 1.3409
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "asia-southeast2",
@@ -904,10 +712,7 @@
         "longitude": 106.8456,
         "latitude": -6.2088
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "australia-southeast1",
@@ -918,10 +723,7 @@
         "longitude": 151.2093,
         "latitude": -33.8688
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "australia-southeast2",
@@ -932,10 +734,7 @@
         "longitude": 144.9631,
         "latitude": -37.8136
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "newzealand-north1",
@@ -946,10 +745,7 @@
         "longitude": 174.7633,
         "latitude": -36.8485
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "me-west1",
@@ -960,10 +756,7 @@
         "longitude": 34.7818,
         "latitude": 32.0853
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "me-central1",
@@ -974,10 +767,7 @@
         "longitude": 51.5310,
         "latitude": 25.2861
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "africa-south1",
@@ -988,10 +778,7 @@
         "longitude": 28.0473,
         "latitude": -26.2041
         },
-        "provider": "GCP",
-        "price": 321,
-        "intensity": 1,
-        "radius": 1
+        "provider": "GCP"
     },
     {
         "name": "US East (N. Virginia)",
@@ -1002,10 +789,7 @@
         "longitude": -77.4875,
         "latitude": 39.0438
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "US East (Ohio)",
@@ -1016,10 +800,7 @@
         "longitude": -82.9988,
         "latitude": 39.9612
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "US West (N. California)",
@@ -1030,10 +811,7 @@
         "longitude": -122.4194,
         "latitude": 37.7749
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "US West (Oregon)",
@@ -1044,10 +822,7 @@
         "longitude": -119.692,
         "latitude": 45.8399
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Canada (Central)",
@@ -1058,10 +833,7 @@
         "longitude": -73.5673,
         "latitude": 45.5017
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "South America (São Paulo)",
@@ -1072,10 +844,7 @@
         "longitude": -46.6333,
         "latitude": -23.5505
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Europe (Ireland)",
@@ -1086,10 +855,7 @@
         "longitude": -6.2603,
         "latitude": 53.3498
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Europe (London)",
@@ -1100,10 +866,7 @@
         "longitude": -0.1276,
         "latitude": 51.5074
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Europe (Paris)",
@@ -1114,10 +877,7 @@
         "longitude": 2.3522,
         "latitude": 48.8566
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Europe (Frankfurt)",
@@ -1128,10 +888,7 @@
         "longitude": 8.6821,
         "latitude": 50.1109
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Europe (Milan)",
@@ -1142,10 +899,7 @@
         "longitude": 9.1895,
         "latitude": 45.4642
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Europe (Stockholm)",
@@ -1156,10 +910,7 @@
         "longitude": 18.0686,
         "latitude": 59.3293
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Middle East (Bahrain)",
@@ -1170,10 +921,7 @@
         "longitude": 50.5832,
         "latitude": 26.2285
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Africa (Cape Town)",
@@ -1184,10 +932,7 @@
         "longitude": 18.4241,
         "latitude": -33.9249
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Asia Pacific (Mumbai)",
@@ -1198,10 +943,7 @@
         "longitude": 72.8777,
         "latitude": 19.076
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Asia Pacific (Hong Kong)",
@@ -1212,10 +954,7 @@
         "longitude": 114.1694,
         "latitude": 22.3193
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Asia Pacific (Osaka)",
@@ -1226,10 +965,7 @@
         "longitude": 135.5022,
         "latitude": 34.6937
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Asia Pacific (Seoul)",
@@ -1240,10 +976,7 @@
         "longitude": 126.978,
         "latitude": 37.5665
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Asia Pacific (Singapore)",
@@ -1254,10 +987,7 @@
         "longitude": 103.8198,
         "latitude": 1.3521
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Asia Pacific (Sydney)",
@@ -1268,10 +998,7 @@
         "longitude": 151.2093,
         "latitude": -33.8688
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "Asia Pacific (Tokyo)",
@@ -1282,10 +1009,7 @@
         "longitude": 139.6917,
         "latitude": 35.6895
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "China (Beijing)",
@@ -1296,10 +1020,7 @@
         "longitude": 116.4074,
         "latitude": 39.9042
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     },
     {
         "name": "China (Ningxia)",
@@ -1310,9 +1031,6 @@
         "longitude": 106.2587,
         "latitude": 37.5097
         },
-        "provider": "AWS",
-        "price": 222,
-        "intensity": 2,
-        "radius": 2
+        "provider": "AWS"
     }
 ]

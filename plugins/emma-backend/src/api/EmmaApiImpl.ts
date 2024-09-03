@@ -58,25 +58,24 @@ export class EmmaApiImpl implements EmmaApi {
             
       this.logger.info('Fetching data centers');
 
-      let mapped: EmmaDataCenter[] = [];
-      let remoteResults = await api.getDataCenters();
+      let remoteResults = (await api.getDataCenters()).body as EmmaDataCenter[];
 
-      remoteResults.body.forEach(dataCenter => {
-          let matchingEmmaDataCenter = this.knownGeoLocations.find(emmaDC => dataCenter.id?.indexOf(emmaDC.region_code) !== -1);
+      remoteResults.forEach(dataCenter => {
+          let matchedGeoLocation = this.knownGeoLocations.find(emmaDC => dataCenter.id?.indexOf(emmaDC.region_code) !== -1);
   
-          if(matchingEmmaDataCenter)
-            mapped.push(matchingEmmaDataCenter);
+          if(matchedGeoLocation)
+            dataCenter.location = matchedGeoLocation.location;
       });
 
       if(geoFence) {        
         this.logger.info('Filtering data centers based on bounds', geoFence);
 
-        mapped = mapped.filter(result => this.isWithinBounds(result.location, geoFence));
+        remoteResults = remoteResults.filter(result => this.isWithinBounds(result.location, geoFence));
       }
 
       this.logger.info('Returning filtered data centers');
 
-      return mapped;
+      return remoteResults;
     }
     
     public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<VmConfiguration[]> {

@@ -66,7 +66,6 @@ describe('EmmaApiImpl', () => {
     mockDataCentersApi.getDataCenters = jest.fn().mockResolvedValue({
       body: [
         { id: 'us-west-1', region_code: 'us-west' },
-        { id: 'eu-central-1', region_code: 'eu-central' },
       ],
     });
 
@@ -123,7 +122,7 @@ describe('EmmaApiImpl', () => {
     const dataCenters = await emmaApi.getDataCenters();
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching data centers');
-    expect(dataCenters).toEqual([{ region_code: 'us-west', location: { latitude: 37.7749, longitude: -122.4194 } }]);
+    expect(dataCenters).toEqual([{ id: 'us-west-1', region_code: 'us-west', location: { latitude: 37.7749, longitude: -122.4194 } }]);
   });
 
   test('should fetch compute configurations', async () => {
