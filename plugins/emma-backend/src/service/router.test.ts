@@ -1,18 +1,41 @@
 import { mockServices } from '@backstage/backend-test-utils';
+import { ConfigReader } from '@backstage/config';
 import express from 'express';
 import request from 'supertest';
 
 import { createRouter } from './router';
+import { EmmaApiImpl } from '../api';
 
 describe('createRouter', () => {
+  let emmaApi: jest.Mocked<EmmaApiImpl>;
   let app: express.Express;
 
+  jest.mock('@backstage/plugin-auth-node', () => ({
+    getBearerTokenFromAuthorizationHeader: () => 'token',
+  }));
+
   beforeAll(async () => {
-    const router = await createRouter({
-      logger: mockServices.logger.mock(),
-      // TODO: Figure out why rootConfig does not include the required emma fields?
-      config: mockServices.rootConfig(),
+    emmaApi = {
+      getDataCenters: jest.fn(),
+      getComputeConfigs: jest.fn(),
+    } as any;
+
+    const config = new ConfigReader({
+      emma: {
+        baseUrl: 'https://emma.example.com',
+        clientId: '1234',
+        clientSecret: '1234'
+      },
     });
+
+    const logger = mockServices.logger.mock();
+
+    const router = await createRouter({
+      config,
+      logger,
+      emmaApi
+    });
+    
     app = express().use(router);
   });
 
@@ -21,7 +44,7 @@ describe('createRouter', () => {
   });
 
   describe('GET /health', () => {
-    it('returns ok', async () => {
+    it('returns 200', async () => {
       const response = await request(app).get('/health');
 
       expect(response.status).toEqual(200);
@@ -33,17 +56,15 @@ describe('createRouter', () => {
     it('returns ok', async () => {
       const response = await request(app).get('/datacenters');
 
-      //TODO: Change to 200 / OK when auth config is working
-      expect(response.status).toEqual(401);
+      expect(response.status).toEqual(200);
     });
   });
 
   describe('GET /computeconfigs', () => {
-    it('returns ok', async () => {
+    it('returns 200', async () => {
       const response = await request(app).get('/computeconfigs');
-
-      //TODO: Change to 200 / OK when auth config is working
-      expect(response.status).toEqual(401);
+      
+      expect(response.status).toEqual(200);
     });
   });
 });

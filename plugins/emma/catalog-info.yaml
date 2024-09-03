@@ -1,10 +1,18 @@
-# TODO: Finish catalog-info metadata
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: backstage-plugin-emma
-  title: '@backstage-community/plugin-emma'
+  name: emma-backstage-plugins
+  description: A collection of plugins for the Emma application, including frontend, backend, and common shared resources.
+  annotations:
+    github.com/project-slug: emma-backstage-plugins/emma-backstage-plugins
+    backstage.io/techdocs-ref: dir:.
 spec:
+  type: library
+  owner: oss@emma.ms
   lifecycle: experimental
-  type: backstage-frontend-library
-  owner: zaradarbh
+  providesApis:
+    - emma-backend
+    - emma-common
+  dependsOn:
+    - backstage.io/plugin-catalog
+    - backstage.io/plugin-techdocs

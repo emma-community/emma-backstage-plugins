@@ -1,13 +1,39 @@
-# emma
+# Emma Plugin
 
-Welcome to the emma plugin!
+## Overview
 
-## Getting started
+The `emma` plugin provides the frontend components and logic for the Emma application. It includes UI components for displaying data, routing, and API interactions.
 
-Your plugin has been added to the example app in this repository, meaning you'll be able to access it by running `yarn start` in the root directory, and then navigating to [/emma](http://localhost:3000/emma).
+## Key Files
 
-You can also serve the plugin in isolation by running `yarn start` in the plugin directory.
-This method of serving the plugin provides quicker iteration speed and a faster startup and hot reloads.
-It is only meant for local development, and the setup for it can be found inside the [/dev](./dev) directory.
+- **`index.ts` and `index.tsx`**: Main entry points for the plugin.
+- **`plugin.ts`**: Contains the initialization logic for the plugin.
+- **`routes.ts`**: Defines the routes used by the plugin.
+- **`EmmaClient.ts`**: Provides methods to interact with the backend API.
+- **`HeatMapComponent.tsx`**: UI component for displaying heat maps.
+- **`HeatMapPageComponent.tsx`**: UI component for displaying a page with heat maps.
+- **`HeatMapPageComponent.test.tsx`**: Tests for the `HeatMapPageComponent`.
 
-## TODO: Finish README.MD
+## Installation
+To install the dependencies, run:
+
+```sh
+yarn install
+```
+
+## Running the Plugin
+To start the development server, run:
+
+```sh
+yarn dev
+```
+
+## Testing
+To run the tests, use:
+
+```sh
+yarn test
+```
+
+## License
+This project is licensed under the MIT License.

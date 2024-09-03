@@ -1,16 +1,41 @@
-# emma
+# Emma Backend Plugin
 
-Welcome to the emma backend plugin!
+## Overview
 
-_This plugin was created through the Backstage CLI_
+The `emma-backend` plugin provides the backend services for the Emma application. It includes API implementations, routing, and testing logic.
 
 ## Getting started
 
-Your plugin has been added to the example app in this repository, meaning you'll be able to access it by running `yarn
-start` in the root directory, and then navigating to [/emma/health](http://localhost:7007/api/emma/health).
+The plugin has been added to the example app in this repository, meaning you'll be able to access it by running `yarn start` in the root directory, and then navigating to [/emma/health](http://localhost:7007/api/emma/health).
 
-You can also serve the plugin in isolation by running `yarn start` in the plugin directory.
-This method of serving the plugin provides quicker iteration speed and a faster startup and hot reloads.
-It is only meant for local development, and the setup for it can be found inside the [/dev](./dev) directory.
+## Key Files
 
-## TODO: Finish README.MD
+- **`index.ts`**: Main entry point for the backend plugin.
+- **`plugin.ts`**: Contains the initialization logic for the backend plugin.
+- **`EmmaApiImpl.ts`**: Provides the implementation of the backend API.
+- **`router.ts`**: Defines the routing logic for the backend services.
+- **`router.test.ts`**: Contains tests for the routing logic.
+
+## Installation
+To install the dependencies, run:
+
+```sh
+yarn install
+```
+
+## Running the Plugin
+To start the development server, run:
+
+```sh
+yarn dev
+```
+
+## Testing
+To run the tests, use:
+
+```sh
+yarn test
+```
+
+## License
+This project is licensed under the MIT License.

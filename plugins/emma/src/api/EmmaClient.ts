@@ -3,7 +3,6 @@ import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType } fr
 import { VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
 import { ResponseError } from '@backstage/errors';
 
-// TODO: Implement unit test
 /** @public */
 export class EmmaClient implements EmmaApi {
   private readonly discoveryApi: DiscoveryApi;
