@@ -1,18 +1,17 @@
 import { createPermission } from '@backstage/plugin-permission-common';
 import { RESOURCE_TYPE_CATALOG_ENTITY } from '@backstage/plugin-catalog-common/alpha';
+import { EMMA_PLUGIN_ID } from './constants';
 
-/**
- * @public
- */
+// TODO: Implement permissions in backend plugin
+/** @public */
 export const emmaDataCenterReadPermission = createPermission({
-  name: 'emma.api.datacenter.read',
+  name: EMMA_PLUGIN_ID + '.api.datacenter.read',
   attributes: { action: 'read' },
   resourceType: RESOURCE_TYPE_CATALOG_ENTITY,
 });
 
-/**
- * @public
- */
+
+/** @public */
 export const emmaPermissions = [
     emmaDataCenterReadPermission
 ];

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeatMapPageComponent } from './HeatMapPageComponent';
+import { HeatMapComponent } from './HeatMapComponent';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { screen } from '@testing-library/react';
@@ -9,7 +9,7 @@ import {
 } from '@backstage/test-utils';
 
 // TODO: Increase code coverage
-describe('HeatMapPageComponent', () => {
+describe('HeatMapComponent', () => {
   const server = setupServer();
   // Enable sane handlers for network requests
   registerMswTestHooks(server);
@@ -22,9 +22,9 @@ describe('HeatMapPageComponent', () => {
   });
 
   it('should render', async () => {
-    await renderInTestApp(<HeatMapPageComponent />);
+    await renderInTestApp(<HeatMapComponent />);
     expect(
-      screen.getByText('Welcome to emma heatmap!'),
+      screen.getByText('OpenStreetMap'),
     ).toBeInTheDocument();
   });
 });

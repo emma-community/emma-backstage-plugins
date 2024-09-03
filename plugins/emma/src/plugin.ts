@@ -11,7 +11,7 @@ import { EmmaClient } from './api/EmmaClient';
 import { EmmaApi, EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
 
 export const emmaApiRef = createApiRef<EmmaApi>({
-  id: 'plugin.emma.api',
+  id: `plugin.${EMMA_PLUGIN_ID}.api`,
 });
 
 export const emmaHeatmapPlugin = createPlugin({

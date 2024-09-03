@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useApi } from '@backstage/frontend-plugin-api';
-import { EmmaDataCenter, EmmaComputeType } from '@internal/backstage-plugin-emma-common';
+import { EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
 import { emmaApiRef } from '../../plugin';
 
 //@ts-ignore
@@ -40,6 +40,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
   }));
 
   return (
+    // TODO: Add LayerGroup for markers based on provider type.
     <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} minZoom={minZoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -58,6 +59,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
         <Marker
           key={dataCenter.region_code}
           position={[dataCenter.location.latitude, dataCenter.location.longitude]}
+          // TODO: Figure out if a better icon will center the pin closer to the heatmap center on zoom 2 - 8
           icon={heatMapIcon}
         >
           <Popup>
@@ -78,6 +80,8 @@ export const HeatMapComponent = () => {
   const emmaApi = useApi(emmaApiRef);
 
   const { value, loading, error } = useAsync(async (): Promise<EmmaDataCenter[]> => {
+    // TODO: Fetch compute configs and map cheapest VM price to each data center.
+    // TODO: Figure out how we want to compute the intensity and radius for each data center. Could be based on price relative to the median price or something like that.
     return await emmaApi.getDataCenters();
   }, []);
 

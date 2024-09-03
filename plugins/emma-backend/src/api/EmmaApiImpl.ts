@@ -5,6 +5,7 @@ import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstan
 import fs from 'fs';
 import path from 'path';
 
+// TODO: Implement unit test
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
     private readonly logger: LoggerService;

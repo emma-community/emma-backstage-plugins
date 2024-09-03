@@ -4,6 +4,7 @@ import request from 'supertest';
 
 import { createRouter } from './router';
 
+// TODO: Increase code coverage
 describe('createRouter', () => {
   let app: express.Express;
 
