@@ -48,8 +48,8 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
   }));
 
   const providers = [...new Set(data.map(entity => entity.providerName))];
+  const preselectedProviders: string[] = providers.filter(provider => provider === 'Amazon EC2' || provider === 'Azure' || provider === 'GCP');
 
-  // TODO: Figure out preselection of providers based on input from Matthias
   return (
     <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} minZoom={minZoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
       <TileLayer
@@ -58,7 +58,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
       />
       <LayersControl position="topright">
         {providers.map(provider => (
-          <Overlay key={provider} name={provider!}>
+          <Overlay key={provider} name={provider!} checked={preselectedProviders?.includes(provider!)}>
             <LayerGroup>              
               <HeatmapLayer
                 fitBoundsOnLoad
