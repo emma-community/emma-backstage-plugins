@@ -52,7 +52,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
       />
       <LayersControl position="topright">
         {providers.map(provider => (
-          <Overlay key={provider} name={provider + ''}>
+          <Overlay key={provider} name={provider!}>
             <LayerGroup>              
               <HeatmapLayer
                 fitBoundsOnLoad
@@ -65,14 +65,14 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
               />
               {entries.filter(entry => entry.providerName === provider).map(dataCenter => (
                 <Marker
-                  key={dataCenter.region_code}
+                  key={dataCenter.id}
                   position={[dataCenter.location.latitude, dataCenter.location.longitude]}
                   icon={heatMapIcon}
                 >
                   <Popup>
                     <strong>{dataCenter.name}</strong><br />
                     {dataCenter.address} (<i>{dataCenter.providerName}</i>)<br />
-                    Best deal: <a href="https://www.emma.ms/pricing"><b>{dataCenter.price} EUR</b></a><br />
+                    Best deal: <a href="https://www.emma.ms/pricing"><strong>{dataCenter.price} EUR</strong></a><br />
                   </Popup>
                 </Marker>
               ))}
