@@ -48,7 +48,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
   }));
 
   const providers = [...new Set(data.map(entity => entity.providerName))];
-  const preselectedProviders: string[] = providers.filter(provider => provider === 'Amazon EC2' || provider === 'Azure' || provider === 'GCP');
+  const preselectedProviders: (string | undefined)[] = providers.filter(provider => provider === 'Amazon EC2' || provider === 'Azure' || provider === 'GCP');
 
   return (
     <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} minZoom={minZoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
@@ -58,7 +58,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
       />
       <LayersControl position="topright">
         {providers.map(provider => (
-          <Overlay key={provider} name={provider!} checked={preselectedProviders?.includes(provider!)}>
+          <Overlay key={provider} name={provider!} checked={preselectedProviders?.includes(provider)}>
             <LayerGroup>              
               <HeatmapLayer
                 fitBoundsOnLoad
@@ -97,9 +97,14 @@ export const HeatMapComponent = () => {
   const emmaApi = useApi(emmaApiRef);
 
   const { value, loading, error } = useAsync(async (): Promise<HeatMapEntity[]> => {
-    // TODO: Mapreduce datacenter zones so we only get one entity pr. physical location
-    // TODO: Filter out datacenters with empty locations (undefined | (0, 0))
-    const dataCenters = await emmaApi.getDataCenters();
+    let dataCenters = (await emmaApi.getDataCenters())
+                        .filter(dataCenter => dataCenter.location !== undefined && dataCenter.location.latitude !== 0 && dataCenter.location.longitude !== 0)
+    
+    // Map datacenter zones so we only get one entity pr. physical data center
+    dataCenters = Array.from(
+      new Map(dataCenters.map((dc) => [dc.id!.replace(/-[a-z]$/, ''), dc])).values(),
+    );
+
     const allComputeConfigs = await emmaApi.getComputeConfigs();
 
     allComputeConfigs.forEach(config => {
@@ -149,7 +154,7 @@ export const HeatMapComponent = () => {
 
         price = computeConfigs[0].cost?.pricePerUnit as number
         intensity = price / globalMedianPrice;
-        radius = price * 5 / globalMedianPrice;
+        radius = price / globalMedianPrice;
       }
       
       return {...dataCenter, price, intensity, radius};
