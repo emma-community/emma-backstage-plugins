@@ -94,15 +94,35 @@ export const HeatMapComponent = () => {
     const dataCenters = await emmaApi.getDataCenters();
     const allComputeConfigs = await emmaApi.getComputeConfigs();
 
-    // TODO: Price are the same currency, but different units. We need to take this into account and convert them to a common unit.
-    const filteredPrices = allComputeConfigs.map(config => config.cost?.pricePerUnit).filter(price => price !== undefined) as number[]; 
+    // Convert all prices to monthly prices
+    allComputeConfigs.forEach(config => {
+      const unit = config.cost?.unit;
+      let price = config.cost?.pricePerUnit;
+
+      if (price !== undefined) {
+        switch (unit) {
+          case 'HOURS':
+            price = price * 24 * 30;            
+            break;
+          case 'DAYS':
+            price = price * 30            
+            break
+          case 'MONTHS':
+          default:
+            break;
+        }
+      }
+
+      config.cost!.pricePerUnit = price;
+      config.cost!.unit = 'MONTHS';
+    });
+
+    const filteredPrices = allComputeConfigs.map(config => config.cost?.pricePerUnit).filter(price => price !== undefined) as number[];
     const globalMedianPrice = filteredPrices.reduce((acc, price) => acc + price, 0) / (filteredPrices.length > 0 ? filteredPrices.length : 1);
-    
+   
+    // TODO: There is be a very low number of compute resources for some data centers. We need to figure out why and decide if we filter out the onces we dont have prices for.
     dataCenters.forEach(dataCenter => {
       const computeConfigs = allComputeConfigs.filter(config => config.dataCenterId === dataCenter.id);
-
-      // TODO: There seems to be a very low number of compute resources for some data centers. We need to figure out why.
-      console.log(computeConfigs, dataCenter);
 
       if (computeConfigs.length > 0) {
         computeConfigs.sort((a, b) => {
