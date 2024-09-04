@@ -71,11 +71,8 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
                 >
                   <Popup>
                     <strong>{dataCenter.name}</strong><br />
-                    {dataCenter.address}<br />
-                    Provider: {dataCenter.providerName}<br />
-                    Price: {dataCenter.price}<br />
-                    Intensity: {dataCenter.intensity}<br />
-                    Radius: {dataCenter.radius}
+                    {dataCenter.address} (<i>{dataCenter.providerName}</i>)<br />
+                    Best deal: <a href="https://www.emma.ms/pricing"><b>{dataCenter.price} EUR</b></a><br />
                   </Popup>
                 </Marker>
               ))}

@@ -64,10 +64,13 @@ export class EmmaApiImpl implements EmmaApi {
       remoteResults.forEach(dataCenter => {
           let matchedGeoLocation = this.knownGeoLocations.find(emmaDC => dataCenter.id?.indexOf(emmaDC.region_code) !== -1);
   
-          if(matchedGeoLocation)
+          if(matchedGeoLocation) {
             dataCenter.location = matchedGeoLocation.location;
-          else
+            dataCenter.address = matchedGeoLocation.address;
+          } else {
             dataCenter.location = { latitude: 0, longitude: 0 };
+            dataCenter.address = 'Unknown';
+          }
       });
 
       if(geoFence) {        
