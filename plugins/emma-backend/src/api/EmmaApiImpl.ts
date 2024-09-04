@@ -60,11 +60,14 @@ export class EmmaApiImpl implements EmmaApi {
 
       let remoteResults = (await api.getDataCenters()).body as EmmaDataCenter[];
 
+      // TODO: Remove local mapping once External API is updated to return geolocations
       remoteResults.forEach(dataCenter => {
           let matchedGeoLocation = this.knownGeoLocations.find(emmaDC => dataCenter.id?.indexOf(emmaDC.region_code) !== -1);
   
           if(matchedGeoLocation)
             dataCenter.location = matchedGeoLocation.location;
+          else
+            dataCenter.location = { latitude: 0, longitude: 0 };
       });
 
       if(geoFence) {        

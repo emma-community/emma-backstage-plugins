@@ -1,9 +1,11 @@
 import React from 'react';
 import { Icon, LatLngTuple } from 'leaflet'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, LayerGroup, LayersControl } from 'react-leaflet'
 import { useApi } from '@backstage/frontend-plugin-api';
 import { EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
 import { emmaApiRef } from '../../plugin';
+
+const { Overlay } = LayersControl;
 
 //@ts-ignore
 import { HeatmapLayer } from 'react-leaflet-heatmap-layer-v3'
@@ -36,42 +38,51 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
     lat: dataCenter.location.latitude,
     lng: dataCenter.location.longitude,
     intensity: dataCenter.intensity,
-    radius: dataCenter.radius
+    radius: dataCenter.radius,
+    providerName: dataCenter.providerName
   }));
 
+  const providers = [...new Set(entries.map(entry => entry.providerName))];
+
   return (
-    // TODO: Add LayerGroup for markers based on provider type.
     <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} minZoom={minZoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <HeatmapLayer
-        fitBoundsOnLoad
-        fitBoundsOnUpdate
-        points={points}
-        longitudeExtractor={(point: any) => point.lng}
-        latitudeExtractor={(point: any) => point.lat}
-        intensityExtractor={(point: any) => point.intensity}
-        radiusExtractor={(point: any) => point.radius}
-      />
-      {entries.map((dataCenter) => (
-        <Marker
-          key={dataCenter.region_code}
-          position={[dataCenter.location.latitude, dataCenter.location.longitude]}
-          // TODO: Figure out if a better icon will center the pin closer to the heatmap center on zoom 2 - 8
-          icon={heatMapIcon}
-        >
-          <Popup>
-            <strong>{dataCenter.name}</strong><br />
-            {dataCenter.address}<br />
-            Provider: {dataCenter.providerName}<br />
-            Price: {dataCenter.price}<br />
-            Intensity: {dataCenter.intensity}<br />
-            Radius: {dataCenter.radius}
-          </Popup>
-        </Marker>
-      ))}
+      <LayersControl position="topright">
+        {providers.map(provider => (
+          <Overlay key={provider} name={provider + ''}>
+            <LayerGroup>              
+              <HeatmapLayer
+                fitBoundsOnLoad
+                fitBoundsOnUpdate
+                points={points.filter(point => point.providerName === provider)}
+                longitudeExtractor={(point: any) => point.lng}
+                latitudeExtractor={(point: any) => point.lat}
+                intensityExtractor={(point: any) => point.intensity}
+                radiusExtractor={(point: any) => point.radius}
+              />
+              {entries.filter(entry => entry.providerName === provider).map(dataCenter => (
+                <Marker
+                  key={dataCenter.region_code}
+                  position={[dataCenter.location.latitude, dataCenter.location.longitude]}
+                  icon={heatMapIcon}
+                >
+                  <Popup>
+                    <strong>{dataCenter.name}</strong><br />
+                    {dataCenter.address}<br />
+                    Provider: {dataCenter.providerName}<br />
+                    Price: {dataCenter.price}<br />
+                    Intensity: {dataCenter.intensity}<br />
+                    Radius: {dataCenter.radius}
+                  </Popup>
+                </Marker>
+              ))}
+            </LayerGroup>
+          </Overlay>
+        ))}
+      </LayersControl>
     </MapContainer>
   );
 };
@@ -112,6 +123,10 @@ export const HeatMapComponent = () => {
         dataCenter.price = computeConfigs[0].cost?.pricePerUnit as number
         dataCenter.intensity = dataCenter.price / globalMedianPrice;
         dataCenter.radius = dataCenter.price * 10 / globalMedianPrice;
+      } else {
+        dataCenter.price = 0;
+        dataCenter.intensity = 0;
+        dataCenter.radius = 0;
       }
     });
 
