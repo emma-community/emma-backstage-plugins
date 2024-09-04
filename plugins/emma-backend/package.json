@@ -12,7 +12,12 @@
   },
   "backstage": {
     "role": "backend-plugin",
-    "plugin-id": "emma"
+    "plugin-id": "emma",
+    "pluginPackages": [
+      "@internal/backstage-plugin-emma",
+      "@internal/backstage-plugin-emma-backend",
+      "@internal/backstage-plugin-emma-common"
+    ]
   },
   "scripts": {
     "start": "backstage-cli package start",

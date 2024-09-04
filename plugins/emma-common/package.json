@@ -8,12 +8,18 @@
   "private": true,
   "publishConfig": {
     "access": "public",
-    "main": "dist/index.esm.js",
+    "main": "dist/index.cjs.js",
+    "module": "dist/index.esm.js",
     "types": "dist/index.d.ts"
   },
   "backstage": {
     "role": "common-library",
-    "pluginId": "emma"
+    "pluginId": "emma",
+    "pluginPackages": [
+      "@internal/backstage-plugin-emma",
+      "@internal/backstage-plugin-emma-backend",
+      "@internal/backstage-plugin-emma-common"
+    ]
   },
   "sideEffects": false,
   "scripts": {
@@ -32,5 +38,8 @@
   },
   "devDependencies": {
     "@backstage/cli": "^0.27.0"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }

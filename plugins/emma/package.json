@@ -6,13 +6,16 @@
   "license": "Apache-2.0",
   "private": true,
   "publishConfig": {
-    "access": "public",
-    "main": "dist/index.esm.js",
-    "types": "dist/index.d.ts"
+    "access": "public"
   },
   "backstage": {
     "role": "frontend-plugin",
-    "pluginId": "emma"
+    "pluginId": "emma",
+    "pluginPackages": [
+      "@internal/backstage-plugin-emma",
+      "@internal/backstage-plugin-emma-backend",
+      "@internal/backstage-plugin-emma-common"
+    ]
   },
   "sideEffects": false,
   "scripts": {
