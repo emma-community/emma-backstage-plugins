@@ -96,6 +96,8 @@ export const HeatMapComponent = () => {
   const emmaApi = useApi(emmaApiRef);
 
   const { value, loading, error } = useAsync(async (): Promise<HeatMapEntity[]> => {
+    // TODO: Mapreduce datacenter zones so we only get one entity pr. physical location
+    // TODO: Filter out datacenters with empty locations (undefined | (0, 0))
     const dataCenters = await emmaApi.getDataCenters();
     const allComputeConfigs = await emmaApi.getComputeConfigs();
 
@@ -151,8 +153,6 @@ export const HeatMapComponent = () => {
       
       return {...dataCenter, price, intensity, radius};
     }) as HeatMapEntity[];
-
-    console.log(heatMapEntities);
 
     return heatMapEntities;
   }, []);
