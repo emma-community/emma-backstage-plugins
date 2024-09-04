@@ -25,17 +25,12 @@ describe('EmmaClient', () => {
     it('should call fetch with the correct URL when geoFence is provided', async () => {
       const mockDataCenters: EmmaDataCenter[] = [ {
         "name": "East US",
-        "address": "Virginia, USA",
-        "country_code": "US",
         "region_code": "eastus",
         "location": {
         "longitude": -79.4209,
         "latitude": 37.4316        
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     }];
       discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
       fetchApi.fetch.mockResolvedValue({
@@ -58,17 +53,12 @@ describe('EmmaClient', () => {
     it('should call fetch with the correct URL when geoFence is not provided', async () => {
       const mockDataCenters: EmmaDataCenter[] = [ {
         "name": "East US",
-        "address": "Virginia, USA",
-        "country_code": "US",
         "region_code": "eastus",
         "location": {
         "longitude": -79.4209,
         "latitude": 37.4316        
         },
-        "provider": "AZURE",
-        "price": 123,
-        "intensity": 0.5,
-        "radius": 0.5
+        "provider": "AZURE"
     }];
       discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
       fetchApi.fetch.mockResolvedValue({

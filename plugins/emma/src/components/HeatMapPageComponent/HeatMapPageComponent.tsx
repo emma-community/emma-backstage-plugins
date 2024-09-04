@@ -16,7 +16,7 @@ export const HeatMapPageComponent = () => {
             <HeaderLabel label="Lifecycle" value="Alpha" />
           </Header>
           <Content>
-            <ContentHeader title="VM cost by data center location">
+            <ContentHeader title="Compute cost by data center location">
               <SupportButton>A description of your plugin goes here.</SupportButton>
             </ContentHeader>
             <HeatMapComponent />

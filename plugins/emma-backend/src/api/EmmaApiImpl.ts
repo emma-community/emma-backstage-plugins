@@ -66,10 +66,8 @@ export class EmmaApiImpl implements EmmaApi {
   
           if(matchedGeoLocation) {
             dataCenter.location = matchedGeoLocation.location;
-            dataCenter.address = matchedGeoLocation.address;
           } else {
             dataCenter.location = { latitude: 0, longitude: 0 };
-            dataCenter.address = 'Unknown';
           }
       });
 

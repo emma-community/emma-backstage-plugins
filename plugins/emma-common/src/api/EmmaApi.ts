@@ -1,9 +1,7 @@
 import { VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
 import { EmmaDataCenter, GeoFence, EmmaComputeType } from '../types';
 
-/**
- * @public
- */
+/** @public */
 export interface EmmaApi {
   getDataCenters(geoFence?: GeoFence): Promise<EmmaDataCenter[]>;
   getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<VmConfiguration[]>;
