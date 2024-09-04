@@ -35,7 +35,9 @@ export type HeatMapProps = {
 };
 
 const heatMapIcon = new Icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png'
+  iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
+  iconSize: [25, 41],
+  iconAnchor: [12.5, 41]
 });
 
 export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, data, maxBounds }: HeatMapProps) => {
