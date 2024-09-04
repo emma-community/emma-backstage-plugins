@@ -1,21 +1,20 @@
 import React from 'react';
-import { Icon, LatLngTuple } from 'leaflet'
-import { MapContainer, TileLayer, Marker, Popup, LayerGroup, LayersControl } from 'react-leaflet'
+import useAsync from 'react-use/lib/useAsync';
 import { useApi } from '@backstage/frontend-plugin-api';
-import { EmmaDataCenter, EmmaComputeUnit } from '@internal/backstage-plugin-emma-common';
-import { emmaApiRef } from '../../plugin';
-
-const { Overlay } = LayersControl;
-
-//@ts-ignore
-import { HeatmapLayer } from 'react-leaflet-heatmap-layer-v3'
-
 import {
   Progress,
   ResponseErrorPanel,
 } from '@backstage/core-components';
+import { EmmaDataCenter, EmmaComputeUnit } from '@internal/backstage-plugin-emma-common';
+import { emmaApiRef } from '../../plugin';
+import { Icon, LatLngTuple } from 'leaflet'
+import { MapContainer, TileLayer, Marker, Popup, LayerGroup, LayersControl } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
-import useAsync from 'react-use/lib/useAsync';
+
+//@ts-ignore
+import { HeatmapLayer } from 'react-leaflet-heatmap-layer-v3'
+
+const { Overlay } = LayersControl;
 
 export type HeatMapEntity = EmmaDataCenter & {
   price: number;
@@ -159,10 +158,10 @@ export const HeatMapComponent = () => {
   }, []);
 
   if (loading) {
-    return <Progress />;
+    return (<Progress />);
   } else if (error) {
-    return <ResponseErrorPanel error={error} />;
+    return (<ResponseErrorPanel error={error} />);
   }
 
-  return <HeatMap width={"1025px"} height={"550px"} center={[0, 0]} zoom={2} minZoom={2} maxZoom={18} scrollWheelZoom={true} data={value || []} maxBounds={[[-90, -180], [90, 180] ]} />;
+  return (<HeatMap width={"1025px"} height={"550px"} center={[0, 0]} zoom={2} minZoom={2} maxZoom={18} scrollWheelZoom={true} data={value || []} maxBounds={[[-90, -180], [90, 180] ]} />);
 };

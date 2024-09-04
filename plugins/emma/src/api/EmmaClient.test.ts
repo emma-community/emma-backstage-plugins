@@ -1,8 +1,8 @@
-import { EmmaClient } from './EmmaClient';
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
+import { ResponseError } from '@backstage/errors';
+import { EmmaClient } from './EmmaClient';
 import { EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType } from '@internal/backstage-plugin-emma-common';
 import { VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
-import { ResponseError } from '@backstage/errors';
 
 describe('EmmaClient', () => {
   let discoveryApi: jest.Mocked<DiscoveryApi>;

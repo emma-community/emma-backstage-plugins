@@ -1,10 +1,10 @@
-import { EmmaApiImpl } from './EmmaApiImpl';
+import fs from 'fs';
+import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { HttpBearerAuth, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi } from '@zaradarbh/emma-typescript-sdk';
-import fs from 'fs';
-import path from 'path';
 import { EmmaApiFactory } from '@internal/backstage-plugin-emma-common';
+import { EmmaApiImpl } from './EmmaApiImpl';
 
 jest.mock('fs');
 jest.mock('path');

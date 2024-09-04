@@ -5,11 +5,7 @@ import {
 import { createRouter } from './service/router';
 import { EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
 
-/**
- * emmaPlugin backend plugin
- *
- * @public
- */
+/** @public */
 export const emmaPlugin = createBackendPlugin({
   pluginId: EMMA_PLUGIN_ID,
   register(env) {

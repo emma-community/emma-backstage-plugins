@@ -8,10 +8,10 @@ import {
 } from '@backstage/core-plugin-api';
 import { rootRouteRef } from './routes';
 import { EmmaClient } from './api/EmmaClient';
-import { EmmaApi, EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
+import { EmmaApi, EMMA_PLUGIN_ID, EMMA_API_REF_ID } from '@internal/backstage-plugin-emma-common';
 
 export const emmaApiRef = createApiRef<EmmaApi>({
-  id: `plugin.${EMMA_PLUGIN_ID}.api`,
+  id: EMMA_API_REF_ID,
 });
 
 export const emmaHeatmapPlugin = createPlugin({

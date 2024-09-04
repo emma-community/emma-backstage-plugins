@@ -1,16 +1,17 @@
-import { Config } from '@backstage/config';
-import { LoggerService  } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, GeoFence, GeoLocation, EmmaComputeType } from '@internal/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
 import fs from 'fs';
 import path from 'path';
+import { Config } from '@backstage/config';
+import { LoggerService  } from '@backstage/backend-plugin-api';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@internal/backstage-plugin-emma-common';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
     private readonly logger: LoggerService;
     private readonly config: Config;
     private readonly authHandler: HttpBearerAuth = new HttpBearerAuth();
-    private readonly apiFactory: EmmaApiFactory;
+    private readonly apiFactory: EmmaApiFactory;   
+    // TODO: Remove local mapping logic once External API is updated to return geolocations
     private readonly knownGeoLocations: EmmaDataCenter[];
   
     private constructor(
@@ -37,7 +38,7 @@ export class EmmaApiImpl implements EmmaApi {
         options.logger
       );
     }
-
+    
     private loadKnownGeoLocations(): EmmaDataCenter[] {
       const filePath = path.resolve(__dirname, 'knownGeoLocations.json');
       const data = fs.readFileSync(filePath, 'utf-8');
@@ -47,7 +48,7 @@ export class EmmaApiImpl implements EmmaApi {
 
     private async issueToken(): Promise<Token> {
       const api = this.apiFactory.create(AuthenticationApi);
-      const token = await api.issueToken({ clientId: this.config.getString('emma.clientId'), clientSecret: this.config.getString('emma.clientSecret') });
+      const token = await api.issueToken({ clientId: this.config.getString(EMMA_CLIENT_ID_KEY), clientSecret: this.config.getString(EMMA_CLIENT_SECRET_KEY) });
 
       return token.body;
     }
@@ -60,7 +61,6 @@ export class EmmaApiImpl implements EmmaApi {
 
       let remoteResults = (await api.getDataCenters()).body as EmmaDataCenter[];
 
-      // TODO: Remove local mapping once External API is updated to return geolocations
       remoteResults.forEach(dataCenter => {
           let matchedGeoLocation = this.knownGeoLocations.find(emmaDC => dataCenter.id?.indexOf(emmaDC.region_code) !== -1);
   
