@@ -49,6 +49,7 @@ export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWh
 
   const providers = [...new Set(data.map(entity => entity.providerName))];
 
+  // TODO: Figure out preselection of providers based on input from Matthias
   return (
     <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} minZoom={minZoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
       <TileLayer
