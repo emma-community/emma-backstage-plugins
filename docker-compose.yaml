@@ -1,0 +1,32 @@
+services:
+  backstage_db:
+    image: postgres:latest
+    container_name: backstage-db
+    ports:
+      - 5432:5432
+    restart: on-failure
+    volumes:
+      - db:/var/lib/postgresql
+    environment:
+      - POSTGRES_USER=backstage
+      - POSTGRES_PASSWORD=backstage
+
+  backend:
+    build:
+      context: .
+      dockerfile: packages/backend/Dockerfile
+      args:
+        - NODE_ENV=production
+    container_name: backstage-backend
+    ports:
+      - 7007:7007
+    depends_on:
+      - backstage_db
+    environment:
+      - POSTGRES_HOST=backstage_db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=backstage
+      - POSTGRES_PASSWORD=backstage
+
+volumes:
+  db:
