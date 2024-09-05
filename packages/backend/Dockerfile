@@ -48,6 +48,12 @@ RUN mkdir packages/backend/dist/skeleton packages/backend/dist/bundle \
 # Stage 3 - Build the actual backend image and install production dependencies
 FROM node:20-bookworm-slim
 
+# Define the build arguments
+ARG NODE_ENV=production
+
+# Set the NODE_ENV environment variable
+ENV NODE_ENV=${NODE_ENV}
+
 # Install isolate-vm dependencies, these are needed by the @backstage/plugin-scaffolder-backend.
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
@@ -90,7 +96,11 @@ COPY --chown=node:node app-config*.yaml ./
 # This will include the examples, if you don't need these simply remove this line
 COPY --chown=node:node examples ./examples
 
-# This switches many Node.js dependencies to production mode.
-ENV NODE_ENV=production
+# This will copy the knownGeoLocations data. TODO: Remove once External API has been patched.
+COPY --chown=node:node /plugins/emma-backend/src/api/knownGeoLocations.json ./plugins/emma-backend/dist/knownGeoLocations.json
 
-CMD ["node", "packages/backend", "--config", "app-config.yaml", "--config", "app-config.production.yaml"]
+CMD if [ "$NODE_ENV" = "production" ]; then \
+        node packages/backend --config app-config.yaml --config app-config.production.yaml; \
+    else \
+        node packages/backend --config app-config.yaml; \
+    fi
