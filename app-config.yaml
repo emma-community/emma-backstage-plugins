@@ -114,3 +114,5 @@ permission:
 
 emma:
   baseUrl: https://emma.example.com
+  clientId: ${EMMA_CLIENT_ID}
+  clientSecret: ${EMMA_CLIENT_SECRET}

@@ -27,6 +27,8 @@ services:
       - POSTGRES_PORT=5432
       - POSTGRES_USER=backstage
       - POSTGRES_PASSWORD=backstage
+      - EMMA_CLIENT_ID=${EMMA_CLIENT_ID}
+      - EMMA_CLIENT_SECRET=${EMMA_CLIENT_SECRET}
 
 volumes:
   db:
