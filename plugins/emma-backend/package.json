@@ -1,14 +1,14 @@
 {
-  "name": "@internal/backstage-plugin-emma-backend",
+  "name": "@emma-community/backstage-plugin-emma-backend",
   "description": "Backend for the emma plugin",
   "version": "0.1.0",
   "backstage": {
     "role": "backend-plugin",
     "pluginId": "emma",
     "pluginPackages": [
-      "@internal/backstage-plugin-emma",
-      "@internal/backstage-plugin-emma-backend",
-      "@internal/backstage-plugin-emma-common"
+      "@emma-community/backstage-plugin-emma",
+      "@emma-community/backstage-plugin-emma-backend",
+      "@emma-community/backstage-plugin-emma-common"
     ]
   },
   "publishConfig": {
@@ -16,7 +16,7 @@
     "main": "dist/index.cjs.js",
     "types": "dist/index.d.ts"
   },
-  "private": true,
+  "private": false,
   "homepage": "https://emma.ms",
   "repository": {
     "type": "git",
@@ -52,7 +52,7 @@
     "express-promise-router": "^4.1.0",
     "uuid": "^9.0.0",
     "yn": "^4.0.0",
-    "@internal/backstage-plugin-emma-common": "^0.1.0",
+    "@emma-community/backstage-plugin-emma-common": "^0.1.0",
     "@zaradarbh/emma-typescript-sdk": "^0.0.3"
   },
   "devDependencies": {

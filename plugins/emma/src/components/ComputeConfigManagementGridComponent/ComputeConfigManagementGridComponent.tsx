@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow, IconButton, Select, M
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { EmmaComputeType } from '@internal/backstage-plugin-emma-common'
+import { EmmaComputeType } from '@emma-community/backstage-plugin-emma-common'
 
 interface ComputeConfigEntry {
   id: number;

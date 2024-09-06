@@ -1,13 +1,13 @@
 {
-  "name": "@internal/backstage-plugin-emma",
+  "name": "@emma-community/backstage-plugin-emma",
   "version": "0.1.0",
   "backstage": {
     "role": "frontend-plugin",
     "pluginId": "emma",
     "pluginPackages": [
-      "@internal/backstage-plugin-emma",
-      "@internal/backstage-plugin-emma-backend",
-      "@internal/backstage-plugin-emma-common"
+      "@emma-community/backstage-plugin-emma",
+      "@emma-community/backstage-plugin-emma-backend",
+      "@emma-community/backstage-plugin-emma-common"
     ]
   },
   "publishConfig": {
@@ -16,7 +16,7 @@
     "module": "dist/index.esm.js",
     "types": "dist/index.d.ts"
   },
-  "private": true,
+  "private": false,
   "homepage": "https://emma.ms",
   "repository": {
     "type": "git",
@@ -54,7 +54,7 @@
     "heatmap.js": "^2.0.5",
     "react-leaflet": "^3.1.0",
     "react-leaflet-heatmap-layer-v3": "^3.0.3-beta-1",
-    "@internal/backstage-plugin-emma-common": "^0.1.0",
+    "@emma-community/backstage-plugin-emma-common": "^0.1.0",
     "@zaradarbh/emma-typescript-sdk": "^0.0.3"
   },
   "peerDependencies": {

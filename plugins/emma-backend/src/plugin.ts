@@ -3,7 +3,7 @@ import {
   createBackendPlugin,
 } from '@backstage/backend-plugin-api';
 import { createRouter } from './service/router';
-import { EMMA_PLUGIN_ID } from '@internal/backstage-plugin-emma-common';
+import { EMMA_PLUGIN_ID } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export const emmaPlugin = createBackendPlugin({

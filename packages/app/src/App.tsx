@@ -36,7 +36,7 @@ import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
 import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
-import { EmmaHeatmapPage } from '@internal/backstage-plugin-emma';
+import { EmmaHeatmapPage } from '@emma-community/backstage-plugin-emma';
 
 const app = createApp({
   apis,

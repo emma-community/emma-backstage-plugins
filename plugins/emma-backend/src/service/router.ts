@@ -3,7 +3,7 @@ import Router from 'express-promise-router';
 import { MiddlewareFactory } from '@backstage/backend-defaults/rootHttpRouter';
 import { LoggerService, RootConfigService } from '@backstage/backend-plugin-api';
 import { EmmaApiImpl } from '../api';
-import { EmmaComputeType, EmmaDataCenter } from '@internal/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaDataCenter } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export interface RouterOptions {

@@ -5,7 +5,7 @@ import {
   Progress,
   ResponseErrorPanel,
 } from '@backstage/core-components';
-import { EmmaDataCenter, EmmaComputeUnit } from '@internal/backstage-plugin-emma-common';
+import { EmmaDataCenter, EmmaComputeUnit } from '@emma-community/backstage-plugin-emma-common';
 import { emmaApiRef } from '../../plugin';
 import { Icon, LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup, LayerGroup, LayersControl } from 'react-leaflet'
