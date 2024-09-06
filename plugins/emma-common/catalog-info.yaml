@@ -2,6 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: backstage-plugin-emma-common
+  title: '@internal/backstage-plugin-emma-common'
   description: emma common library.
   annotations:
     github.com/project-slug: emma-community/emma-backstage-plugins
