@@ -42,6 +42,8 @@
   "dependencies": {
     "@backstage/core-components": "workspace:^",
     "@backstage/core-plugin-api": "workspace:^",
+    "@backstage/frontend-plugin-api": "workspace:^",
+    "@backstage/errors": "workspace:^",
     "@material-ui/core": "^4.12.2",
     "@material-ui/lab": "4.0.0-alpha.61",
     "react-use": "^17.2.4",
@@ -51,7 +53,8 @@
     "heatmap.js": "^2.0.5",
     "react-leaflet": "^3.1.0",
     "react-leaflet-heatmap-layer-v3": "^3.0.3-beta-1",
-    "@internal/backstage-plugin-emma-common": "^0.1.0"
+    "@internal/backstage-plugin-emma-common": "^0.1.0",
+    "@zaradarbh/emma-typescript-sdk": "^0.0.3"
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0",

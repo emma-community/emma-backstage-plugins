@@ -42,7 +42,9 @@
   },
   "dependencies": {
     "@backstage/backend-common": "workspace:^",
+    "@backstage/backend-defaults": "workspace:^",
     "@backstage/backend-plugin-api": "workspace:^",
+    "@backstage/config": "workspace:^",
     "@backstage/errors": "workspace:^",
     "@backstage/plugin-auth-node": "workspace:^",
     "@types/express": "^4.17.6",
@@ -50,7 +52,8 @@
     "express-promise-router": "^4.1.0",
     "uuid": "^9.0.0",
     "yn": "^4.0.0",
-    "@internal/backstage-plugin-emma-common": "^0.1.0"
+    "@internal/backstage-plugin-emma-common": "^0.1.0",
+    "@zaradarbh/emma-typescript-sdk": "^0.0.3"
   },
   "devDependencies": {
     "@backstage/backend-defaults": "workspace:^",

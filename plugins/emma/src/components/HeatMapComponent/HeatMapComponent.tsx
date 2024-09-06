@@ -11,7 +11,7 @@ import { Icon, LatLngTuple } from 'leaflet'
 import { MapContainer, TileLayer, Marker, Popup, LayerGroup, LayersControl } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 
-//@ts-ignore
+// @ts-ignore
 import { HeatmapLayer } from 'react-leaflet-heatmap-layer-v3'
 
 const { Overlay } = LayersControl;

@@ -11,7 +11,7 @@ export class EmmaApiImpl implements EmmaApi {
     private readonly config: Config;
     private readonly authHandler: HttpBearerAuth = new HttpBearerAuth();
     private readonly apiFactory: EmmaApiFactory;   
-    // TODO: Remove local mapping logic once External API is updated to return geolocations
+    // TODO: Remove once External API is updated to return geo locations.
     private readonly knownGeoLocations: EmmaDataCenter[];
   
     private constructor(

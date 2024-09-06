@@ -2894,7 +2894,7 @@
     typescript-json-schema "^0.63.0"
     yaml "^2.0.0"
 
-"@backstage/config@^1.2.0":
+"@backstage/config@^1.2.0", "@backstage/config@workspace:^":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@backstage/config/-/config-1.2.0.tgz#6a4d93197d0586ee3a40f9e4877c5cfd76c128f3"
   integrity sha512-tW8hNzDTClotYmpOrUrutymzZ0Zimx/WeU2+5tLv+ZI8ssRV64KGRe8hi7PuQz2lARVF1DxjwV//Bq2VjR5veA==
@@ -3098,7 +3098,7 @@
     zod "^3.22.4"
     zod-to-json-schema "^3.21.4"
 
-"@backstage/frontend-plugin-api@^0.8.0-next.1":
+"@backstage/frontend-plugin-api@^0.8.0-next.1", "@backstage/frontend-plugin-api@workspace:^":
   version "0.8.0-next.1"
   resolved "https://registry.yarnpkg.com/@backstage/frontend-plugin-api/-/frontend-plugin-api-0.8.0-next.1.tgz#f558732e933bee55d7bc322b96689f36f497f698"
   integrity sha512-bJFBpfKQS7XbxANme0MVwtsbNOZqmsGz1M8oGIRwPwO9maEA9lMywYOjWZoKDVbF//MunHM7oTbm1hnt35gyQQ==
