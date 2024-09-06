@@ -1,13 +1,6 @@
 {
   "name": "@internal/backstage-plugin-emma",
   "version": "0.1.0",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "license": "Apache-2.0",
-  "private": true,
-  "publishConfig": {
-    "access": "public"
-  },
   "backstage": {
     "role": "frontend-plugin",
     "pluginId": "emma",
@@ -17,7 +10,26 @@
       "@internal/backstage-plugin-emma-common"
     ]
   },
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.cjs.js",
+    "module": "dist/index.esm.js",
+    "types": "dist/index.d.ts"
+  },
+  "private": true,
+  "homepage": "https://emma.ms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emma-community/emma-backstage-plugins",
+    "directory": "plugins/emma-backstage-plugins"
+  },
+  "license": "Apache-2.0",
   "sideEffects": false,
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "backstage-cli package start",
     "build": "backstage-cli package build",
@@ -28,13 +40,10 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@backstage/core-components": "^0.14.10",
-    "@backstage/core-plugin-api": "^1.9.3",
-    "@backstage/errors": "^1.2.4",
-    "@backstage/theme": "^0.5.6",
-    "@material-ui/core": "^4.9.13",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.61",
+    "@backstage/core-components": "workspace:^",
+    "@backstage/core-plugin-api": "workspace:^",
+    "@material-ui/core": "^4.12.2",
+    "@material-ui/lab": "4.0.0-alpha.61",
     "react-use": "^17.2.4",
     "leaflet": "^1.9.4",
     "leaflet-heatmap": "^1.0.0",
@@ -45,23 +54,19 @@
     "@internal/backstage-plugin-emma-common": "^0.1.0"
   },
   "peerDependencies": {
-    "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "react-router-dom": "6.0.0-beta.0 || ^6.3.0"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.27.0",
-    "@backstage/core-app-api": "^1.14.2",
-    "@backstage/dev-utils": "^1.0.37",
-    "@backstage/test-utils": "^1.5.10",
+    "@backstage/cli": "workspace:^",
+    "@backstage/dev-utils": "workspace:^",
+    "@testing-library/dom": "^10.0.0",
     "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.0.0",
-    "msw": "^1.0.0",
-    "react": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "@testing-library/react": "^15.0.0",
+    "@types/react": "^16.13.1 || ^17.0.0",
     "jest-canvas-mock": "^2.2.0"
   },
-  "files": [
-    "dist"
-  ],
   "jest": {
     "setupFiles": ["jest-canvas-mock"]
   },

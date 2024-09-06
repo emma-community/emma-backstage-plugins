@@ -1,15 +1,7 @@
 {
   "name": "@internal/backstage-plugin-emma-backend",
+  "description": "Backend for the emma plugin",
   "version": "0.1.0",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "license": "Apache-2.0",
-  "private": true,
-  "publishConfig": {
-    "access": "public",
-    "main": "dist/index.cjs.js",
-    "types": "dist/index.d.ts"
-  },
   "backstage": {
     "role": "backend-plugin",
     "pluginId": "emma",
@@ -19,6 +11,26 @@
       "@internal/backstage-plugin-emma-common"
     ]
   },
+  "publishConfig": {
+    "access": "public",
+    "main": "dist/index.cjs.js",
+    "types": "dist/index.d.ts"
+  },
+  "private": true,
+  "homepage": "https://emma.ms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emma-community/emma-backstage-plugins",
+    "directory": "plugins/emma-backstage-plugins"
+  },
+  "license": "Apache-2.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "files": [
+    "dist",
+    "config.d.ts",
+    "src/api/knownGeoLocations.json"
+  ],
   "scripts": {
     "start": "backstage-cli package start",
     "build": "backstage-cli package build",
@@ -29,28 +41,24 @@
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
-    "@backstage/backend-common": "^0.24.1",
-    "@backstage/backend-defaults": "^0.4.4",
-    "@backstage/backend-plugin-api": "^0.8.1",
+    "@backstage/backend-common": "workspace:^",
+    "@backstage/backend-plugin-api": "workspace:^",
+    "@backstage/errors": "workspace:^",
+    "@backstage/plugin-auth-node": "workspace:^",
+    "@types/express": "^4.17.6",
     "express": "^4.17.1",
     "express-promise-router": "^4.1.0",
-    "node-fetch": "^2.6.7",
+    "uuid": "^9.0.0",
+    "yn": "^4.0.0",
     "@internal/backstage-plugin-emma-common": "^0.1.0"
   },
   "devDependencies": {
-    "@backstage/backend-test-utils": "^0.5.1",
-    "@backstage/cli": "^0.27.0",
-    "@backstage/plugin-auth-backend": "^0.22.12",
-    "@backstage/plugin-auth-backend-module-guest-provider": "^0.1.10",
-    "@types/express": "*",
-    "@types/supertest": "^2.0.12",
-    "supertest": "^6.2.4",
-    "msw": "^2.3.1"
+    "@backstage/backend-defaults": "workspace:^",
+    "@backstage/backend-test-utils": "workspace:^",
+    "@backstage/cli": "workspace:^",
+    "@types/supertest": "^2.0.8",
+    "@types/uuid": "^9.0.0",
+    "supertest": "^6.1.6"
   },
-  "files": [
-    "dist",
-    "config.d.ts",
-    "src/api/knownGeoLocations.json"
-  ],
   "configSchema": "config.d.ts"
 }
