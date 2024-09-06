@@ -12,7 +12,7 @@ spec:
   owner: oss@emma.ms
   lifecycle: experimental
   dependsOn:
-    - emma-backend
-    - emma-common
+    - backstage-plugin-emma-backend
+    - backstage-plugin-emma-common
     - backstage.io/plugin-catalog
     - backstage.io/plugin-techdocs

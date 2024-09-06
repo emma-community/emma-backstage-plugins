@@ -14,6 +14,6 @@ spec:
   providesApis:
     - emma-backend
   dependsOn:
-    - emma-common
+    - backstage-plugin-emma-common
     - backstage.io/plugin-catalog
     - backstage.io/plugin-techdocs

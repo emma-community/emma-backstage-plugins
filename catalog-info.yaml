@@ -1,19 +1,19 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: emma-backstage-plugins
-  description: A collection of plugins for the Emma application, including frontend, backend, and common shared resources.
+  name: backstage-plugin-emma-bundle
+  title: 'backstage-plugin-emma-bundle'
+  description: A bundle of plugins by emma, including frontend, backend, and common libs.
   annotations:
-    github.com/project-slug: emma-backstage-plugins/emma-backstage-plugins
+    github.com/project-slug: emma-community/emma-backstage-plugins
     backstage.io/techdocs-ref: dir:.
 spec:
   type: library
   owner: oss@emma.ms
   lifecycle: experimental
-  providesApis:
-    - emma
-    - emma-backend
-    - emma-common
   dependsOn:
+    - backstage-plugin-emma
+    - backstage-plugin-emma-backend
+    - backstage-plugin-emma-common
     - backstage.io/plugin-catalog
     - backstage.io/plugin-techdocs
