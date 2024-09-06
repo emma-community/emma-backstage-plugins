@@ -9,6 +9,7 @@ export class EmmaApiFactory {
   }
   
   create<T>(ctor: new () => T): T {
+    // eslint-disable-next-line
     const api = new ctor();
     
     if (api instanceof DataCentersApi || api instanceof ComputeInstancesConfigurationsApi || api instanceof LocationsApi || api instanceof KubernetesClustersApi || api instanceof OperatingSystemsApi || api instanceof SecurityGroupsApi || api instanceof ProvidersApi || api instanceof SpotInstancesApi || api instanceof SSHKeysApi || api instanceof StatisticsApi || api instanceof SubnetworksApi || api instanceof VirtualMachinesApi) {

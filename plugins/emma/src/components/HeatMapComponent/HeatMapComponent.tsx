@@ -136,7 +136,9 @@ export const HeatMapComponent = () => {
 
     const heatMapEntities = dataCenters.map(dataCenter => {
       const computeConfigs = allComputeConfigs.filter(config => config.locationId === dataCenter.locationId);
-      let price, intensity, radius = 0;
+      let price = 0;
+      let intensity = 0;
+      let radius = 0;
 
       if (computeConfigs.length > 0) {        
         computeConfigs.sort((a, b) => {
@@ -149,9 +151,9 @@ export const HeatMapComponent = () => {
               return 0;
           } else if (priceA === undefined) {
               return 1;
-          } else {
-              return -1;
-          }
+          } 
+          
+          return -1;
         });
 
         price = computeConfigs[0].cost?.pricePerUnit as number
@@ -171,5 +173,6 @@ export const HeatMapComponent = () => {
     return (<ResponseErrorPanel error={error} />);
   }
 
-  return (<HeatMap width={"1025px"} height={"550px"} center={[0, 0]} zoom={2} minZoom={2} maxZoom={18} scrollWheelZoom={true} data={value || []} maxBounds={[[-90, -180], [90, 180] ]} />);
+  // eslint-disable-next-line
+  return (<HeatMap width="1025px" height="550px" center={[0, 0]} zoom={2} minZoom={2} maxZoom={18} scrollWheelZoom={true} data={value || []} maxBounds={[[-90, -180], [90, 180] ]} />);
 };

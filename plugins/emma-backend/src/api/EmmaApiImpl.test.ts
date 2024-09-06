@@ -101,6 +101,7 @@ describe('EmmaApiImpl', () => {
   test('should load known geo locations from file', () => {
     const emmaApi = EmmaApiImpl.fromConfig(mockConfig, { logger: mockLogger });
     expect(fs.readFileSync).toHaveBeenCalledWith('knownGeoLocations.json', 'utf-8');
+    // eslint-disable-next-line
     expect(emmaApi['knownGeoLocations']).toEqual([{ region_code: 'us-west', location: { latitude: 37.7749, longitude: -122.4194 } }]);
   });
 
@@ -108,6 +109,7 @@ describe('EmmaApiImpl', () => {
     const emmaApi = EmmaApiImpl.fromConfig(mockConfig, { logger: mockLogger });
 
     // Wait for the token to be issued and set
+    // eslint-disable-next-line
     await emmaApi['issueToken']();
 
     expect(mockAuthApi.issueToken).toHaveBeenCalledWith({
