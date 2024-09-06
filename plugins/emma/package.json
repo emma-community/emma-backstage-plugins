@@ -46,6 +46,7 @@
     "@backstage/errors": "workspace:^",
     "@material-ui/core": "^4.12.2",
     "@material-ui/lab": "4.0.0-alpha.61",
+    "@material-ui/icons": "^4.11.2",
     "react-use": "^17.2.4",
     "leaflet": "^1.9.4",
     "leaflet-heatmap": "^1.0.0",
