@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: packages/backend/Dockerfile
       args:
-        - NODE_ENV=production
+        - NODE_ENV=development
     container_name: backstage-backend
     ports:
       - 7007:7007
