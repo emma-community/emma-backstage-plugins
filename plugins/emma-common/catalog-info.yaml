@@ -2,10 +2,9 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: backstage-plugin-emma-common
-  title: '@backstage-community/plugin-emma-common'
-  description: Provides shared resources such as constants, types, and API methods used by both the frontend and backend plugins.
+  description: emma common library.
   annotations:
-    github.com/project-slug: emma-backstage-plugins/emma-common
+    github.com/project-slug: emma-community/emma-backstage-plugins
     backstage.io/techdocs-ref: dir:.
 spec:
   lifecycle: experimental
