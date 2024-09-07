@@ -31,11 +31,14 @@ jobs:
           
           echo "Building and publishing common package"
           
+          # Install yarn
+          npm install -g yarn
+
           # Install dependencies
-          npm install
+          yarn install 
 
           # Build the package
-          npm run build
+          yarn build
 
           # Publish to NPM
           npm publish
@@ -55,11 +58,14 @@ jobs:
           
           echo "Building and publishing backend package"
           
+          # Install yarn
+          npm install -g yarn
+
           # Install dependencies
-          npm install
+          yarn install 
 
           # Build the package
-          npm run build
+          yarn build
 
           # Publish to NPM
           npm publish
@@ -79,11 +85,14 @@ jobs:
           
           echo "Building and publishing frontend package"
           
+          # Install yarn
+          npm install -g yarn
+
           # Install dependencies
-          npm install
+          yarn install 
 
           # Build the package
-          npm run build
+          yarn build
 
           # Publish to NPM
           npm publish
