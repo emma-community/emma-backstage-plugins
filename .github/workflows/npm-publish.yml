@@ -35,7 +35,7 @@ jobs:
           # Compile & test
           yarn install 
           yarn tsc 
-          yarn build
+          yarn build:all
           yarn test
 
           # Publish
