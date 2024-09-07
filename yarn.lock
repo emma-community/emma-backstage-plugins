@@ -4834,6 +4834,14 @@
     pkginfo "^0.4.1"
     uid2 "^1.0.0"
 
+"@emma-community/emma-typescript-sdk@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@emma-community/emma-typescript-sdk/-/emma-typescript-sdk-1.0.0.tgz#1a9cfa48aad846645eb0eb6e3e52489c3614cee6"
+  integrity sha512-ud5Ycg4zgU1FK08j7e5f9OXF5bBZzqK2pKEVYxAuLH504h564532vetdgFmP9jPYw71kBEnsAKP1S0xJEjUPOQ==
+  dependencies:
+    bluebird "^3.7.2"
+    request "^2.88.2"
+
 "@emotion/babel-plugin@^11.12.0":
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.12.0.tgz#7b43debb250c313101b3f885eba634f1d723fcc2"
@@ -10651,14 +10659,6 @@
   dependencies:
     js-yaml "^3.10.0"
     tslib "^2.4.0"
-
-"@zaradarbh/emma-typescript-sdk@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@zaradarbh/emma-typescript-sdk/-/emma-typescript-sdk-0.0.3.tgz#2b42ad85a43726c753998b1621df65582bc0ab46"
-  integrity sha512-SDymiVXcTwpLZJ4UfZkXN/a4ZdtDMbF/aKEPAh5ojryTIYGz6jeqvDCcqZ12QJQDy3029UX9mt5ioFTQ5GY73Q==
-  dependencies:
-    bluebird "^3.7.2"
-    request "^2.88.2"
 
 "@zkochan/js-yaml@0.0.6":
   version "0.0.6"

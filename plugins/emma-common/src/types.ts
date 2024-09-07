@@ -1,4 +1,4 @@
-import { DataCenter } from '@zaradarbh/emma-typescript-sdk';
+import { DataCenter } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export type EmmaDataCenter = DataCenter & {

@@ -1,7 +1,7 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
 import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType } from '@emma-community/backstage-plugin-emma-common';
-import { VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
+import { VmConfiguration } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaClient implements EmmaApi {

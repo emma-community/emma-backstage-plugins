@@ -55,7 +55,7 @@
     "react-leaflet": "^3.1.0",
     "react-leaflet-heatmap-layer-v3": "^3.0.3-beta-1",
     "@emma-community/backstage-plugin-emma-common": "^0.1.0",
-    "@zaradarbh/emma-typescript-sdk": "^0.0.3"
+    "@emma-community/emma-typescript-sdk": "^1.0.0"
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0",

@@ -2,13 +2,13 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { HttpBearerAuth, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi } from '@zaradarbh/emma-typescript-sdk';
+import { HttpBearerAuth, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi } from '@emma-community/emma-typescript-sdk';
 import { EmmaApiFactory } from '@emma-community/backstage-plugin-emma-common';
 import { EmmaApiImpl } from './EmmaApiImpl';
 
 jest.mock('fs');
 jest.mock('path');
-jest.mock('@zaradarbh/emma-typescript-sdk');
+jest.mock('@emma-community/emma-typescript-sdk');
 jest.mock('@emma-community/backstage-plugin-emma-common');
 
 describe('EmmaApiImpl', () => {

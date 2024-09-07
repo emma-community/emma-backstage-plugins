@@ -1,4 +1,4 @@
-import { Authentication, ComputeInstancesConfigurationsApi, DataCentersApi, LocationsApi, KubernetesClustersApi, OperatingSystemsApi, SecurityGroupsApi, ProvidersApi, SpotInstancesApi, SSHKeysApi, StatisticsApi, SubnetworksApi, VirtualMachinesApi  } from '@zaradarbh/emma-typescript-sdk';
+import { Authentication, ComputeInstancesConfigurationsApi, DataCentersApi, LocationsApi, KubernetesClustersApi, OperatingSystemsApi, SecurityGroupsApi, ProvidersApi, SpotInstancesApi, SSHKeysApi, StatisticsApi, SubnetworksApi, VirtualMachinesApi  } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiFactory {

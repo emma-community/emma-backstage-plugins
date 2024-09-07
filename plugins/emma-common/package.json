@@ -43,7 +43,7 @@
   "dependencies": {
     "@backstage/plugin-catalog-common": "workspace:^",
     "@backstage/plugin-permission-common": "workspace:^",
-    "@zaradarbh/emma-typescript-sdk": "^0.0.3"
+    "@emma-community/emma-typescript-sdk": "^1.0.0"
   },
   "devDependencies": {
     "@backstage/cli": "workspace:^"

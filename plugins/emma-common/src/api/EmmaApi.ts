@@ -1,4 +1,4 @@
-import { VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
+import { VmConfiguration } from '@emma-community/emma-typescript-sdk';
 import { EmmaDataCenter, GeoFence, EmmaComputeType } from '../types';
 
 /** @public */

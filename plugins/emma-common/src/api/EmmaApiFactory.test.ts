@@ -13,10 +13,10 @@ import {
     StatisticsApi,
     SubnetworksApi,
     VirtualMachinesApi,
-} from '@zaradarbh/emma-typescript-sdk';
+} from '@emma-community/emma-typescript-sdk';
 import { EmmaApiFactory } from './EmmaApiFactory';
   
-jest.mock('@zaradarbh/emma-typescript-sdk', () => {
+jest.mock('@emma-community/emma-typescript-sdk', () => {
   const mockSetDefaultAuthentication = jest.fn();
   
   class MockDataCentersApi {

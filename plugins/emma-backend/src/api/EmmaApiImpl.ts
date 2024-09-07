@@ -3,7 +3,7 @@ import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { EmmaApi, EmmaApiFactory, EmmaDataCenter, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration } from '@zaradarbh/emma-typescript-sdk';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
