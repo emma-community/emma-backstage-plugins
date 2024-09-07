@@ -1,0 +1,53 @@
+name: Build and Publish NPM Packages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org/'
+          always-auth: true
+
+      - name: Install dependencies for each package and publish
+        run: |
+          for dir in ./plugins/*/; do
+            cd "$dir"
+            
+            echo "Processing $dir"
+
+            # Install dependencies
+            npm install
+
+            # Build the package
+            npm run build
+
+            # Publish to NPM
+            npm publish
+
+            # Get package version from package.json and create Git tag
+            PACKAGE_VERSION=$(node -p "require('./package.json').version")
+            git tag "v$PACKAGE_VERSION"
+            git push origin "v$PACKAGE_VERSION"
+            
+            # Go back to root directory
+            cd - > /dev/null
+          done
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
