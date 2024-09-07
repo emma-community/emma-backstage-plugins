@@ -39,14 +39,14 @@ jobs:
           yarn test
 
           # Publish
-          npm publish ./plugins/emma-common/ --dry-run
-          npm publish ./plugins/emma-backend/ --dry-run
-          npm publish ./plugins/emma/ --dry-run
+          npm publish ./plugins/emma-common/
+          npm publish ./plugins/emma-backend/
+          npm publish ./plugins/emma/
 
           # Create Git tag for packages
-          # PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          # git tag "v$PACKAGE_VERSION"
-          # git push origin "v$PACKAGE_VERSION"
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          git tag "v$PACKAGE_VERSION"
+          git push origin "v$PACKAGE_VERSION"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
