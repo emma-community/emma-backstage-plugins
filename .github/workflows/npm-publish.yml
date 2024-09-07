@@ -24,30 +24,74 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
           always-auth: true
 
-      - name: Install dependencies for each package and publish
+      # Build and publish common package
+      - name: Install dependencies and publish common package
         run: |
-          for dir in ./plugins/*/; do
-            cd "$dir"
-            
-            echo "Processing $dir"
+          cd ./plugins/emma-common
+          
+          echo "Building and publishing common package"
+          
+          # Install dependencies
+          npm install
 
-            # Install dependencies
-            npm install
+          # Build the package
+          npm run build
 
-            # Build the package
-            npm run build
+          # Publish to NPM
+          npm publish
 
-            # Publish to NPM
-            npm publish
+          # Create Git tag for common package
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          git tag "common-v$PACKAGE_VERSION"
+          git push origin "common-v$PACKAGE_VERSION"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            # Get package version from package.json and create Git tag
-            PACKAGE_VERSION=$(node -p "require('./package.json').version")
-            git tag "v$PACKAGE_VERSION"
-            git push origin "v$PACKAGE_VERSION"
-            
-            # Go back to root directory
-            cd - > /dev/null
-          done
+      # Build and publish backend package
+      - name: Install dependencies and publish backend package
+        run: |
+          cd ./plugins/emma-backend
+          
+          echo "Building and publishing backend package"
+          
+          # Install dependencies
+          npm install
+
+          # Build the package
+          npm run build
+
+          # Publish to NPM
+          npm publish
+
+          # Create Git tag for backend package
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          git tag "backend-v$PACKAGE_VERSION"
+          git push origin "backend-v$PACKAGE_VERSION"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and publish frontend package
+      - name: Install dependencies and publish frontend package
+        run: |
+          cd ./plugins/emma
+          
+          echo "Building and publishing frontend package"
+          
+          # Install dependencies
+          npm install
+
+          # Build the package
+          npm run build
+
+          # Publish to NPM
+          npm publish
+
+          # Create Git tag for frontend package
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          git tag "frontend-v$PACKAGE_VERSION"
+          git push origin "frontend-v$PACKAGE_VERSION"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
