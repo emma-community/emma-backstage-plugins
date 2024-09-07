@@ -24,83 +24,29 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
           always-auth: true
 
-      # Build and publish common package
-      - name: Install dependencies and publish common package
-        run: |
-          cd ./plugins/emma-common
-          
-          echo "Building and publishing common package"
+      # Build and publish packages
+      - name: Install dependencies and publish packages
+        run: |          
+          echo "Building and publishing packages"
           
           # Install yarn
           npm install -g yarn
 
-          # Install dependencies
+          # Compile & test
           yarn install 
-
-          # Build the package
+          yarn tsc 
           yarn build
+          yarn test
 
-          # Publish to NPM
-          npm publish
+          # Publish
+          npm publish ./plugins/emma-common/ --dry-run
+          npm publish ./plugins/emma-backend/ --dry-run
+          npm publish ./plugins/emma/ --dry-run
 
-          # Create Git tag for common package
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          git tag "common-v$PACKAGE_VERSION"
-          git push origin "common-v$PACKAGE_VERSION"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Build and publish backend package
-      - name: Install dependencies and publish backend package
-        run: |
-          cd ./plugins/emma-backend
-          
-          echo "Building and publishing backend package"
-          
-          # Install yarn
-          npm install -g yarn
-
-          # Install dependencies
-          yarn install 
-
-          # Build the package
-          yarn build
-
-          # Publish to NPM
-          npm publish
-
-          # Create Git tag for backend package
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          git tag "backend-v$PACKAGE_VERSION"
-          git push origin "backend-v$PACKAGE_VERSION"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Build and publish frontend package
-      - name: Install dependencies and publish frontend package
-        run: |
-          cd ./plugins/emma
-          
-          echo "Building and publishing frontend package"
-          
-          # Install yarn
-          npm install -g yarn
-
-          # Install dependencies
-          yarn install 
-
-          # Build the package
-          yarn build
-
-          # Publish to NPM
-          npm publish
-
-          # Create Git tag for frontend package
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          git tag "frontend-v$PACKAGE_VERSION"
-          git push origin "frontend-v$PACKAGE_VERSION"
+          # Create Git tag for packages
+          # PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          # git tag "v$PACKAGE_VERSION"
+          # git push origin "v$PACKAGE_VERSION"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -21,7 +21,7 @@
   "homepage": "https://emma.ms",
   "repository": {
     "type": "git",
-    "url": "https://github.com/emma-community/emma-backstage-plugins",
+    "url": "git+https://github.com/emma-community/emma-backstage-plugins.git",
     "directory": "plugins/emma-backstage-plugins"
   },
   "license": "Apache-2.0",
