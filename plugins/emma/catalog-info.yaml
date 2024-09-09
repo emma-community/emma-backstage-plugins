@@ -9,7 +9,7 @@ metadata:
     backstage.io/techdocs-ref: dir:.
 spec:
   type: library
-  owner: oss@emma.ms
+  owner: info@emma.ms
   lifecycle: experimental
   dependsOn:
     - backstage-plugin-emma-backend

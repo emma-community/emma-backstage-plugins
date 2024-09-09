@@ -10,7 +10,7 @@ metadata:
 spec:
   lifecycle: experimental
   type: backstage-common-library
-  owner: oss@emma.ms
+  owner: info@emma.ms
   providesApis:
     - emma-common
   dependsOn:
