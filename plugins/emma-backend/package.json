@@ -1,7 +1,7 @@
 {
   "name": "@emma-community/backstage-plugin-emma-backend",
   "description": "Backend for the emma plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "backstage": {
     "role": "backend-plugin",
     "pluginId": "emma",
@@ -28,8 +28,7 @@
   "types": "src/index.ts",
   "files": [
     "dist",
-    "config.d.ts",
-    "src/api/knownGeoLocations.json"
+    "config.d.ts"
   ],
   "scripts": {
     "start": "backstage-cli package start",
@@ -37,7 +36,7 @@
     "lint": "backstage-cli package lint",
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
-    "prepack": "backstage-cli package prepack",
+    "prepack": "backstage-cli package prepack && node copy-knownGeoLocations.js",
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
