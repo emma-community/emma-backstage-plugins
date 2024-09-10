@@ -1,8 +1,7 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
 import { EmmaClient } from './EmmaClient';
-import { EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType } from '@emma-community/backstage-plugin-emma-common';
-import { VmConfiguration } from '@emma-community/emma-typescript-sdk';
+import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType } from '@emma-community/backstage-plugin-emma-common';
 
 describe('EmmaClient', () => {
   let discoveryApi: jest.Mocked<DiscoveryApi>;
@@ -91,7 +90,7 @@ describe('EmmaClient', () => {
 
   describe('getComputeConfigs', () => {
     it('should call fetch with the correct URL when computeType is provided', async () => {
-      const mockVmConfigurations: VmConfiguration[] = [{ id: 1 }];
+      const mockVmConfigurations: EmmaVmConfiguration[] = [{ id: 1, label: 'default', type: EmmaComputeType.VirtualMachine }];
       discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
       fetchApi.fetch.mockResolvedValue({
         ok: true,
@@ -106,7 +105,7 @@ describe('EmmaClient', () => {
     });
 
     it('should call fetch with the correct URL when no computeType is provided', async () => {
-      const mockVmConfigurations: VmConfiguration[] = [{ id: 1 }];
+      const mockVmConfigurations: EmmaVmConfiguration[] = [{ id: 1, label: 'default', type: EmmaComputeType.VirtualMachine }];
       discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
       fetchApi.fetch.mockResolvedValue({
         ok: true,

@@ -132,6 +132,6 @@ describe('EmmaApiImpl', () => {
     const vmConfigs = await emmaApi.getComputeConfigs();
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute configs');
-    expect(vmConfigs).toEqual([{ id: 'vm-1' }, { id: 'vm-2' }, { id: 'spot-1' }, { id: 'k8s-1' }]);
+    expect(vmConfigs).toEqual([{ id: 'vm-1', label: 'default', type: 'VirtualMachine' }, { id: 'vm-2', label: 'default', type: 'VirtualMachine' }, { id: 'spot-1', label: 'default', type: 'SpotInstance' }, { id: 'k8s-1', label: 'default', type: 'KubernetesNode' }]);
   });
 });

@@ -1,7 +1,6 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
-import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType } from '@emma-community/backstage-plugin-emma-common';
-import { VmConfiguration } from '@emma-community/emma-typescript-sdk';
+import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export class EmmaClient implements EmmaApi {
@@ -28,7 +27,7 @@ export class EmmaClient implements EmmaApi {
     return await this.get<EmmaDataCenter[]>(urlSegment);
   }
 
-  public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<VmConfiguration[]> {
+  public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
     const queryString = new URLSearchParams();
 
     computeType.forEach(type => queryString.append('computeType', type));
@@ -44,7 +43,7 @@ export class EmmaClient implements EmmaApi {
 
     const urlSegment = `computeconfigs/?${queryString}`;
 
-    return await this.get<VmConfiguration[]>(urlSegment);
+    return await this.get<EmmaVmConfiguration[]>(urlSegment);
 
   }
 

@@ -1,30 +1,24 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableRow, Select, MenuItem, IconButton, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { EmmaComputeType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaVmConfiguration } from '@emma-community/backstage-plugin-emma-common';
 import { VmConfigurationRowComponent } from './VmConfigurationRowComponent';
 import { VmConfigurationModalComponent } from './VmConfigurationModalComponent';
 
-export interface ComputeConfigEntry {
-  id: number;
-  name: string;
-  type: EmmaComputeType;
-}
-
-const initialData: ComputeConfigEntry[] = [
-  { id: 1, name: 'VM1', type: EmmaComputeType.VirtualMachine },
-  { id: 2, name: 'SpotInstance1', type: EmmaComputeType.SpotInstance },
-  { id: 3, name: 'K8Node1', type: EmmaComputeType.KubernetesNode }
+const initialData: EmmaVmConfiguration[] = [
+  { id: 1, label: 'VM1', type: EmmaComputeType.VirtualMachine },
+  { id: 2, label: 'SpotInstance1', type: EmmaComputeType.SpotInstance },
+  { id: 3, label: 'K8Node1', type: EmmaComputeType.KubernetesNode }
 ];
 
 export const VmConfigurationGridComponent: React.FC = () => {
-  const [data, setData] = useState<ComputeConfigEntry[]>(initialData);
+  const [data, setData] = useState<EmmaVmConfiguration[]>(initialData);
   const [filter, setFilter] = useState<EmmaComputeType | 'All'>('All');
   const [modalOpen, setModalOpen] = useState(false);
-  const [editEntry, setEditEntry] = useState<Partial<ComputeConfigEntry> | null>(null); // Entry for editing
+  const [editEntry, setEditEntry] = useState<Partial<EmmaVmConfiguration> | null>(null); // Entry for editing
 
-  const handleOpenModal = (entry?: Partial<ComputeConfigEntry>) => {
-    setEditEntry(entry || { name: '', type: EmmaComputeType.VirtualMachine });
+  const handleOpenModal = (entry?: Partial<EmmaVmConfiguration>) => {
+    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine });
     setModalOpen(true);
   };
 
@@ -33,7 +27,7 @@ export const VmConfigurationGridComponent: React.FC = () => {
     setEditEntry(null);
   };
 
-  const handleSave = (entry: ComputeConfigEntry) => {
+  const handleSave = (entry: EmmaVmConfiguration) => {
     if (editEntry?.id) {
       // Update existing entry
       setData((prevData) => prevData.map((item) => (item.id === entry.id ? entry : item)));
@@ -66,7 +60,7 @@ export const VmConfigurationGridComponent: React.FC = () => {
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-            <TableCell>Name</TableCell>
+            <TableCell>Label</TableCell>
             <TableCell>Type</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
@@ -77,7 +71,7 @@ export const VmConfigurationGridComponent: React.FC = () => {
               key={entry.id}
               entry={entry}
               onEdit={() => handleOpenModal(entry)}
-              onDelete={() => handleDelete(entry.id)}
+              onDelete={() => handleDelete(entry.id!)}
             />
           ))}
           <TableRow>

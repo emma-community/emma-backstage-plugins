@@ -1,10 +1,16 @@
-import { DataCenter } from '@emma-community/emma-typescript-sdk';
+import { DataCenter, VmConfiguration } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export type EmmaDataCenter = DataCenter & {
     location: GeoLocation
     region_code: string;
     provider: string;
+}
+
+/** @public */
+export type EmmaVmConfiguration = VmConfiguration & {
+    label: string;
+    type: EmmaComputeType;
 }
 
 /** @public */

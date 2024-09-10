@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@emma-community/backstage-plugin-emma-common';
 import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
@@ -83,20 +83,60 @@ export class EmmaApiImpl implements EmmaApi {
     return remoteResults;
   }
   
-  public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<VmConfiguration[]> {
+  public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
       const api = this.apiFactory.create(ComputeInstancesConfigurationsApi);
-      let vmConfigs: VmConfiguration[] = [];
+      let vmConfigs: EmmaVmConfiguration[] = [];
           
       this.logger.info('Fetching compute configs');
       
-      if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.VirtualMachine) > -1)
-        vmConfigs = vmConfigs.concat((await api.getVmConfigs(providerId, locationId, dataCenterId)).body.content ?? []);
+      // TODO: Check paging and fetch all results.
+      if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.VirtualMachine) > -1) {
+        const vmConfigsResponse = (await api.getVmConfigs(providerId, locationId, dataCenterId)).body.content ?? [];
+        
+        const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
+            const emmaVmConfig: EmmaVmConfiguration = {
+                ...vmConfig,
+                label: 'default',
+                type: EmmaComputeType.VirtualMachine
+            };
 
-      if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.SpotInstance) > -1)
-        vmConfigs = vmConfigs.concat((await api.getSpotConfigs(providerId, locationId, dataCenterId)).body.content ?? []);
+            return emmaVmConfig;
+        });
+    
+        vmConfigs = vmConfigs.concat(emmaVmConfigs);
+      }
+    
+      if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.SpotInstance) > -1) {
+        const vmConfigsResponse = (await api.getSpotConfigs(providerId, locationId, dataCenterId)).body.content ?? [];
+        
+        const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
+            const emmaVmConfig: EmmaVmConfiguration = {
+                ...vmConfig,
+                label: 'default',
+                type: EmmaComputeType.SpotInstance
+            };
 
-      if(computeType.length === 0 || computeType.indexOf(EmmaComputeType.KubernetesNode) > -1)
-        vmConfigs = vmConfigs.concat((await api.getKuberNodesConfigs(providerId, locationId, dataCenterId)).body.content ?? []);
+            return emmaVmConfig;
+        });
+    
+        vmConfigs = vmConfigs.concat(emmaVmConfigs);
+      }
+    
+      if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.KubernetesNode) > -1) {
+        const vmConfigsResponse = (await api.getKuberNodesConfigs(providerId, locationId, dataCenterId)).body.content ?? [];
+        
+        const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
+            const emmaVmConfig: EmmaVmConfiguration = {
+                ...vmConfig,
+                label: 'default',
+                type: EmmaComputeType.KubernetesNode
+            };
+
+            return emmaVmConfig;
+        });
+    
+        vmConfigs = vmConfigs.concat(emmaVmConfigs);
+      }
       
       this.logger.info('Returning filtered compute configs');
 

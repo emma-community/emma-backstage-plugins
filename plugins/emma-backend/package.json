@@ -1,7 +1,7 @@
 {
   "name": "@emma-community/backstage-plugin-emma-backend",
   "description": "Backend for the emma plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "backstage": {
     "role": "backend-plugin",
     "pluginId": "emma",
@@ -51,8 +51,7 @@
     "express-promise-router": "^4.1.0",
     "uuid": "^9.0.0",
     "yn": "^4.0.0",
-    "@emma-community/backstage-plugin-emma-common": "^1.0.3",
-    "@emma-community/emma-typescript-sdk": "^1.0.0"
+    "@emma-community/backstage-plugin-emma-common": "^1.0.4"
   },
   "devDependencies": {
     "@backstage/backend-defaults": "workspace:^",

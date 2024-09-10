@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Select, MenuItem } from '@material-ui/core';
-import { EmmaComputeType } from '@emma-community/backstage-plugin-emma-common';
-import { ComputeConfigEntry } from './VmConfigurationGridComponent';
+import { EmmaComputeType, EmmaVmConfiguration } from '@emma-community/backstage-plugin-emma-common';
 
 interface VmConfigModalProps {
   open: boolean;
-  entry: Partial<ComputeConfigEntry> | null;
+  entry: Partial<EmmaVmConfiguration> | null;
   onClose: () => void;
-  onSave: (entry: ComputeConfigEntry) => void;
+  onSave: (entry: EmmaVmConfiguration) => void;
 }
 
 export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ open, entry, onClose, onSave }) => {
-  const [currentEntry, setCurrentEntry] = useState<Partial<ComputeConfigEntry>>(entry || { name: '', type: EmmaComputeType.VirtualMachine });
+  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVmConfiguration>>(entry || { label: '', type: EmmaComputeType.VirtualMachine });
 
   useEffect(() => {
     if (entry) {
@@ -20,8 +19,8 @@ export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ op
   }, [entry]);
 
   const handleSave = () => {
-    if (currentEntry.name && currentEntry.type) {
-      onSave(currentEntry as ComputeConfigEntry);
+    if (currentEntry.label && currentEntry.type) {
+      onSave(currentEntry as EmmaVmConfiguration);
     }
   };
 
@@ -33,8 +32,8 @@ export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ op
           label="Name"
           fullWidth
           margin="dense"
-          value={currentEntry.name}
-          onChange={(e) => setCurrentEntry({ ...currentEntry, name: e.target.value })}
+          value={currentEntry.label}
+          onChange={(e) => setCurrentEntry({ ...currentEntry, label: e.target.value })}
         />
         <Select
           fullWidth
