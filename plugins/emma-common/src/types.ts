@@ -21,6 +21,26 @@ export enum EmmaComputeType {
 }
 
 /** @public */
+export enum EmmaCPUType {
+    Shared = 'shared',
+    Standard = 'standard',
+    HCP = 'hcp'
+}
+
+/** @public */
+export enum EmmaNetworkType {
+    Isolated = 'isolated',
+    MultiCloud = 'multi-cloud',
+    Default = 'default'
+}
+
+/** @public */
+export enum EmmaVolumeType {
+    SSD = 'ssd',
+    SSDPlus = 'ssd-plus'
+}
+
+/** @public */
 export enum EmmaComputeUnit {
     Months = 'MONTHS',
     Days = 'DAYS',

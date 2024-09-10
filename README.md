@@ -43,7 +43,7 @@ The `emma-common` plugin provides shared resources such as constants, types, and
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-repo/emma-backstage-plugins.git
+git clone https://github.com/emma-community/emma-backstage-plugins.git
 cd emma-backstage-plugins
 ```
 

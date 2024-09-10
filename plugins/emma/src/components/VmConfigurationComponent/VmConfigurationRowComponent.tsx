@@ -13,10 +13,10 @@ interface VmConfigRowProps {
 export const VmConfigurationRowComponent: React.FC<VmConfigRowProps> = ({ entry, onEdit, onDelete }) => {
   return (
     <TableRow>
-      <TableCell>{entry.id}</TableCell>
-      <TableCell>{entry.label}</TableCell>
-      <TableCell>{entry.type}</TableCell>
-      <TableCell>
+      <TableCell style={{ width: '40%' }}>{entry.label}</TableCell>
+      <TableCell style={{ width: '20%' }}>{entry.providerName}</TableCell>
+      <TableCell style={{ width: '20%' }}>{entry.type}</TableCell>
+      <TableCell style={{ width: '20%' }}>
         <Tooltip title="Edit">
           <IconButton onClick={onEdit}>
             <EditIcon />
