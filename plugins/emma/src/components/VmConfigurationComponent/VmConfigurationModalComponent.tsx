@@ -10,33 +10,49 @@ interface VmConfigModalProps {
 }
 
 export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ open, entry, onClose, onSave }) => {
-  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVmConfiguration>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, providerName: 'AWS', vCpu: 2, vCpuType: EmmaCPUType.Shared, volumeGb: 200, volumeType: EmmaVolumeType.SSD });
-  const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu || 4)); // Set default vCPU to 4, using log base 2 of the value for slider
-  const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>(entry?.volumeGb || 50);
+  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVmConfiguration>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, providerName: 'AWS', vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, volumeGb: 200, volumeType: EmmaVolumeType.SSD });
+  const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu || 4));
+  const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb || 32));
+  const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>(entry?.volumeGb || 200);
 
   useEffect(() => {
     if (entry) {
       setCurrentEntry(entry);
-      setVCpuSliderValue(Math.log2(entry.vCpu || 4)); // Convert the entry's vCPU to log2 for the slider
+      setVCpuSliderValue(Math.log2(entry.vCpu || 4));
+      setRamSliderValue(Math.log2(entry.ramGb || 32));
       setVolumeSizeSliderValue(entry.volumeGb || 200);
     }
   }, [entry]);
 
   const handleSave = () => {
     if (currentEntry.label && currentEntry.type) {
-      onSave({ ...currentEntry, vCpu: Math.pow(2, vCpuSliderValue), volumeGb: volumeSizeSliderValue } as EmmaVmConfiguration);
+      onSave({ 
+        ...currentEntry, 
+        vCpu: Math.pow(2, vCpuSliderValue),
+        ramGb: Math.pow(2, ramSliderValue),
+        volumeGb: volumeSizeSliderValue 
+      } as EmmaVmConfiguration);
     }
   };
 
   const vCPUMarks = [
-    { value: 0, label: '1' },   // log2(1) = 0
-    { value: 1, label: '2' },   // log2(2) = 1
-    { value: 2, label: '4' },   // log2(4) = 2
-    { value: 3, label: '8' },   // log2(8) = 3
-    { value: 4, label: '16' },  // log2(16) = 4
-    { value: 5, label: '32' },  // log2(32) = 5
-    { value: 6, label: '64' },   // log2(64) = 6
-    { value: 7, label: '128' }   // log2(64) = 7
+    { value: 0, label: '1' },     // log2(1) = 0
+    { value: 1, label: '2' },     // log2(2) = 1
+    { value: 2, label: '4' },     // log2(4) = 2
+    { value: 3, label: '8' },     // log2(8) = 3
+    { value: 4, label: '16' },    // log2(16) = 4
+    { value: 5, label: '32' },    // log2(32) = 5
+    { value: 6, label: '64' },    // log2(64) = 6
+    { value: 7, label: '128' }    // log2(128) = 7
+  ];
+
+  const ramMarks = [
+    { value: 5, label: '32' },    // log2(32) = 5
+    { value: 6, label: '64' },    // log2(64) = 6
+    { value: 7, label: '128' },   // log2(128) = 7
+    { value: 8, label: '256' },   // log2(256) = 8    
+    { value: 9, label: '512' },   // log2(128) = 9
+    { value: 10, label: '1024' }, // log2(128) = 10
   ];
 
   return (
@@ -86,7 +102,7 @@ export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ op
         </Select>
 
         <div style={{ margin: '20px 0' }}>
-          <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label> {/* Convert slider value back to binary */}
+          <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label>
           <Slider
             value={vCpuSliderValue}
             onChange={(_: any, newValue: number | number[]) => setVCpuSliderValue(newValue as number)}
@@ -97,7 +113,21 @@ export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ op
             min={0}
             max={7}
           />
-        </div>    
+        </div>
+
+        <div style={{ margin: '20px 0' }}>
+          <label>RAM (GB): {Math.pow(2, ramSliderValue)}</label>
+          <Slider
+            value={ramSliderValue}
+            onChange={(_: any, newValue: number | number[]) => setRamSliderValue(newValue as number)}
+            aria-labelledby="ram-size-slider"
+            valueLabelDisplay="auto"
+            step={1}
+            marks={ramMarks}
+            min={5}
+            max={10}
+          />
+        </div>   
               
         <Select
           label="Volume Type"
@@ -111,7 +141,7 @@ export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ op
         </Select>
 
         <div style={{ margin: '20px 0' }}>
-          <label>Volume Size (GB): {volumeSizeSliderValue}</label>
+          <label>Volume (GB): {volumeSizeSliderValue}</label>
           <Slider
             value={volumeSizeSliderValue}
             onChange={(_: any, newValue: number | number[]) => setVolumeSizeSliderValue(newValue as number)}
