@@ -1,1 +1,0 @@
-export { ComputeConfigManagementGridComponent } from './ComputeConfigManagementGridComponent';

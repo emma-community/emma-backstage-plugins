@@ -79,7 +79,8 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         {/* End global nav */}
         <SidebarDivider />
         <SidebarScrollWrapper>          
-          <SidebarItem icon={MapIcon} to="emma" text="Heatmap" />
+          <SidebarItem icon={MapIcon} to="emma/heatmap" text="Heatmap" />
+          <SidebarItem icon={CreateComponentIcon} to="emma/management" text="Management" />
         </SidebarScrollWrapper>
       </SidebarGroup>
       <SidebarSpace />

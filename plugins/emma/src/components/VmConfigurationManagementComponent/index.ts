@@ -1,0 +1,1 @@
+export { VmConfigurationManagementComponent } from './VmConfigurationManagementComponent';

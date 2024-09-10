@@ -38,3 +38,12 @@ export const EmmaHeatmapPage = emmaHeatmapPlugin.provide(
     mountPoint: rootRouteRef,
   }),
 );
+
+export const EmmaVmConfigurationManagementPage = emmaHeatmapPlugin.provide(
+  createRoutableExtension({
+    name: 'VmConfigurationManagementPage',
+    component: () =>
+      import('./components/VmConfigurationManagementPageComponent').then(m => m.VmConfigurationManagementPageComponent),
+    mountPoint: rootRouteRef,
+  }),
+);
