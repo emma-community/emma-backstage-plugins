@@ -13,9 +13,11 @@ jobs:
       contents: write
 
     steps:
+      # Step to checkout code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Step to set up Node.js with caching
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -24,11 +26,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
           always-auth: true
 
-      # Step to fetch tags
+      # Step to fetch tags from the git repository
       - name: Fetch tags
         run: git fetch --tags
 
-      # Step to get the latest tag
+      # Step to get the latest git tag
       - name: Get latest tag
         id: get_latest_tag
         run: echo "latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
@@ -40,7 +42,11 @@ jobs:
           package_version=$(node -e "console.log(require('./package.json').version)")
           echo "package_version=$package_version" >> $GITHUB_ENV
 
-      # Compare the package version with the latest tag
+      # Install semver to compare version numbers accurately
+      - name: Install semver
+        run: npm install -g semver
+
+      # Compare the package version with the latest tag and publish if package version is greater
       - name: Compare versions and publish if greater
         run: |
           echo "Latest Tag: ${{ env.latest_tag }}"
@@ -55,25 +61,25 @@ jobs:
 
           echo "Latest Tag Version (stripped): $LATEST_TAG_VERSION"
 
-          # Compare the versions
-          if [ "$(printf '%s\n' "$LATEST_TAG_VERSION" "${{ env.package_version }}" | sort -V | head -n1)" != "$LATEST_TAG_VERSION" ]; then
+          # Compare the versions using semver
+          if npx semver "$LATEST_TAG_VERSION" "<" "${{ env.package_version }}"; then
             echo "New version detected. Publishing..."
-            
+
             # Install yarn
             npm install -g yarn
 
-            # Compile & test
+            # Compile, build, and test
             yarn install 
             yarn tsc 
             yarn build:all
             yarn test
 
-            # Publish packages
+            # Publish packages to NPM
             npm publish ./plugins/emma-common/
             npm publish ./plugins/emma-backend/
             npm publish ./plugins/emma/
 
-            # Create Git tag for packages
+            # Create Git tag for the new version
             git tag "v${{ env.package_version }}"
             git push origin "v${{ env.package_version }}"
           else
