@@ -61,7 +61,7 @@ jobs:
 
           echo "Latest Tag Version (stripped): $LATEST_TAG_VERSION"
 
-          echo npx semver "$LATEST_TAG_VERSION" "<" "${{ env.package_version }}"
+          echo $(npx semver "$LATEST_TAG_VERSION" "<" "${{ env.package_version }}")
 
           # Compare the versions using semver
           if npx semver "$LATEST_TAG_VERSION" "<" "${{ env.package_version }}"; then
