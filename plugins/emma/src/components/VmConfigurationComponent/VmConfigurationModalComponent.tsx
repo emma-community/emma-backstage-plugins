@@ -66,40 +66,73 @@ export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ op
           value={currentEntry.label}
           onChange={(e) => setCurrentEntry({ ...currentEntry, label: e.target.value })}
         />
-        <Select
-          label="Provider"
-          fullWidth
-          margin="dense"
-          value={currentEntry.providerName}
-          onChange={(e) => setCurrentEntry({ ...currentEntry, providerName: e.target.value as string })}
-        >
-          <MenuItem value="AWS">AWS</MenuItem>
-          <MenuItem value="Azure">Azure</MenuItem>
-          <MenuItem value="GCP">GCP</MenuItem>
-        </Select>        
-        <Select
-          label="Type"
-          fullWidth
-          margin="dense"
-          value={currentEntry.type}
-          onChange={(e) => setCurrentEntry({ ...currentEntry, type: e.target.value as EmmaComputeType })}
-        >
-          <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
-          <MenuItem value={EmmaComputeType.SpotInstance}>Spot Instance</MenuItem>
-          <MenuItem value={EmmaComputeType.KubernetesNode}>Kubernetes Node</MenuItem>
-        </Select>
+        
+        <div style={{ margin: '20px 0' }}>
+          <div>Provider</div>  
+          <Select
+            fullWidth
+            margin="dense"
+            value={currentEntry.providerName}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, providerName: e.target.value as string })}
+          >
+            <MenuItem value="AWS">AWS</MenuItem>
+            <MenuItem value="Azure">Azure</MenuItem>
+            <MenuItem value="GCP">GCP</MenuItem>
+          </Select>
+        </div>
+
+        <div style={{ margin: '20px 0' }}>
+          <div>Type</div>  
+          <Select
+            fullWidth
+            margin="dense"
+            value={currentEntry.type}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, type: e.target.value as EmmaComputeType })}
+          >
+            <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
+            <MenuItem value={EmmaComputeType.SpotInstance}>Spot Instance</MenuItem>
+            <MenuItem value={EmmaComputeType.KubernetesNode}>Kubernetes Node</MenuItem>
+          </Select>
+        </div>
+
+        <div style={{ margin: '20px 0' }}>
+          <div>Location</div>  
+          <Select
+            fullWidth
+            margin="dense"
+            value={currentEntry.locationName}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, locationName: e.target.value as string })}
+          >
+            <MenuItem value="TODO">TODO: CALL API AND MAP LOCATIONS</MenuItem>
+          </Select>
+        </div>
+           
+        <div style={{ margin: '20px 0' }}>
+          <div>Data Center</div>  
+          <Select
+            fullWidth
+            margin="dense"
+            value={currentEntry.dataCenterName}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenterName: e.target.value as string })}
+          >
+            <MenuItem value="TODO">TODO: CALL API AND MAP DATACENTERS</MenuItem>
+          </Select>
+        </div>
               
-        <Select
-          label="vCpuType"
-          fullWidth
-          margin="dense"
-          value={currentEntry.vCpuType}
-          onChange={(e) => setCurrentEntry({ ...currentEntry, vCpuType: e.target.value as EmmaCPUType })}
-        >
-          <MenuItem value={EmmaCPUType.Shared}>Shared</MenuItem>
-          <MenuItem value={EmmaCPUType.Standard}>Standard</MenuItem>
-          <MenuItem value={EmmaCPUType.HCP}>HCP</MenuItem>
-        </Select>
+        <div style={{ margin: '20px 0' }}>
+          <div>vCpuType</div>  
+          <Select
+            label="vCpuType"
+            fullWidth
+            margin="dense"
+            value={currentEntry.vCpuType}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, vCpuType: e.target.value as EmmaCPUType })}
+          >
+            <MenuItem value={EmmaCPUType.Shared}>Shared</MenuItem>
+            <MenuItem value={EmmaCPUType.Standard}>Standard</MenuItem>
+            <MenuItem value={EmmaCPUType.HCP}>HCP</MenuItem>
+          </Select>
+        </div>
 
         <div style={{ margin: '20px 0' }}>
           <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label>
@@ -129,16 +162,18 @@ export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ op
           />
         </div>   
               
-        <Select
-          label="Volume Type"
-          fullWidth
-          margin="dense"
-          value={currentEntry.volumeType}
-          onChange={(e) => setCurrentEntry({ ...currentEntry, volumeType: e.target.value as EmmaVolumeType })}
-        >
-          <MenuItem value={EmmaVolumeType.SSD}>SSD</MenuItem>
-          <MenuItem value={EmmaVolumeType.SSDPlus}>SSDPlus</MenuItem>
-        </Select>
+        <div style={{ margin: '20px 0' }}>
+          <div>Volume Type</div>  
+          <Select
+            fullWidth
+            margin="dense"
+            value={currentEntry.volumeType}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, volumeType: e.target.value as EmmaVolumeType })}
+          >
+            <MenuItem value={EmmaVolumeType.SSD}>SSD</MenuItem>
+            <MenuItem value={EmmaVolumeType.SSDPlus}>SSDPlus</MenuItem>
+          </Select>
+        </div>
 
         <div style={{ margin: '20px 0' }}>
           <label>Volume (GB): {volumeSizeSliderValue}</label>
