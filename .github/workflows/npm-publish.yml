@@ -42,10 +42,6 @@ jobs:
           package_version=$(node -e "console.log(require('./package.json').version)")
           echo "package_version=$package_version" >> $GITHUB_ENV
 
-      # Install semver to compare version numbers accurately
-      - name: Install semver
-        run: npm install -g semver
-
       # Compare the package version with the latest tag and publish if package version is greater
       - name: Compare versions and publish if greater
         run: |
@@ -61,10 +57,8 @@ jobs:
 
           echo "Latest Tag Version (stripped): $LATEST_TAG_VERSION"
 
-          echo $($LATEST_TAG_VERSION < ${{ env.package_version }})
-
-          # Compare the versions using semver
-          if npx semver "$LATEST_TAG_VERSION" "<" "${{ env.package_version }}"; then
+          # Compare the versions
+          if [[ "$(echo -e "${{ env.package_version }}\n$LATEST_TAG_VERSION" | sort -V | tail -n 1)" == "$${{ env.package_version }}" && "$${{ env.package_version }}" != "$LATEST_TAG_VERSION" ]]; then     
             echo "New version detected. Publishing..."
 
             # Install yarn
