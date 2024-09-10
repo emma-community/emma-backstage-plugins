@@ -1,7 +1,7 @@
 {
   "name": "@emma-community/backstage-plugin-emma-backend",
   "description": "Backend for the emma plugin",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "backstage": {
     "role": "backend-plugin",
     "pluginId": "emma",
