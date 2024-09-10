@@ -33,7 +33,9 @@ jobs:
       # Step to get the latest git tag
       - name: Get latest tag
         id: get_latest_tag
-        run: echo "latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+        run: |
+          latest_tag=$(git describe --tags --abbrev=0)
+          echo "latest_tag=$latest_tag" >> $GITHUB_ENV
 
       # Step to get the current package version from package.json
       - name: Get package version
@@ -52,7 +54,6 @@ jobs:
           echo "Latest Tag: ${{ env.latest_tag }}"
           echo "Package Version: ${{ env.package_version }}"
 
-          # Strip 'v' from the tag if it exists
           LATEST_TAG_VERSION="${{ env.latest_tag }}"
 
           if [[ "$LATEST_TAG_VERSION" == v* ]]; then
