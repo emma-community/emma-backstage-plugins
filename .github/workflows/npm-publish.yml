@@ -45,8 +45,8 @@ jobs:
       # Compare the package version with the latest tag and publish if package version is greater
       - name: Compare versions and publish if greater
         run: |
-          LATEST_TAG_VERSION="${{ env.latest_tag }}"
-          PACKAGE_VERSION="${{ env.package_version }}"
+          LATEST_TAG_VERSION=${{ steps.get_latest_tag.outputs.latest_tag }}
+          PACKAGE_VERSION=${{ steps.get_package_version.outputs.package_version }}
 
           echo "Latest Tag: $LATEST_TAG_VERSION"
           echo "Package Version: $PACKAGE_VERSION"
