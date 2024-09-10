@@ -36,7 +36,7 @@ jobs:
       # Step to get the current package version from package.json
       - name: Get package version
         id: get_package_version
-        run: echo "package_version=$(node -p \"require('./package.json').version\")" >> $GITHUB_ENV
+        run: echo "package_version=$(node -e \"console.log(require('./package.json').version)\")" >> $GITHUB_ENV
 
       # Compare the package version with the latest tag
       - name: Compare versions and publish if greater
