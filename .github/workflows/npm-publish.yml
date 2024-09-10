@@ -24,29 +24,59 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
           always-auth: true
 
-      # Build and publish packages
-      - name: Install dependencies and publish packages
-        run: |          
-          echo "Building and publishing packages"
-          
-          # Install yarn
-          npm install -g yarn
+      # Step to fetch tags
+      - name: Fetch tags
+        run: git fetch --tags
 
-          # Compile & test
-          yarn install 
-          yarn tsc 
-          yarn build:all
-          yarn test
+      # Step to get the latest tag
+      - name: Get latest tag
+        id: get_latest_tag
+        run: echo "latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
 
-          # Publish
-          npm publish ./plugins/emma-common/
-          npm publish ./plugins/emma-backend/
-          npm publish ./plugins/emma/
+      # Step to get the current package version from package.json
+      - name: Get package version
+        id: get_package_version
+        run: echo "package_version=$(node -p \"require('./package.json').version\")" >> $GITHUB_ENV
 
-          # Create Git tag for packages
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          git tag "v$PACKAGE_VERSION"
-          git push origin "v$PACKAGE_VERSION"
+      # Compare the package version with the latest tag
+      - name: Compare versions and publish if greater
+        run: |
+          echo "Latest Tag: ${{ env.latest_tag }}"
+          echo "Package Version: ${{ env.package_version }}"
+
+          # Strip 'v' from the tag if it exists
+          LATEST_TAG_VERSION="${{ env.latest_tag }}"
+
+          if [[ "$LATEST_TAG_VERSION" == v* ]]; then
+            LATEST_TAG_VERSION="${LATEST_TAG_VERSION:1}"
+          fi
+
+          echo "Latest Tag Version (stripped): $LATEST_TAG_VERSION"
+
+          # Compare the versions
+          if [ "$(printf '%s\n' "$LATEST_TAG_VERSION" "${{ env.package_version }}" | sort -V | head -n1)" != "$LATEST_TAG_VERSION" ]; then
+            echo "New version detected. Publishing..."
+            
+            # Install yarn
+            npm install -g yarn
+
+            # Compile & test
+            yarn install 
+            yarn tsc 
+            yarn build:all
+            yarn test
+
+            # Publish packages
+            npm publish ./plugins/emma-common/
+            npm publish ./plugins/emma-backend/
+            npm publish ./plugins/emma/
+
+            # Create Git tag for packages
+            git tag "v${{ env.package_version }}"
+            git push origin "v${{ env.package_version }}"
+          else
+            echo "No new version. Skipping publish."
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

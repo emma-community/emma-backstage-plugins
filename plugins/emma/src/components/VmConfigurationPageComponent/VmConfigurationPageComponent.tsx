@@ -7,12 +7,12 @@ import {
   HeaderLabel,
   SupportButton,
 } from '@backstage/core-components';
-import { VmConfigurationManagementComponent } from '../VmConfigurationManagementComponent';
+import { VmConfigurationGridComponent } from '../VmConfigurationComponent';
 
-export const VmConfigurationManagementPageComponent = () => {
+export const VmConfigurationPageComponent = () => {
   return ( 
     <Page themeId="tool">
-      <Header title="Welcome to VMConfiguration management page!">
+      <Header title="Welcome to VMConfiguration page!">
         <HeaderLabel label="Owner" value="emma.ms" />
         <HeaderLabel label="Lifecycle" value="Alpha" />
       </Header>
@@ -20,7 +20,7 @@ export const VmConfigurationManagementPageComponent = () => {
         <ContentHeader title="VMConfiguration Management">
           <SupportButton>Management page for VMConfiguration entities.</SupportButton>
         </ContentHeader>
-        <VmConfigurationManagementComponent />
+        <VmConfigurationGridComponent />
       </Content>
     </Page>
   );

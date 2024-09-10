@@ -1,0 +1,1 @@
+export { VmConfigurationGridComponent } from './VmConfigurationGridComponent';
