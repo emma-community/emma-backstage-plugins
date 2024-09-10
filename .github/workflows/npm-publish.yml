@@ -32,15 +32,13 @@ jobs:
 
       # Step to get the latest git tag
       - name: Get latest tag
-        id: get_latest_tag
-        run: echo "latest_tag=$(git tag --sort=-v:refname | head -n 1)" >> $GITHUB_ENV
+        id: get_latest_tag        
+        run: echo "::set-output name=latest_tag::$(git tag --sort=-v:refname | head -n 1)"
 
       # Step to get the current package version from package.json
       - name: Get package version
         id: get_package_version
-        run: |
-          package_version=$(node -e "console.log(require('./package.json').version)")
-          echo "package_version=$package_version" >> $GITHUB_ENV
+        run: echo "::set-output name=package_version::$(node -e "console.log(require('./package.json').version)")"
 
       # Compare the package version with the latest tag and publish if package version is greater
       - name: Compare versions and publish if greater
