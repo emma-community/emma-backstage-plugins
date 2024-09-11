@@ -14,6 +14,7 @@ The `emma-common` plugin provides shared resources such as constants, types, and
 - **`setupTests.ts`**: Contains setup logic for tests.
 
 ## Installation
+
 To install the dependencies, run:
 
 ```sh
@@ -21,6 +22,7 @@ yarn install
 ```
 
 ## Testing
+
 To run the tests, use:
 
 ```sh
@@ -28,4 +30,5 @@ yarn test
 ```
 
 ## License
+
 This project is licensed under the Apache 2.0 License.

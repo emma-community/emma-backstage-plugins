@@ -15,13 +15,15 @@ The `emma` plugin provides the frontend components and logic for the emma applic
 - **`HeatMapPageComponent.test.tsx`**: Tests for the `HeatMapPageComponent`.
 
 ## Installation
+
 To install the dependencies, run:
 
 ```sh
 yarn install
 ```
 
-## Running the Plugin
+## Running the plugin
+
 To start the development server, run:
 
 ```sh
@@ -29,6 +31,7 @@ yarn dev
 ```
 
 ## Testing
+
 To run the tests, use:
 
 ```sh
@@ -36,4 +39,5 @@ yarn test
 ```
 
 ## License
+
 This project is licensed under the Apache 2.0 License.
