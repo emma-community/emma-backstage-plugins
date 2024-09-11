@@ -2,19 +2,19 @@ import React from 'react';
 import { TableCell, TableRow, IconButton, Tooltip } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { EmmaVmConfiguration } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaVm } from '@emma-community/backstage-plugin-emma-common';
 
-interface VmConfigRowProps {
-  entry: EmmaVmConfiguration;
+interface ComputeRowProps {
+  entry: EmmaVm;
   onEdit: () => void;
   onDelete: () => void;
 }
 
-export const EmmaVmRowComponent: React.FC<VmConfigRowProps> = ({ entry, onEdit, onDelete }) => {
+export const ComputeRowComponent: React.FC<ComputeRowProps> = ({ entry, onEdit, onDelete }) => {
   return (
     <TableRow>
       <TableCell style={{ width: '40%' }}>{entry.label}</TableCell>
-      <TableCell style={{ width: '20%' }}>{entry.providerName}</TableCell>
+      <TableCell style={{ width: '20%' }}>{entry.provider}</TableCell>
       <TableCell style={{ width: '20%' }}>{entry.type}</TableCell>
       <TableCell style={{ width: '20%' }}>
         <Tooltip title="Edit">

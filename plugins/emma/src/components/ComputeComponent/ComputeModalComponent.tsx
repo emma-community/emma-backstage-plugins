@@ -1,26 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Select, MenuItem, Slider } from '@material-ui/core';
-import { EmmaComputeType, EmmaVmConfiguration, EmmaCPUType, EmmaVolumeType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType } from '@emma-community/backstage-plugin-emma-common';
 
-interface VmConfigModalProps {
+interface ComputeModalProps {
   open: boolean;
-  entry: Partial<EmmaVmConfiguration> | null;
+  entry: Partial<EmmaVm> | null;
   onClose: () => void;
-  onSave: (entry: EmmaVmConfiguration) => void;
+  onSave: (entry: EmmaVm) => void;
 }
 
-export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry, onClose, onSave }) => {
-  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVmConfiguration>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, providerName: 'AWS', vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, volumeGb: 200, volumeType: EmmaVolumeType.SSD });
-  const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu || 4));
-  const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb || 32));
-  const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>(entry?.volumeGb || 200);
+export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry, onClose, onSave }) => {
+  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: 'AWS', vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }] });
+  const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 4));
+  const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb! || 32));
+  const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((() => {
+    if (entry?.disks) {
+      return entry.disks[0].sizeGb!;
+    }
+
+    return 200;
+  }))
 
   useEffect(() => {
     if (entry) {
       setCurrentEntry(entry);
-      setVCpuSliderValue(Math.log2(entry.vCpu || 4));
-      setRamSliderValue(Math.log2(entry.ramGb || 32));
-      setVolumeSizeSliderValue(entry.volumeGb || 200);
+      setVCpuSliderValue(Math.log2(entry.vCpu! || 4));
+      setRamSliderValue(Math.log2(entry.ramGb! || 32));
+      setVolumeSizeSliderValue((() => {
+        if (entry?.disks) {
+          return entry.disks[0].sizeGb!;
+        }
+    
+        return 200;
+      }));
     }
   }, [entry]);
 
@@ -31,7 +43,7 @@ export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry
         vCpu: Math.pow(2, vCpuSliderValue),
         ramGb: Math.pow(2, ramSliderValue),
         volumeGb: volumeSizeSliderValue 
-      } as EmmaVmConfiguration);
+      } as EmmaVm);
     }
   };
 
@@ -57,23 +69,22 @@ export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{currentEntry?.id ? 'Edit VMConfiguration' : 'Add VMConfiguration'}</DialogTitle>
+      <DialogTitle>{currentEntry?.id ? 'Edit compute entity' : 'Add compute entity'}</DialogTitle>
       <DialogContent>
         <TextField
           label="Label"
           fullWidth
           margin="dense"
-          value={currentEntry.label}
+          value={currentEntry.label!}
           onChange={(e) => setCurrentEntry({ ...currentEntry, label: e.target.value })}
         />
-        
         <div style={{ margin: '20px 0' }}>
           <div>Provider</div>  
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.providerName}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, providerName: e.target.value as string })}
+            value={currentEntry.provider! ?? 'AWS'}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, provider: e.target.value as string })}
           >
             <MenuItem value="AWS">AWS</MenuItem>
             <MenuItem value="Azure">Azure</MenuItem>
@@ -86,7 +97,7 @@ export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.type}
+            value={currentEntry.type!}
             onChange={(e) => setCurrentEntry({ ...currentEntry, type: e.target.value as EmmaComputeType })}
           >
             <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
@@ -100,8 +111,8 @@ export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.locationName}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, locationName: e.target.value as string })}
+            value={currentEntry.location! ?? 'TODO'}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, location: e.target.value as string })}
           >
             <MenuItem value="TODO">TODO: CALL API AND MAP LOCATIONS</MenuItem>
           </Select>
@@ -112,8 +123,8 @@ export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.dataCenterName}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenterName: e.target.value as string })}
+            value={currentEntry.dataCenter! ?? 'TODO'}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: e.target.value as string })}
           >
             <MenuItem value="TODO">TODO: CALL API AND MAP DATACENTERS</MenuItem>
           </Select>
@@ -125,15 +136,15 @@ export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry
             label="vCpuType"
             fullWidth
             margin="dense"
-            value={currentEntry.vCpuType}
+            value={currentEntry.vCpuType!}
             onChange={(e) => setCurrentEntry({ ...currentEntry, vCpuType: e.target.value as EmmaCPUType })}
           >
             <MenuItem value={EmmaCPUType.Shared}>Shared</MenuItem>
             <MenuItem value={EmmaCPUType.Standard}>Standard</MenuItem>
-            <MenuItem value={EmmaCPUType.HCP}>HCP</MenuItem>
+            <MenuItem value={EmmaCPUType.Hpc}>Hpc</MenuItem>
           </Select>
         </div>
-
+   
         <div style={{ margin: '20px 0' }}>
           <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label>
           <Slider
@@ -161,17 +172,19 @@ export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry
             max={10}
           />
         </div>   
-              
+
         <div style={{ margin: '20px 0' }}>
           <div>Volume Type</div>  
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.volumeType}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, volumeType: e.target.value as EmmaVolumeType })}
+            value={currentEntry.disks ? currentEntry.disks[0].type! : EmmaVolumeType.SSD}
+            onChange={(e) => {
+              setCurrentEntry({ ...currentEntry, disks: [{ type: e.target.value as EmmaVolumeType, sizeGb: volumeSizeSliderValue }] });}
+            }
           >
             <MenuItem value={EmmaVolumeType.SSD}>SSD</MenuItem>
-            <MenuItem value={EmmaVolumeType.SSDPlus}>SSDPlus</MenuItem>
+            <MenuItem value={EmmaVolumeType.SSDPlus}>SSD-Plus</MenuItem>
           </Select>
         </div>
 

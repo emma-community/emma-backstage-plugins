@@ -1,0 +1,1 @@
+export { ComputeGridComponent } from './ComputeGridComponent';

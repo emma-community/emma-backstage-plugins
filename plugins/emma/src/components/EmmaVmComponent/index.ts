@@ -1,1 +1,0 @@
-export { EmmaVmGridComponent } from './EmmaVmGridComponent';

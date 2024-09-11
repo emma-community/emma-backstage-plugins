@@ -7,9 +7,9 @@ import {
   HeaderLabel,
   SupportButton,
 } from '@backstage/core-components';
-import { EmmaVmGridComponent } from '../EmmaVmComponent';
+import { ComputeGridComponent } from '../ComputeComponent';
 
-export const EmmaVmPageComponent = () => {
+export const ComputePageComponent = () => {
   return ( 
     <Page themeId="tool">
       <Header title="Welcome to compute entities page!">
@@ -20,7 +20,7 @@ export const EmmaVmPageComponent = () => {
         <ContentHeader title="Compute Entities">
           <SupportButton>Management page for emma compute entities.</SupportButton>
         </ContentHeader>
-        <EmmaVmGridComponent />
+        <ComputeGridComponent />
       </Content>
     </Page>
   );

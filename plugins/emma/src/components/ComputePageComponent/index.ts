@@ -1,0 +1,1 @@
+export { ComputePageComponent } from './ComputePageComponent';

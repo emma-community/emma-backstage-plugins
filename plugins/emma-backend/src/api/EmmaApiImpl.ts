@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi } from '@emma-community/emma-typescript-sdk';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType } from '@emma-community/backstage-plugin-emma-common';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -194,7 +194,8 @@ export class EmmaApiImpl implements EmmaApi {
       const emmaVms = vmsResponse.map((vm: Vm) => {
         return {
           ...vm,
-          type: EmmaComputeType.VirtualMachine
+          type: EmmaComputeType.VirtualMachine,
+          vCpuType: EmmaCPUType[vm.vCpuType?.toString() as keyof typeof EmmaCPUType]
         };
       });
 
@@ -208,7 +209,8 @@ export class EmmaApiImpl implements EmmaApi {
       const emmaVms = vmsResponse.map((vm: Vm) => {
         return {
           ...vm,
-          type: EmmaComputeType.SpotInstance
+          type: EmmaComputeType.SpotInstance,
+          vCpuType: EmmaCPUType[vm.vCpuType?.toString() as keyof typeof EmmaCPUType]
         };
       });
 
@@ -224,7 +226,8 @@ export class EmmaApiImpl implements EmmaApi {
           nodeGroup.nodes!.map(node => ({
             ...node,
             label: k8s.id!.toString(),
-            type: EmmaComputeType.KubernetesNode
+            type: EmmaComputeType.KubernetesNode,
+            vCpuType: EmmaCPUType[node.vCpuType?.toString() as keyof typeof EmmaCPUType]
           }))
         ) || []
       );
@@ -259,7 +262,7 @@ export class EmmaApiImpl implements EmmaApi {
  
   public async addComputeEntity(entity: EmmaVm): Promise<void> {
     this.logger.info(`Adding compute entity with id: ${entity.id} and type: ${entity.type}`);
-
+    
     switch(entity.type) {
       case EmmaComputeType.VirtualMachine:
         await this.apiFactory.create(VirtualMachinesApi).vmCreate({ 
@@ -269,9 +272,9 @@ export class EmmaApiImpl implements EmmaApi {
           osId: entity.os.id, 
           ramGb: entity.ramGb!,
           vCpu: entity.vCpu!,
-          vCpuType: entity.vCpuType!.toString(),
-          volumeGb: entity.disks![0].sizeGb, 
-          volumeType: entity.disks![0].type,
+          vCpuType: VmCreate.VCpuTypeEnum[entity.vCpuType?.toString() as keyof typeof VmCreate.VCpuTypeEnum],
+          volumeGb: entity.disks![0].sizeGb!, 
+          volumeType: VmCreate.VolumeTypeEnum[entity.disks![0].type as keyof typeof VmCreate.VolumeTypeEnum],
           sshKeyId: entity.sshKeyId! });
         break;
       case EmmaComputeType.SpotInstance:
@@ -282,9 +285,9 @@ export class EmmaApiImpl implements EmmaApi {
           osId: entity.os.id, 
           ramGb: entity.ramGb!,
           vCpu: entity.vCpu!,
-          vCpuType: entity.vCpuType!.toString(),
-          volumeGb: entity.disks![0].sizeGb, 
-          volumeType: entity.disks![0].type,
+          vCpuType: VmCreate.VCpuTypeEnum[entity.vCpuType?.toString() as keyof typeof VmCreate.VCpuTypeEnum],
+          volumeGb: entity.disks![0].sizeGb!, 
+          volumeType: VmCreate.VolumeTypeEnum[entity.disks![0].type as keyof typeof VmCreate.VolumeTypeEnum],
           price: entity.cost!.price!,
           sshKeyId: entity.sshKeyId! });
         break;
@@ -298,9 +301,9 @@ export class EmmaApiImpl implements EmmaApi {
               dataCenterId: entity.dataCenter.id, 
               ramGb: entity.ramGb!,
               vCpu: entity.vCpu!,
-              vCpuType: entity.vCpuType!.toString(),
-              volumeGb: entity.disks![0].sizeGb, 
-              volumeType: entity.disks![0].types
+              vCpuType: VmCreate.VCpuTypeEnum[entity.vCpuType?.toString() as keyof typeof VmCreate.VCpuTypeEnum],
+              volumeGb: entity.disks![0].sizeGb!, 
+              volumeType: VmCreate.VolumeTypeEnum[entity.disks![0].type as keyof typeof VmCreate.VolumeTypeEnum]
             }
           ]});
         break;
@@ -323,9 +326,9 @@ export class EmmaApiImpl implements EmmaApi {
               dataCenterId: entity.dataCenter.id, 
               ramGb: entity.ramGb!,
               vCpu: entity.vCpu!,
-              vCpuType: entity.vCpuType!.toString(),
-              volumeGb: entity.disks![0].sizeGb, 
-              volumeType: entity.disks![0].types
+              vCpuType: VmCreate.VCpuTypeEnum[entity.vCpuType?.toString() as keyof typeof VmCreate.VCpuTypeEnum],
+              volumeGb: entity.disks![0].sizeGb!, 
+              volumeType: VmCreate.VolumeTypeEnum[entity.disks![0].type as keyof typeof VmCreate.VolumeTypeEnum]
             }
           ]});
         break;

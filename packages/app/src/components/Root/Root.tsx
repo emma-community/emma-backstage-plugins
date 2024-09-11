@@ -28,6 +28,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import { MyGroupsSidebarItem } from '@backstage/plugin-org';
 import GroupIcon from '@material-ui/icons/People';
 import MapIcon from '@material-ui/icons/Map';
+import ComputerIcon from '@material-ui/icons/Computer';
 
 const useSidebarLogoStyles = makeStyles({
   root: {
@@ -80,7 +81,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         <SidebarDivider />
         <SidebarScrollWrapper>          
           <SidebarItem icon={MapIcon} to="emma/heatmap" text="Heatmap" />
-          <SidebarItem icon={CreateComponentIcon} to="emma/management" text="Management" />
+          <SidebarItem icon={ComputerIcon} to="emma/compute" text="Compute" />
         </SidebarScrollWrapper>
       </SidebarGroup>
       <SidebarSpace />

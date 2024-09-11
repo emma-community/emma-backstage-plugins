@@ -6,26 +6,26 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import { EmmaComputeType, EmmaVmConfiguration, EmmaCPUType, EmmaVolumeType } from '@emma-community/backstage-plugin-emma-common';
-import { EmmaVmRowComponent } from './EmmaVmRowComponent';
-import { EmmaVmModalComponent } from './EmmaVmModalComponent';
+import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType } from '@emma-community/backstage-plugin-emma-common';
+import { ComputeRowComponent } from './ComputeRowComponent';
+import { ComputeModalComponent } from './ComputeModalComponent';
 
-const initialData: EmmaVmConfiguration[] = [
-  { id: 1, label: 'VM1', type: EmmaComputeType.VirtualMachine, providerName: 'AWS', vCpuType: EmmaCPUType.Shared, vCpu: 32,volumeType: EmmaVolumeType.SSD, volumeGb: 100 },
-  { id: 2, label: 'SpotInstance1', type: EmmaComputeType.SpotInstance, providerName: 'AWS', vCpuType: EmmaCPUType.Shared, vCpu: 16,volumeType: EmmaVolumeType.SSD, volumeGb: 200 },
-  { id: 3, label: 'K8Node1', type: EmmaComputeType.KubernetesNode, providerName: 'Azure', vCpuType: EmmaCPUType.Standard, vCpu: 64,volumeType: EmmaVolumeType.SSDPlus, volumeGb: 700 },
-  { id: 4, label: 'VM2', type: EmmaComputeType.VirtualMachine, providerName: 'GCP', vCpuType: EmmaCPUType.HCP, vCpu: 128,volumeType: EmmaVolumeType.SSDPlus, volumeGb: 500 },
-  { id: 5, label: 'K8Node2', type: EmmaComputeType.KubernetesNode, providerName: 'Azure', vCpuType: EmmaCPUType.Standard, vCpu: 32,volumeType: EmmaVolumeType.SSD, volumeGb: 350 },
+const initialData: EmmaVm[] = [
+  { id: 1, label: 'VM1', type: EmmaComputeType.VirtualMachine, provider: 'AWS', vCpuType: EmmaCPUType.Shared, vCpu: 32, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}] },
+  { id: 2, label: 'SpotInstance1', type: EmmaComputeType.SpotInstance, provider: 'AWS', vCpuType: EmmaCPUType.Shared, vCpu: 16, ramGb: 64, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 250}] },
+  { id: 3, label: 'K8Node1', type: EmmaComputeType.KubernetesNode, provider: 'Azure', vCpuType: EmmaCPUType.Standard, vCpu: 64, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 400}] },
+  { id: 4, label: 'VM2', type: EmmaComputeType.VirtualMachine, provider: 'GCP', vCpuType: EmmaCPUType.Hpc, vCpu: 128, ramGb: 128, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 650}] },
+  { id: 5, label: 'K8Node2', type: EmmaComputeType.KubernetesNode, provider: 'Azure', vCpuType: EmmaCPUType.Standard, vCpu: 32, ramGb: 256, disks: [{type: EmmaVolumeType.SSD, sizeGb: 125}] },
 ];
 
-export const EmmaVmGridComponent: React.FC = () => {
-  const [data, setData] = useState<EmmaVmConfiguration[]>(initialData);
+export const ComputeGridComponent: React.FC = () => {
+  const [data, setData] = useState<EmmaVm[]>(initialData);
   const [filter, setFilter] = useState<EmmaComputeType | 'All'>('All');
   const [modalOpen, setModalOpen] = useState(false);
-  const [editEntry, setEditEntry] = useState<Partial<EmmaVmConfiguration> | null>(null);
+  const [editEntry, setEditEntry] = useState<Partial<EmmaVm> | null>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<{ [key: string]: boolean }>({});
 
-  const handleOpenModal = (entry?: Partial<EmmaVmConfiguration>) => {
+  const handleOpenModal = (entry?: Partial<EmmaVm>) => {
     setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine });
     setModalOpen(true);
   };
@@ -35,7 +35,7 @@ export const EmmaVmGridComponent: React.FC = () => {
     setEditEntry(null);
   };
 
-  const handleSave = (entry: EmmaVmConfiguration) => {
+  const handleSave = (entry: EmmaVm) => {
     if (editEntry?.id) {
       setData((prevData) => prevData.map((item) => (item.id === entry.id ? entry : item)));
     } else {
@@ -58,13 +58,13 @@ export const EmmaVmGridComponent: React.FC = () => {
   const filteredData = filter === 'All' ? data : data.filter((item) => item.type === filter);
 
   const groupedData = filteredData.reduce((acc, entry) => {
-    const provider = entry.providerName || 'Unknown';
+    const provider = entry.provider || 'Unknown';
     if (!acc[provider]) {
       acc[provider] = [];
     }
     acc[provider].push(entry);
     return acc;
-  }, {} as { [key: string]: EmmaVmConfiguration[] });
+  }, {} as { [key: string]: EmmaVm[] });
 
   return (
     <div>
@@ -106,7 +106,7 @@ export const EmmaVmGridComponent: React.FC = () => {
                     <Table>
                       <TableBody>
                         {groupedData[providerName].map((entry) => (
-                          <EmmaVmRowComponent
+                          <ComputeRowComponent
                             key={entry.id}
                             entry={entry}
                             onEdit={() => handleOpenModal(entry)}
@@ -135,7 +135,7 @@ export const EmmaVmGridComponent: React.FC = () => {
       </Table>
 
       {/* Modal for Add/Edit */}
-      <EmmaVmModalComponent
+      <ComputeModalComponent
         open={modalOpen}
         entry={editEntry}
         onClose={handleCloseModal}

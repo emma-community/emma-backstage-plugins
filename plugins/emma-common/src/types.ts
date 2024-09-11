@@ -1,4 +1,4 @@
-import { DataCenter, VmConfiguration, Provider, Location } from '@emma-community/emma-typescript-sdk';
+import { DataCenter, VmConfiguration, Provider, Location, KubernetesNodeGroupsInnerNodesInnerDisksInner } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export enum EmmaComputeType {
@@ -11,7 +11,7 @@ export enum EmmaComputeType {
 export enum EmmaCPUType {
   Shared = 'shared',
   Standard = 'standard',
-  HCP = 'hcp'
+  Hpc = 'hcp'
 }
 
 /** @public */
@@ -52,6 +52,9 @@ export type EmmaEntity<T> = {
 }
 
 /** @public */
+export type EmmaDisk = EmmaEntity<number> & KubernetesNodeGroupsInnerNodesInnerDisksInner;
+
+/** @public */
 export type EmmaDataCenter = EmmaEntity<string> & DataCenter & {
   location: GeoLocation
   region_code: string;
@@ -76,10 +79,10 @@ export type EmmaVm = EmmaEntity<number> & {
   dataCenter?: any;
   os?: any;
   vCpu?: number;
-  vCpuType?: any;
+  vCpuType?: EmmaCPUType;
   cloudNetworkType?: any;
   ramGb?: number;
-  disks?: Array<any>;
+  disks?: Array<EmmaDisk>;
   networks?: Array<any>;
   securityGroup?: any;
   cost?: any;
