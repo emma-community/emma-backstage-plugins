@@ -36,7 +36,7 @@ import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
 import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
-import { EmmaHeatmapPage, EmmaVmConfigurationPage } from '@emma-community/backstage-plugin-emma';
+import { EmmaHeatmapPage, EmmaVmPage } from '@emma-community/backstage-plugin-emma';
 
 const app = createApp({
   apis,
@@ -97,7 +97,7 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/emma/heatmap" element={<EmmaHeatmapPage />} />
-    <Route path="/emma/management" element={<EmmaVmConfigurationPage />} />    
+    <Route path="/emma/management" element={<EmmaVmPage />} />    
   </FlatRoutes>
 );
 

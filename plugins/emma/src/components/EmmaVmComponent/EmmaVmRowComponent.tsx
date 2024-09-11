@@ -10,7 +10,7 @@ interface VmConfigRowProps {
   onDelete: () => void;
 }
 
-export const VmConfigurationRowComponent: React.FC<VmConfigRowProps> = ({ entry, onEdit, onDelete }) => {
+export const EmmaVmRowComponent: React.FC<VmConfigRowProps> = ({ entry, onEdit, onDelete }) => {
   return (
     <TableRow>
       <TableCell style={{ width: '40%' }}>{entry.label}</TableCell>

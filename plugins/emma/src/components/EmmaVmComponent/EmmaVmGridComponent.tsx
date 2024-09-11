@@ -7,8 +7,8 @@ import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { EmmaComputeType, EmmaVmConfiguration, EmmaCPUType, EmmaVolumeType } from '@emma-community/backstage-plugin-emma-common';
-import { VmConfigurationRowComponent } from './VmConfigurationRowComponent';
-import { VmConfigurationModalComponent } from './VmConfigurationModalComponent';
+import { EmmaVmRowComponent } from './EmmaVmRowComponent';
+import { EmmaVmModalComponent } from './EmmaVmModalComponent';
 
 const initialData: EmmaVmConfiguration[] = [
   { id: 1, label: 'VM1', type: EmmaComputeType.VirtualMachine, providerName: 'AWS', vCpuType: EmmaCPUType.Shared, vCpu: 32,volumeType: EmmaVolumeType.SSD, volumeGb: 100 },
@@ -18,7 +18,7 @@ const initialData: EmmaVmConfiguration[] = [
   { id: 5, label: 'K8Node2', type: EmmaComputeType.KubernetesNode, providerName: 'Azure', vCpuType: EmmaCPUType.Standard, vCpu: 32,volumeType: EmmaVolumeType.SSD, volumeGb: 350 },
 ];
 
-export const VmConfigurationGridComponent: React.FC = () => {
+export const EmmaVmGridComponent: React.FC = () => {
   const [data, setData] = useState<EmmaVmConfiguration[]>(initialData);
   const [filter, setFilter] = useState<EmmaComputeType | 'All'>('All');
   const [modalOpen, setModalOpen] = useState(false);
@@ -106,7 +106,7 @@ export const VmConfigurationGridComponent: React.FC = () => {
                     <Table>
                       <TableBody>
                         {groupedData[providerName].map((entry) => (
-                          <VmConfigurationRowComponent
+                          <EmmaVmRowComponent
                             key={entry.id}
                             entry={entry}
                             onEdit={() => handleOpenModal(entry)}
@@ -135,7 +135,7 @@ export const VmConfigurationGridComponent: React.FC = () => {
       </Table>
 
       {/* Modal for Add/Edit */}
-      <VmConfigurationModalComponent
+      <EmmaVmModalComponent
         open={modalOpen}
         entry={editEntry}
         onClose={handleCloseModal}

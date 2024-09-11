@@ -1,1 +1,0 @@
-export { VmConfigurationPageComponent } from './VmConfigurationPageComponent';

@@ -38,7 +38,6 @@ export enum EmmaComputeUnit {
 export type GeoLocation = {
   latitude: number;
   longitude: number;
-  label?: string;
 }
 
 /** @public */

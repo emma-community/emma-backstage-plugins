@@ -9,7 +9,7 @@ interface VmConfigModalProps {
   onSave: (entry: EmmaVmConfiguration) => void;
 }
 
-export const VmConfigurationModalComponent: React.FC<VmConfigModalProps> = ({ open, entry, onClose, onSave }) => {
+export const EmmaVmModalComponent: React.FC<VmConfigModalProps> = ({ open, entry, onClose, onSave }) => {
   const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVmConfiguration>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, providerName: 'AWS', vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, volumeGb: 200, volumeType: EmmaVolumeType.SSD });
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu || 4));
   const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb || 32));
