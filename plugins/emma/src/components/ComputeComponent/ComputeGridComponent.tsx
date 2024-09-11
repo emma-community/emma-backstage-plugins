@@ -11,11 +11,11 @@ import { ComputeRowComponent } from './ComputeRowComponent';
 import { ComputeModalComponent } from './ComputeModalComponent';
 
 const initialData: EmmaVm[] = [
-  { id: 1, label: 'VM1', type: EmmaComputeType.VirtualMachine, provider: { name: 'AWS' }, vCpuType: EmmaCPUType.Shared, vCpu: 32, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}] },
-  { id: 2, label: 'SpotInstance1', type: EmmaComputeType.SpotInstance, provider: { name: 'AWS' }, vCpuType: EmmaCPUType.Shared, vCpu: 16, ramGb: 64, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 250}] },
-  { id: 3, label: 'K8Node1', type: EmmaComputeType.KubernetesNode, provider: { name: 'Azure' }, vCpuType: EmmaCPUType.Standard, vCpu: 64, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 400}] },
-  { id: 4, label: 'VM2', type: EmmaComputeType.VirtualMachine, provider: { name: 'GCP' }, vCpuType: EmmaCPUType.Hpc, vCpu: 128, ramGb: 128, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 650}] },
-  { id: 5, label: 'K8Node2', type: EmmaComputeType.KubernetesNode, provider: { name: 'Azure' }, vCpuType: EmmaCPUType.Standard, vCpu: 32, ramGb: 256, disks: [{type: EmmaVolumeType.SSD, sizeGb: 125}] },
+  { id: 1, label: 'VM1', type: EmmaComputeType.VirtualMachine, provider: { id: 1, name: 'AWS' }, vCpuType: EmmaCPUType.Shared, vCpu: 32, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], location: { id: 6, name: 'London' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'AWS' } },
+  { id: 2, label: 'SpotInstance1', type: EmmaComputeType.SpotInstance, provider: { id: 1, name: 'AWS' }, vCpuType: EmmaCPUType.Shared, vCpu: 16, ramGb: 64, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 250}], location: { id: 6, name: 'London' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'AWS' } },
+  { id: 3, label: 'K8Node1', type: EmmaComputeType.KubernetesNode, provider: { id: 2, name: 'Azure' }, vCpuType: EmmaCPUType.Standard, vCpu: 64, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 400}], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'azure-swedencentral', name: 'azure-swedencentral', location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'Azure' } },
+  { id: 4, label: 'VM2', type: EmmaComputeType.VirtualMachine, provider: { id: 3, name: 'GCP' }, vCpuType: EmmaCPUType.Hpc, vCpu: 128, ramGb: 128, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 650}], location: { id: 4, name: 'Mumbai' }, dataCenter: { id: 'gcp-asia-east2-c', name: 'gcp-asia-east2-c', location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'GCP' } },
+  { id: 5, label: 'K8Node2', type: EmmaComputeType.KubernetesNode, provider: { id: 2, name: 'Azure' }, vCpuType: EmmaCPUType.Standard, vCpu: 32, ramGb: 256, disks: [{type: EmmaVolumeType.SSD, sizeGb: 125}], location: { id: 5, name: 'Paris' }, dataCenter: { id: 'azure-northeurope', name: 'azure-northeurope', location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'Azure' } },
 ];
 
 export const ComputeGridComponent: React.FC = () => {
@@ -26,7 +26,7 @@ export const ComputeGridComponent: React.FC = () => {
   const [collapsedGroups, setCollapsedGroups] = useState<{ [key: string]: boolean }>({});
 
   const handleOpenModal = (entry?: Partial<EmmaVm>) => {
-    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine });
+    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 1, name: 'AWS' }, vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }], location: { id: 6, name: 'London' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'AWS' } });
     setModalOpen(true);
   };
 

@@ -15,41 +15,32 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
   const emmaApi = useApi(emmaApiRef);
   const [locations, setLocations] = useState<EmmaLocation[]>([]);
   const [dataCenters, setDataCenters] = useState<EmmaDataCenter[]>([]);
-  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { name: 'AWS' }, vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }] });
+  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 1, name: 'AWS' }, vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }], location: { id: 6, name: 'London' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'AWS' } });
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 4));
   const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb! || 32));
-  const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((() => {
-    if (entry?.disks) {
-      return entry.disks[0].sizeGb!;
-    }
-
-    return 200;
-  }))
-
+  const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
+  
   useEffect(() => {
     if (entry) {
       setCurrentEntry(entry);
       setVCpuSliderValue(Math.log2(entry.vCpu! || 4));
       setRamSliderValue(Math.log2(entry.ramGb! || 32));
-      setVolumeSizeSliderValue((() => {
-        if (entry?.disks) {
-          return entry.disks[0].sizeGb!;
-        }
-    
-        return 200;
-      }));
+      setVolumeSizeSliderValue((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
     }
 
     const fetchLocationsAndDataCenters = async () => {
-      const fetchedLocations = await emmaApi.getLocations();
-      const fetchedDataCenters = await emmaApi.getDataCenters();
+      if(locations.length === 0) {
+        setLocations(await emmaApi.getLocations());
 
-      setLocations(fetchedLocations);
-      setDataCenters(fetchedDataCenters);
+        require('console').log('fetchLocationsAndDataCenters saved');
+      }
+
+      if(dataCenters.length === 0)
+        setDataCenters(await emmaApi.getDataCenters());
     };
   
     fetchLocationsAndDataCenters();
-  }, [entry, emmaApi]);
+  }, [entry, emmaApi, locations, dataCenters]);
 
   const handleSave = () => {
     if (currentEntry.label && currentEntry.type) {
@@ -78,8 +69,8 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
     { value: 6, label: '64' },    // log2(64) = 6
     { value: 7, label: '128' },   // log2(128) = 7
     { value: 8, label: '256' },   // log2(256) = 8    
-    { value: 9, label: '512' },   // log2(128) = 9
-    { value: 10, label: '1024' }, // log2(128) = 10
+    { value: 9, label: '512' },   // log2(512) = 9
+    { value: 10, label: '1024' }, // log2(1024) = 10
   ];
 
   return (
@@ -90,7 +81,7 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           label="Label"
           fullWidth
           margin="dense"
-          value={currentEntry.label!}
+          value={currentEntry.label}
           onChange={(e) => setCurrentEntry({ ...currentEntry, label: e.target.value })}
         />
         <div style={{ margin: '20px 0' }}>
@@ -98,12 +89,12 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.provider?.name! ?? { name: 'AWS' }}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, provider: { name: e.target.value as string } })}
+            value={currentEntry.provider!.id}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, provider: { id: e.target.value as number, name: currentEntry.provider?.name } })}
           >
-            <MenuItem value="AWS">AWS</MenuItem>
-            <MenuItem value="Azure">Azure</MenuItem>
-            <MenuItem value="GCP">GCP</MenuItem>
+            <MenuItem value={1}>AWS</MenuItem>
+            <MenuItem value={2}>Azure</MenuItem>
+            <MenuItem value={3}>GCP</MenuItem>
           </Select>
         </div>
 
@@ -112,7 +103,7 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.type!}
+            value={currentEntry.type}
             onChange={(e) => setCurrentEntry({ ...currentEntry, type: e.target.value as EmmaComputeType })}
           >
             <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
@@ -126,10 +117,10 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           <Select
             fullWidth
             value={currentEntry.location?.id}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, location: { id: e.target.value as number } })}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, location: { id: e.target.value as number, name: currentEntry.location?.name } })}
           >
             {locations.map((loc) => (
-              <MenuItem key={loc.id} value={loc.name}>{loc.name}</MenuItem>
+              <MenuItem value={loc.id}>{loc.name}</MenuItem>
             ))}
           </Select>
         </div>
@@ -139,10 +130,10 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           <Select
             fullWidth
             value={currentEntry.dataCenter?.id}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, location: { longitude: 0, latitude: 0}, region_code: currentEntry.location?.region!, provider: currentEntry.provider?.name! } })}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, name: currentEntry.dataCenter?.name, location: { longitude: 0, latitude: 0}, region_code: currentEntry.location?.region!, provider: currentEntry.provider?.name! } })}
           >
             {dataCenters.map((dc) => (
-              <MenuItem key={dc.id} value={dc.name}>{dc.name}</MenuItem>
+              <MenuItem value={dc.id}>{dc.name}</MenuItem>
             ))}
           </Select>
         </div>
@@ -153,7 +144,7 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
             label="vCpuType"
             fullWidth
             margin="dense"
-            value={currentEntry.vCpuType!}
+            value={currentEntry.vCpuType}
             onChange={(e) => setCurrentEntry({ ...currentEntry, vCpuType: e.target.value as EmmaCPUType })}
           >
             <MenuItem value={EmmaCPUType.Shared}>Shared</MenuItem>
@@ -195,7 +186,7 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.disks ? currentEntry.disks[0].type! : EmmaVolumeType.SSD}
+            value={currentEntry.disks ? currentEntry.disks[0].type : EmmaVolumeType.SSD}
             onChange={(e) => {
               setCurrentEntry({ ...currentEntry, disks: [{ type: e.target.value as EmmaVolumeType, sizeGb: volumeSizeSliderValue }] });}
             }
