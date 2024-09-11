@@ -58,7 +58,6 @@ export type EmmaDisk = EmmaEntity<number> & KubernetesNodeGroupsInnerNodesInnerD
 export type EmmaDataCenter = EmmaEntity<string> & DataCenter & {
   location: GeoLocation
   region_code: string;
-  provider: string;
 }
 
 /** @public */

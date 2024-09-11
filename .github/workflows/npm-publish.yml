@@ -13,11 +13,9 @@ jobs:
       contents: write
 
     steps:
-      # Step to checkout code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step to set up Node.js with caching
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -26,21 +24,17 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
           always-auth: true
 
-      # Step to fetch tags from the git repository
       - name: Fetch tags
         run: git fetch --tags
 
-      # Step to get the latest git tag
       - name: Get latest tag
         id: get_latest_tag            
         run: echo "latest_tag=$(git tag --sort=-v:refname | head -n 1)" >> $GITHUB_OUTPUT
 
-      # Step to get the current package version from package.json
       - name: Get package version
         id: get_package_version
         run: echo "package_version=$(node -e "console.log(require('./package.json').version)")" >> $GITHUB_OUTPUT
 
-      # Compare the package version with the latest tag and publish if package version is greater
       - name: Compare versions and publish if greater
         run: |
           LATEST_TAG_VERSION=${{ steps.get_latest_tag.outputs.latest_tag }}

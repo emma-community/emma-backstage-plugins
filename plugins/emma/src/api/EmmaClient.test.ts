@@ -26,10 +26,9 @@ describe('EmmaClient', () => {
         "name": "East US",
         "region_code": "eastus",
         "location": {
-        "longitude": -79.4209,
-        "latitude": 37.4316        
-        },
-        "provider": "AZURE"
+          "longitude": -79.4209,
+          "latitude": 37.4316        
+        }
     }];
       discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
       fetchApi.fetch.mockResolvedValue({
@@ -54,10 +53,9 @@ describe('EmmaClient', () => {
         "name": "East US",
         "region_code": "eastus",
         "location": {
-        "longitude": -79.4209,
-        "latitude": 37.4316        
-        },
-        "provider": "AZURE"
+          "longitude": -79.4209,
+          "latitude": 37.4316        
+        }
     }];
       discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
       fetchApi.fetch.mockResolvedValue({
