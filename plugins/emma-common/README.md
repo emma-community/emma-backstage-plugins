@@ -1,4 +1,4 @@
-# Emma Common Plugin
+# emma Common Plugin
 
 ## Overview
 
