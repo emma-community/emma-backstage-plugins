@@ -12,7 +12,7 @@ import { HeatMapComponent } from '../HeatMapComponent';
 export const HeatMapPageComponent = () => {
   return ( 
     <Page themeId="tool">
-      <Header title="Welcome to emma compute config heatmap!">
+      <Header title="Welcome to the emma heatmap page!">
         <HeaderLabel label="Owner" value="emma.ms" />
         <HeaderLabel label="Lifecycle" value="Alpha" />
       </Header>

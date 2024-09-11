@@ -12,13 +12,13 @@ import { ComputeGridComponent } from '../ComputeComponent';
 export const ComputePageComponent = () => {
   return ( 
     <Page themeId="tool">
-      <Header title="Welcome to compute entities page!">
+      <Header title="Welcome to the emma compute page!">
         <HeaderLabel label="Owner" value="emma.ms" />
         <HeaderLabel label="Lifecycle" value="Alpha" />
       </Header>
       <Content>
-        <ContentHeader title="Compute Entities">
-          <SupportButton>Management page for emma compute entities.</SupportButton>
+        <ContentHeader title="Compute entity management by provider">
+          <SupportButton>Manage your emma compute entities.</SupportButton>
         </ContentHeader>
         <ComputeGridComponent />
       </Content>
