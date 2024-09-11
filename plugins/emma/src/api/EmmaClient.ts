@@ -96,6 +96,11 @@ export class EmmaClient implements EmmaApi {
     await this.get(`compute/entities/add/?entity=${JSON.stringify(entity)}`);
   }
 
+  public async updateComputeEntity(entity: EmmaVm): Promise<void> {
+    // TODO: Debug JSON serialization
+    await this.get(`compute/entities/update/?entity=${JSON.stringify(entity)}`);
+  }
+
   private async get<T>(path: string): Promise<T> {
     const baseUrl = `${await this.discoveryApi.getBaseUrl(EMMA_PLUGIN_ID)}/`;
     const url = new URL(path, baseUrl);

@@ -9,4 +9,5 @@ export interface EmmaApi {
   getComputeEntities(entityId?: number, ...computeType: EmmaComputeType[]): Promise<EmmaVm[]>;
   deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void>;
   addComputeEntity(entity: EmmaVm): Promise<void>;
+  updateComputeEntity(entity: EmmaVm): Promise<void>;
 }

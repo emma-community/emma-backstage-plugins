@@ -311,6 +311,31 @@ export class EmmaApiImpl implements EmmaApi {
     this.logger.info('Added compute entity');
   }
 
+  public async updateComputeEntity(entity: EmmaVm): Promise<void> {
+    this.logger.info(`Updating compute entity with id: ${entity.id} and type: ${entity.type}`);
+
+    switch(entity.type) {
+      case EmmaComputeType.KubernetesNode:
+        await this.apiFactory.create(KubernetesClustersApi).editKubernetesCluster(Number(entity.label!), { 
+          workerNodes: [
+            { 
+              name: entity.name!,
+              dataCenterId: entity.dataCenter.id, 
+              ramGb: entity.ramGb!,
+              vCpu: entity.vCpu!,
+              vCpuType: entity.vCpuType!.toString(),
+              volumeGb: entity.disks![0].sizeGb, 
+              volumeType: entity.disks![0].types
+            }
+          ]});
+        break;
+      default:
+        throw new Error(`Unsupported compute type: ${entity.type}`);
+    }
+
+    this.logger.info('Updated compute entity');
+  }
+
   private isWithinBounds(location: GeoLocation, geoFence: GeoFence): boolean {
       return geoFence.bottomLeft.latitude <= location.latitude && 
               location.latitude <= geoFence.topRight.latitude && 
