@@ -288,7 +288,7 @@ export class EmmaApiImpl implements EmmaApi {
           vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
           volumeGb: entity.disks![0].sizeGb!, 
           volumeType: this.parseEnum(VmCreate.VolumeTypeEnum, entity.disks![0].type!)!,
-          price: entity.cost!.price!,
+          price: entity.cost!.price!, // TODO: Test what happens if price exceeds the range of the type in a given zone
           sshKeyId: entity.sshKeyId! });
         break;
       case EmmaComputeType.KubernetesNode:
