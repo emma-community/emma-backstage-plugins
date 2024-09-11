@@ -100,9 +100,19 @@ export async function createRouter(
     if(req.query.entityId) {
       entityId = Number(req.query.entityId);
     }
+
     const computeEntities = await emmaApi.getComputeEntities(entityId, ...requestedComputeTypes);
 
     res.status(200).json(computeEntities);
+  });
+
+  router.post('/compute/entities/:entityId/delete', async (req, res) => {
+    const requestedComputeType: EmmaComputeType = EmmaComputeType[req.query.computeType as keyof typeof EmmaComputeType];
+    const entityId: number = Number(req.params.entityId);;
+
+    await emmaApi.deleteComputeEntity(entityId, requestedComputeType);
+
+    res.status(200);
   });
 
   const middleware = MiddlewareFactory.create({ logger, config });

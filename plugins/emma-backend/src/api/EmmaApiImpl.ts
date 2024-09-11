@@ -216,6 +216,26 @@ export class EmmaApiImpl implements EmmaApi {
     return vms;
   }
  
+  public async deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void> {
+    this.logger.info(`Deleting compute entity with id: ${entityId} and type: ${computeType}`);
+
+    switch(computeType) {
+      case EmmaComputeType.VirtualMachine:
+        await this.apiFactory.create(VirtualMachinesApi).vmDelete(entityId);
+        break;
+      case EmmaComputeType.SpotInstance:
+        await this.apiFactory.create(SpotInstancesApi).spotDelete(entityId);
+        break;
+      case EmmaComputeType.KubernetesNode:
+        await this.apiFactory.create(KubernetesClustersApi).deleteKubernetesCluster(entityId);
+        break;
+      default:
+        throw new Error(`Unsupported compute type: ${computeType}`);
+    }
+
+    this.logger.info('Deleted compute entity');
+  }
+
   private isWithinBounds(location: GeoLocation, geoFence: GeoFence): boolean {
       return geoFence.bottomLeft.latitude <= location.latitude && 
               location.latitude <= geoFence.topRight.latitude && 

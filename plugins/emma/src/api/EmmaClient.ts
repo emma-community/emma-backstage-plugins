@@ -73,6 +73,10 @@ export class EmmaClient implements EmmaApi {
     return await this.get<EmmaVm[]>(urlSegment);
   }
 
+  public async deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void> {
+    await this.get(`compute/entities/${entityId}/delete/?computeType=${computeType}`);
+  }
+
   private async get<T>(path: string): Promise<T> {
     const baseUrl = `${await this.discoveryApi.getBaseUrl(EMMA_PLUGIN_ID)}/`;
     const url = new URL(path, baseUrl);
