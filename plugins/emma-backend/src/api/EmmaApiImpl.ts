@@ -82,7 +82,8 @@ export class EmmaApiImpl implements EmmaApi {
 
     return dataCenters;
   }
-
+  
+  // TODO: Test this.
   public async getProviders(providerId?: number, providerName?: string): Promise<EmmaProvider[]>
   {
     const api = this.apiFactory.create(ProvidersApi);
@@ -104,6 +105,8 @@ export class EmmaApiImpl implements EmmaApi {
     return providers;
   }
 
+  
+  // TODO: Test this.
   public async getLocations(locationId?: number, locationName?: string): Promise<EmmaLocation[]>
   {
     const api = this.apiFactory.create(LocationsApi);
@@ -182,6 +185,7 @@ export class EmmaApiImpl implements EmmaApi {
       return vmConfigs;
   }
   
+  // TODO: Test this.
   public async getComputeEntities(entityId?: number, ...computeType: EmmaComputeType[]): Promise<EmmaVm[]> {
     let vms: EmmaVm[] = [];
           
@@ -240,6 +244,7 @@ export class EmmaApiImpl implements EmmaApi {
     return vms;
   }
  
+  // TODO: Test this.
   public async deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void> {
     this.logger.info(`Deleting compute entity with id: ${entityId} and type: ${computeType}`);
 
@@ -260,6 +265,7 @@ export class EmmaApiImpl implements EmmaApi {
     this.logger.info('Deleted compute entity');
   }
  
+  // TODO: Test this.
   public async addComputeEntity(entity: EmmaVm): Promise<void> {
     this.logger.info(`Adding compute entity with id: ${entity.id} and type: ${entity.type}`);
     
@@ -314,6 +320,7 @@ export class EmmaApiImpl implements EmmaApi {
     this.logger.info('Added compute entity');
   }
 
+  // TODO: Test this.
   public async updateComputeEntity(entity: EmmaVm): Promise<void> {
     this.logger.info(`Updating compute entity with id: ${entity.id} and type: ${entity.type}`);
 
