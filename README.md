@@ -1,4 +1,4 @@
-# Emma Backstage Plugins
+# emma Backstage Plugins
 
 ## Overview
 
