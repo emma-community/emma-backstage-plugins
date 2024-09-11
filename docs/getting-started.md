@@ -45,7 +45,7 @@ Now that the emma plugin is installed, you need to register it in the app so tha
 import { EmmaHeatmapPage } from '@emma-community/backstage-plugin-emma';
 ```
 
-Next, add a route for the EmmaHeatMapPage within the existing `<FlatRoutes>` section:
+Next, add a route for the `EmmaHeatMapPage` within the existing `<FlatRoutes>` section:
 
 ```jsx
 <Route path="/emma/heatmap" element={<EmmaHeatmapPage />} />

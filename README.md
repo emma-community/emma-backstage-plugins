@@ -8,7 +8,7 @@ The `emma-backstage-plugins` repository contains three main plugins: `emma`, `em
 
 ### `emma` Plugin
 
-The `emma` plugin provides the frontend components and logic for the Emma application. It includes UI components for displaying data, routing, and API interactions.
+The `emma` plugin provides the frontend components and logic for the emma application. It includes UI components for displaying data, routing, and API interactions.
 
 **Key Features:**
 - Main entry points for the plugin.
@@ -19,7 +19,7 @@ The `emma` plugin provides the frontend components and logic for the Emma applic
 
 ### `emma-backend` Plugin
 
-The `emma-backend` plugin provides the backend services for the Emma application. It includes API implementations, routing, and testing logic.
+The `emma-backend` plugin provides the backend services for the emma application. It includes API implementations, routing, and testing logic.
 
 **Key Features:**
 - Main entry point for the backend plugin.
@@ -119,7 +119,7 @@ This command will stop and remove the containers, networks, and volumes created 
 ### Additional notes
 
 - The PostgreSQL database data is persisted in a Docker volume named `db`.
-- The `backend` service uses environment variables for database connection and Emma API credentials.
+- The `backend` service uses environment variables for database connection and emma API credentials.
 
 By following these steps, you can easily build and run the Backstage application using Docker Compose.
 

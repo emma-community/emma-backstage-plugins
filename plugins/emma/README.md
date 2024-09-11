@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `emma` plugin provides the frontend components and logic for the Emma application. It includes UI components for displaying data, routing, and API interactions.
+The `emma` plugin provides the frontend components and logic for the emma application. It includes UI components for displaying data, routing, and API interactions.
 
 ## Key Files
 
