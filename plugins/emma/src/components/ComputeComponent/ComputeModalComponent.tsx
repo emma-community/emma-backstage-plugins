@@ -210,7 +210,7 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           />
         </div>
 
-        {/* TODO: Add SSHKEY signature field to generate ssh key id via API call when creating new entities */}
+        {/* TODO: Add SSHKEY signature field to show generated ssh private key when creating new entities */}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="primary">

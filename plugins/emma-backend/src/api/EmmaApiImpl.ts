@@ -297,7 +297,7 @@ export class EmmaApiImpl implements EmmaApi {
       case EmmaComputeType.KubernetesNode:
         await this.apiFactory.create(KubernetesClustersApi).createKubernetesCluster({ 
           name: entity.name!,
-          deploymentLocation: KubernetesCreate.DeploymentLocationEnum.Eu, // TODO: If this enum expands to more then one deployment location we will need another strategy to determine the location
+          deploymentLocation: KubernetesCreate.DeploymentLocationEnum.Eu,
           workerNodes: [
             { 
               name: entity.name!,
