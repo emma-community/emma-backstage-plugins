@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `emma-backend` plugin provides the backend services for the Emma application. It includes API implementations, routing, and testing logic.
+The `emma-backend` plugin provides the backend services for the emma application. It includes API implementations, routing, and testing logic.
 
 ## Getting started
 
