@@ -1,6 +1,6 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
-import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration, EmmaVm, EmmaProvider } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export class EmmaClient implements EmmaApi {
@@ -27,6 +27,20 @@ export class EmmaClient implements EmmaApi {
     return await this.get<EmmaDataCenter[]>(urlSegment);
   }
 
+  public async getProviders(providerId?: number, providerName?: string): Promise<EmmaProvider[]> {
+    const queryString = new URLSearchParams();
+
+    if(providerId)
+      queryString.append('providerId', providerId.toString());
+
+    if(providerName)
+      queryString.append('providerName', providerName);
+
+    const urlSegment = `providers/?${queryString}`;
+
+    return await this.get<EmmaProvider[]>(urlSegment);
+  }
+
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
     const queryString = new URLSearchParams();
 
@@ -41,10 +55,22 @@ export class EmmaClient implements EmmaApi {
     if(dataCenterId)
       queryString.append('dataCenterId', dataCenterId);
 
-    const urlSegment = `computeconfigs/?${queryString}`;
+    const urlSegment = `compute/configs/?${queryString}`;
 
     return await this.get<EmmaVmConfiguration[]>(urlSegment);
+  }
 
+  public async getComputeEntities(entityId?: number, ...computeType: EmmaComputeType[]): Promise<EmmaVm[]> {
+    const queryString = new URLSearchParams();
+
+    computeType.forEach(type => queryString.append('computeType', type));
+
+    if(entityId)
+      queryString.append('entityId', entityId.toString());
+
+    const urlSegment = `compute/entities/?${queryString}`;
+
+    return await this.get<EmmaVm[]>(urlSegment);
   }
 
   private async get<T>(path: string): Promise<T> {

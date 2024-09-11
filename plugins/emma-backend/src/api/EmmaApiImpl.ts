@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration } from '@emma-community/emma-typescript-sdk';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@emma-community/backstage-plugin-emma-common';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -60,9 +60,9 @@ export class EmmaApiImpl implements EmmaApi {
           
     this.logger.info('Fetching data centers');
 
-    let remoteResults = (await api.getDataCenters()).body as EmmaDataCenter[];
+    let dataCenters = (await api.getDataCenters()).body as EmmaDataCenter[];
 
-    remoteResults.forEach(dataCenter => {
+    dataCenters.forEach(dataCenter => {
         const matchedGeoLocation = this.knownGeoLocations.find(emmaDC => dataCenter.id?.indexOf(emmaDC.region_code) !== -1);
 
         if(matchedGeoLocation) {
@@ -75,12 +75,33 @@ export class EmmaApiImpl implements EmmaApi {
     if(geoFence) {        
       this.logger.info('Filtering data centers based on bounds', geoFence);
 
-      remoteResults = remoteResults.filter(result => this.isWithinBounds(result.location, geoFence));
+      dataCenters = dataCenters.filter(dataCenter => this.isWithinBounds(dataCenter.location, geoFence));
     }
 
     this.logger.info('Returning filtered data centers');
 
-    return remoteResults;
+    return dataCenters;
+  }
+
+  public async getProviders(providerId?: number, providerName?: string): Promise<EmmaProvider[]>
+  {
+    const api = this.apiFactory.create(ProvidersApi);
+          
+    this.logger.info('Fetching providers');
+
+    let providers: EmmaProvider[] = [];
+
+    if(providerId) {
+      providers.push((await api.getProvider(providerId)).body);
+    } 
+    
+    if(providerName || !providerId) {
+      providers = providers.concat((await api.getProviders(providerName)).body);
+    }
+
+    this.logger.info('Returning filtered providers');
+
+    return providers;
   }
   
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
@@ -141,6 +162,63 @@ export class EmmaApiImpl implements EmmaApi {
       this.logger.info('Returning filtered compute configs');
 
       return vmConfigs;
+  }
+  
+  public async getComputeEntities(entityId?: number, ...computeType: EmmaComputeType[]): Promise<EmmaVm[]> {
+    let vms: EmmaVm[] = [];
+          
+    this.logger.info('Fetching compute entities');
+
+    if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.VirtualMachine) > -1) {
+      const api = this.apiFactory.create(VirtualMachinesApi);
+      const vmsResponse = entityId ? [(await api.getVm(entityId)).body] : (await api.getVms()).body ?? [];
+      
+      const emmaVms = vmsResponse.map((vm: Vm) => {
+        return {
+          ...vm,
+          label: 'default',
+          type: EmmaComputeType.VirtualMachine
+        };
+      });
+
+      vms = vms.concat(emmaVms);
+    }
+
+    if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.SpotInstance) > -1) {
+      const api = this.apiFactory.create(SpotInstancesApi);
+      const vmsResponse = entityId ? [(await api.getSpot(entityId)).body] : (await api.getSpots()).body ?? [];
+      
+      const emmaVms = vmsResponse.map((vm: Vm) => {
+        return {
+          ...vm,
+          label: 'default',
+          type: EmmaComputeType.SpotInstance
+        };
+      });
+
+      vms = vms.concat(emmaVms);
+    }
+
+    if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.KubernetesNode) > -1) {
+      const api = this.apiFactory.create(KubernetesClustersApi);
+      const vmsResponse = entityId ? [(await api.getKubernetesCluster(entityId)).body] : (await api.getKubernetesClusters()).body || [];
+
+      const emmaVms = vmsResponse.flatMap(k8s =>
+        k8s.nodeGroups?.flatMap(nodeGroup =>
+          nodeGroup.nodes!.map(node => ({
+            ...node,
+            label: 'default',
+            type: EmmaComputeType.KubernetesNode
+          }))
+        ) || []
+      );
+  
+      vms = vms.concat(emmaVms);
+    }  
+
+    this.logger.info('Returning filtered compute entities');
+
+    return vms;
   }
 
   private isWithinBounds(location: GeoLocation, geoFence: GeoFence): boolean {

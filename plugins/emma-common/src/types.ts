@@ -1,17 +1,4 @@
-import { DataCenter, VmConfiguration } from '@emma-community/emma-typescript-sdk';
-
-/** @public */
-export type EmmaDataCenter = DataCenter & {
-    location: GeoLocation
-    region_code: string;
-    provider: string;
-}
-
-/** @public */
-export type EmmaVmConfiguration = VmConfiguration & {
-    label: string;
-    type: EmmaComputeType;
-}
+import { DataCenter, VmConfiguration, Provider } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export enum EmmaComputeType {
@@ -59,3 +46,45 @@ export type GeoFence = {
     topRight: GeoLocation;
     bottomLeft: GeoLocation;
 }
+
+/** @public */
+export type EmmaEntity<T> = {
+    id?: T;
+}
+
+/** @public */
+export type EmmaDataCenter = EmmaEntity<string> & DataCenter & {
+    location: GeoLocation
+    region_code: string;
+    provider: string;
+}
+
+/** @public */
+export type EmmaProvider = EmmaEntity<number> & Provider;
+
+/** @public */
+export type EmmaVm = EmmaEntity<number> & {
+    label: string;
+    type: EmmaComputeType;
+    createdAt?: string;
+    name?: string;
+    status?: any;
+    provider?: any;
+    location?: any;
+    dataCenter?: any;
+    os?: any;
+    vCpu?: number;
+    vCpuType?: any;
+    cloudNetworkType?: any;
+    ramGb?: number;
+    disks?: Array<any>;
+    networks?: Array<any>;
+    securityGroup?: any;
+    cost?: any;
+};
+
+/** @public */
+export type EmmaVmConfiguration = EmmaEntity<number> & VmConfiguration & {
+    label: string;
+    type: EmmaComputeType;
+};

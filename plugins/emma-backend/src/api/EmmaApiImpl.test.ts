@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { HttpBearerAuth, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi } from '@emma-community/emma-typescript-sdk';
+import { HttpBearerAuth, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VirtualMachinesApi, SpotInstancesApi, KubernetesClustersApi } from '@emma-community/emma-typescript-sdk';
 import { EmmaApiFactory } from '@emma-community/backstage-plugin-emma-common';
 import { EmmaApiImpl } from './EmmaApiImpl';
 
@@ -78,6 +78,24 @@ describe('EmmaApiImpl', () => {
     });
     mockComputeApi.getKuberNodesConfigs = jest.fn().mockResolvedValue({
       body: { content: [{ id: 'k8s-1' }] },
+    });    
+    mockComputeApi.getVm = jest.fn().mockResolvedValue({
+      body: { id: 'vm-1' },
+    });
+    mockComputeApi.getVms = jest.fn().mockResolvedValue({
+      body: [{ id: 'vm-1' }, { id: 'vm-2' }],
+    });
+    mockComputeApi.getSpot = jest.fn().mockResolvedValue({
+      body: { id: 'spot-1' },
+    });
+    mockComputeApi.getSpots = jest.fn().mockResolvedValue({
+      body: [{ id: 'spot-1' }, { id: 'spot-2' }],
+    });
+    mockComputeApi.getKubernetesCluster = jest.fn().mockResolvedValue({
+      body: { id: 'k8s-1', nodeGroups: [{ id: 'nodeGroup-1', nodes: [ { id: 'k8s-1' }, { id: 'k8s-2' } ] }] },
+    });
+    mockComputeApi.getKubernetesClusters = jest.fn().mockResolvedValue({
+      body: [{ id: 'k8s-1', nodeGroups: [{ id: 'nodeGroup-1', nodes: [ { id: 'k8s-1' }, { id: 'k8s-2' } ] }] }, { id: 'k8s-2', nodeGroups: [{ id: 'nodeGroup-2', nodes: [ { id: 'k8s-3' }, { id: 'k8s-4' } ] }] }],
     });
 
     // Mock the EmmaApiFactory to return our mock API instances
@@ -86,6 +104,9 @@ describe('EmmaApiImpl', () => {
         if (apiClass === AuthenticationApi) return mockAuthApi;
         if (apiClass === DataCentersApi) return mockDataCentersApi;
         if (apiClass === ComputeInstancesConfigurationsApi) return mockComputeApi;
+        if (apiClass === VirtualMachinesApi) return mockComputeApi;
+        if (apiClass === SpotInstancesApi) return mockComputeApi;
+        if (apiClass === KubernetesClustersApi) return mockComputeApi;
         return null;
       }),
     };
@@ -133,5 +154,13 @@ describe('EmmaApiImpl', () => {
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute configs');
     expect(vmConfigs).toEqual([{ id: 'vm-1', label: 'default', type: 'VirtualMachine' }, { id: 'vm-2', label: 'default', type: 'VirtualMachine' }, { id: 'spot-1', label: 'default', type: 'SpotInstance' }, { id: 'k8s-1', label: 'default', type: 'KubernetesNode' }]);
+  });
+
+  test('should fetch compute entitites', async () => {
+    const emmaApi = EmmaApiImpl.fromConfig(mockConfig, { logger: mockLogger });
+    const vms = await emmaApi.getComputeEntities();
+
+    expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute entities');
+    expect(vms).toEqual([{ id: 'vm-1', label: 'default', type: 'VirtualMachine' }, { id: 'vm-2', label: 'default', type: 'VirtualMachine' }, { id: 'spot-1', label: 'default', type: 'SpotInstance' }, { id: 'spot-2', label: 'default', type: 'SpotInstance' }, { id: 'k8s-1', label: 'default', type: 'KubernetesNode' }, { id: 'k8s-2', label: 'default', type: 'KubernetesNode' }, { id: 'k8s-3', label: 'default', type: 'KubernetesNode' }, { id: 'k8s-4', label: 'default', type: 'KubernetesNode' }]);
   });
 });

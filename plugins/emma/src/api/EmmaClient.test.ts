@@ -100,7 +100,7 @@ describe('EmmaClient', () => {
       const result = await emmaClient.getComputeConfigs(undefined, undefined, undefined, EmmaComputeType.VirtualMachine);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/computeconfigs/?computeType=VirtualMachine');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?computeType=VirtualMachine');
       expect(result).toEqual(mockVmConfigurations);
     });
 
@@ -115,7 +115,7 @@ describe('EmmaClient', () => {
       const result = await emmaClient.getComputeConfigs();
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/computeconfigs/?');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?');
       expect(result).toEqual(mockVmConfigurations);
     });
 
@@ -131,7 +131,7 @@ describe('EmmaClient', () => {
       await expect(emmaClient.getComputeConfigs()).rejects.toThrow(ResponseError);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/computeconfigs/?');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?');
     });
   });
 });

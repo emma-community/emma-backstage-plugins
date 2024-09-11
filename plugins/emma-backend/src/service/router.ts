@@ -45,7 +45,24 @@ export async function createRouter(
     res.status(200).json(dataCenters);
   });
 
-  router.get('/computeconfigs', async (req, res) => {
+  router.get('/providers', async (req, res) => {
+    let providerId: number | undefined;
+    let providerName: string | undefined;
+
+    if(req.query.providerId) {
+      providerId = Number(req.query.providerId);
+    }
+
+    if(req.query.providerName) {
+      providerName = req.query.providerName as string;
+    }
+
+    const providers = await emmaApi.getProviders(providerId, providerName);
+
+    res.status(200).json(providers);
+  });
+
+  router.get('/compute/configs', async (req, res) => {
     let requestedComputeTypes: EmmaComputeType[] = [];
     let providerId: number | undefined;
     let locationId: number | undefined;
@@ -70,6 +87,22 @@ export async function createRouter(
     const computeConfigs = await emmaApi.getComputeConfigs(providerId, locationId, dataCenterId, ...requestedComputeTypes);
 
     res.status(200).json(computeConfigs);
+  });
+
+  router.get('/compute/entities', async (req, res) => {
+    let requestedComputeTypes: EmmaComputeType[] = [];
+    let entityId: number | undefined;
+
+    if(req.query.computeType) {
+      requestedComputeTypes = Array.isArray(req.query.computeType) ? req.query.computeType.map(value => EmmaComputeType[value as keyof typeof EmmaComputeType]) : [EmmaComputeType[req.query.computeType as keyof typeof EmmaComputeType]];
+    }
+
+    if(req.query.entityId) {
+      entityId = Number(req.query.entityId);
+    }
+    const computeEntities = await emmaApi.getComputeEntities(entityId, ...requestedComputeTypes);
+
+    res.status(200).json(computeEntities);
   });
 
   const middleware = MiddlewareFactory.create({ logger, config });

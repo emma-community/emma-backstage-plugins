@@ -18,6 +18,7 @@ describe('createRouter', () => {
     emmaApi = {
       getDataCenters: jest.fn(),
       getComputeConfigs: jest.fn(),
+      getComputeEntities: jest.fn(),
     } as any;
 
     const config = new ConfigReader({
@@ -60,9 +61,17 @@ describe('createRouter', () => {
     });
   });
 
-  describe('GET /computeconfigs', () => {
+  describe('GET /compute/configs', () => {
     it('returns 200', async () => {
-      const response = await request(app).get('/computeconfigs');
+      const response = await request(app).get('/compute/configs');
+      
+      expect(response.status).toEqual(200);
+    });
+  });
+
+  describe('GET /compute/entities', () => {
+    it('returns 200', async () => {
+      const response = await request(app).get('/compute/entities');
       
       expect(response.status).toEqual(200);
     });
