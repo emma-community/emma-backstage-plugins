@@ -62,6 +62,23 @@ export async function createRouter(
     res.status(200).json(providers);
   });
 
+  router.get('/locations', async (req, res) => {
+    let locationId: number | undefined;
+    let locationName: string | undefined;
+
+    if(req.query.locationId) {
+      locationId = Number(req.query.locationId);
+    }
+
+    if(req.query.locationName) {
+      locationName = req.query.locationName as string;
+    }
+
+    const providers = await emmaApi.getLocations(locationId, locationName);
+
+    res.status(200).json(providers);
+  });
+
   router.get('/compute/configs', async (req, res) => {
     let requestedComputeTypes: EmmaComputeType[] = [];
     let providerId: number | undefined;

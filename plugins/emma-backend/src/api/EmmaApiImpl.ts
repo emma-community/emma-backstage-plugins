@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi } from '@emma-community/emma-typescript-sdk';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY } from '@emma-community/backstage-plugin-emma-common';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -102,6 +102,27 @@ export class EmmaApiImpl implements EmmaApi {
     this.logger.info('Returning filtered providers');
 
     return providers;
+  }
+
+  public async getLocations(locationId?: number, locationName?: string): Promise<EmmaLocation[]>
+  {
+    const api = this.apiFactory.create(LocationsApi);
+          
+    this.logger.info('Fetching locations');
+
+    let locations: EmmaLocation[] = [];
+
+    if(locationId) {
+      locations.push((await api.getLocation(locationId)).body);
+    } 
+    
+    if(locationName || !locationId) {
+      locations = locations.concat((await api.getLocations(locationName)).body);
+    }
+
+    this.logger.info('Returning filtered locations');
+
+    return locations;
   }
   
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {

@@ -1,4 +1,4 @@
-import { DataCenter, VmConfiguration, Provider } from '@emma-community/emma-typescript-sdk';
+import { DataCenter, VmConfiguration, Provider, Location } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export enum EmmaComputeType {
@@ -58,6 +58,9 @@ export type EmmaDataCenter = EmmaEntity<string> & DataCenter & {
   region_code: string;
   provider: string;
 }
+
+/** @public */
+export type EmmaLocation = EmmaEntity<number> & Location;
 
 /** @public */
 export type EmmaProvider = EmmaEntity<number> & Provider;

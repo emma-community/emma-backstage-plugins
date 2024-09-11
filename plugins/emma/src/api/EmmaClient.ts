@@ -1,6 +1,6 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
-import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration, EmmaVm, EmmaProvider } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export class EmmaClient implements EmmaApi {
@@ -39,6 +39,20 @@ export class EmmaClient implements EmmaApi {
     const urlSegment = `providers/?${queryString}`;
 
     return await this.get<EmmaProvider[]>(urlSegment);
+  }
+
+  public async getLocations(locationId?: number, locationName?: string): Promise<EmmaLocation[]> {
+    const queryString = new URLSearchParams();
+
+    if(locationId)
+      queryString.append('locationId', locationId.toString());
+
+    if(locationName)
+      queryString.append('locationName', locationName);
+
+    const urlSegment = `locations/?${queryString}`;
+
+    return await this.get<EmmaLocation[]>(urlSegment);
   }
 
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
