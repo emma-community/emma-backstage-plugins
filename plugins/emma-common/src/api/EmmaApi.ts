@@ -7,4 +7,5 @@ export interface EmmaApi {
   getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]>;
   getComputeEntities(entityId?: number, ...computeType: EmmaComputeType[]): Promise<EmmaVm[]>;
   deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void>;
+  addComputeEntity(entity: EmmaVm): Promise<void>;
 }

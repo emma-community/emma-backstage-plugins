@@ -81,6 +81,7 @@ export type EmmaVm = EmmaEntity<number> & {
   networks?: Array<any>;
   securityGroup?: any;
   cost?: any;
+  sshKeyId?: number;
 };
 
 /** @public */

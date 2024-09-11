@@ -235,6 +235,60 @@ export class EmmaApiImpl implements EmmaApi {
 
     this.logger.info('Deleted compute entity');
   }
+ 
+  public async addComputeEntity(entity: EmmaVm): Promise<void> {
+    this.logger.info(`Adding compute entity with id: ${entity.id} and type: ${entity.type}`);
+
+    switch(entity.type) {
+      case EmmaComputeType.VirtualMachine:
+        await this.apiFactory.create(VirtualMachinesApi).vmCreate({ 
+          name: entity.name!,
+          cloudNetworkType: entity.cloudNetworkType!.toString(),
+          dataCenterId: entity.dataCenter.id, 
+          osId: entity.os.id, 
+          ramGb: entity.ramGb!,
+          vCpu: entity.vCpu!,
+          vCpuType: entity.vCpuType!.toString(),
+          volumeGb: entity.disks![0].sizeGb, 
+          volumeType: entity.disks![0].type,
+          sshKeyId: entity.sshKeyId! });
+        break;
+      case EmmaComputeType.SpotInstance:
+        await this.apiFactory.create(SpotInstancesApi).spotCreate({ 
+          name: entity.name!,
+          cloudNetworkType: entity.cloudNetworkType!.toString(),
+          dataCenterId: entity.dataCenter.id, 
+          osId: entity.os.id, 
+          ramGb: entity.ramGb!,
+          vCpu: entity.vCpu!,
+          vCpuType: entity.vCpuType!.toString(),
+          volumeGb: entity.disks![0].sizeGb, 
+          volumeType: entity.disks![0].type,
+          price: entity.cost!.price!,
+          sshKeyId: entity.sshKeyId! });
+        break;
+      case EmmaComputeType.KubernetesNode:
+        await this.apiFactory.create(KubernetesClustersApi).createKubernetesCluster({ 
+          name: entity.name!,
+          deploymentLocation: entity.dataCenter.id,
+          workerNodes: [
+            { 
+              name: entity.name!,
+              dataCenterId: entity.dataCenter.id, 
+              ramGb: entity.ramGb!,
+              vCpu: entity.vCpu!,
+              vCpuType: entity.vCpuType!.toString(),
+              volumeGb: entity.disks![0].sizeGb, 
+              volumeType: entity.disks![0].types
+            }
+          ]});
+        break;
+      default:
+        throw new Error(`Unsupported compute type: ${entity.type}`);
+    }
+
+    this.logger.info('Added compute entity');
+  }
 
   private isWithinBounds(location: GeoLocation, geoFence: GeoFence): boolean {
       return geoFence.bottomLeft.latitude <= location.latitude && 

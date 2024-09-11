@@ -3,7 +3,7 @@ import Router from 'express-promise-router';
 import { MiddlewareFactory } from '@backstage/backend-defaults/rootHttpRouter';
 import { LoggerService, RootConfigService } from '@backstage/backend-plugin-api';
 import { EmmaApiImpl } from '../api';
-import { EmmaComputeType, EmmaDataCenter } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaDataCenter, EmmaVm } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export interface RouterOptions {
@@ -111,6 +111,15 @@ export async function createRouter(
     const entityId: number = Number(req.params.entityId);;
 
     await emmaApi.deleteComputeEntity(entityId, requestedComputeType);
+
+    res.status(200);
+  });
+
+  router.post('/compute/entities/add', async (req, res) => {
+    // TODO: Debug JSON deserialization
+    const entity = JSON.parse(req.query.entity!.toString()) as EmmaVm;
+
+    await emmaApi.addComputeEntity(entity);
 
     res.status(200);
   });
