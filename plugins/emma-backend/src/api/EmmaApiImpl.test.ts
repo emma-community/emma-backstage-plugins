@@ -153,7 +153,7 @@ describe('EmmaApiImpl', () => {
     const vmConfigs = await emmaApi.getComputeConfigs();
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute configs');
-    expect(vmConfigs).toEqual([{ id: 'vm-1', label: 'default', type: 'VirtualMachine' }, { id: 'vm-2', label: 'default', type: 'VirtualMachine' }, { id: 'spot-1', label: 'default', type: 'SpotInstance' }, { id: 'k8s-1', label: 'default', type: 'KubernetesNode' }]);
+    expect(vmConfigs).toEqual([{ id: 'vm-1', type: 'VirtualMachine' }, { id: 'vm-2', type: 'VirtualMachine' }, { id: 'spot-1', type: 'SpotInstance' }, { id: 'k8s-1', type: 'KubernetesNode' }]);
   });
 
   test('should fetch compute entitites', async () => {
@@ -161,6 +161,6 @@ describe('EmmaApiImpl', () => {
     const vms = await emmaApi.getComputeEntities();
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute entities');
-    expect(vms).toEqual([{ id: 'vm-1', label: 'default', type: 'VirtualMachine' }, { id: 'vm-2', label: 'default', type: 'VirtualMachine' }, { id: 'spot-1', label: 'default', type: 'SpotInstance' }, { id: 'spot-2', label: 'default', type: 'SpotInstance' }, { id: 'k8s-1', label: 'default', type: 'KubernetesNode' }, { id: 'k8s-2', label: 'default', type: 'KubernetesNode' }, { id: 'k8s-3', label: 'default', type: 'KubernetesNode' }, { id: 'k8s-4', label: 'default', type: 'KubernetesNode' }]);
+    expect(vms).toEqual([{ id: 'vm-1', type: 'VirtualMachine' }, { id: 'vm-2', type: 'VirtualMachine' }, { id: 'spot-1', type: 'SpotInstance' }, { id: 'spot-2', type: 'SpotInstance' }, { id: 'k8s-1', label: 'k8s-1', type: 'KubernetesNode' }, { id: 'k8s-2', label: 'k8s-1', type: 'KubernetesNode' }, { id: 'k8s-3', label: 'k8s-2', type: 'KubernetesNode' }, { id: 'k8s-4', label: 'k8s-2', type: 'KubernetesNode' }]);
   });
 });

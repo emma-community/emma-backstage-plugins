@@ -117,7 +117,6 @@ export class EmmaApiImpl implements EmmaApi {
         const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
             const emmaVmConfig: EmmaVmConfiguration = {
                 ...vmConfig,
-                label: 'default',
                 type: EmmaComputeType.VirtualMachine
             };
 
@@ -133,7 +132,6 @@ export class EmmaApiImpl implements EmmaApi {
         const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
             const emmaVmConfig: EmmaVmConfiguration = {
                 ...vmConfig,
-                label: 'default',
                 type: EmmaComputeType.SpotInstance
             };
 
@@ -149,7 +147,6 @@ export class EmmaApiImpl implements EmmaApi {
         const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
             const emmaVmConfig: EmmaVmConfiguration = {
                 ...vmConfig,
-                label: 'default',
                 type: EmmaComputeType.KubernetesNode
             };
 
@@ -176,7 +173,6 @@ export class EmmaApiImpl implements EmmaApi {
       const emmaVms = vmsResponse.map((vm: Vm) => {
         return {
           ...vm,
-          label: 'default',
           type: EmmaComputeType.VirtualMachine
         };
       });
@@ -191,7 +187,6 @@ export class EmmaApiImpl implements EmmaApi {
       const emmaVms = vmsResponse.map((vm: Vm) => {
         return {
           ...vm,
-          label: 'default',
           type: EmmaComputeType.SpotInstance
         };
       });
@@ -207,7 +202,7 @@ export class EmmaApiImpl implements EmmaApi {
         k8s.nodeGroups?.flatMap(nodeGroup =>
           nodeGroup.nodes!.map(node => ({
             ...node,
-            label: 'default',
+            label: k8s.id!.toString(),
             type: EmmaComputeType.KubernetesNode
           }))
         ) || []
@@ -220,7 +215,7 @@ export class EmmaApiImpl implements EmmaApi {
 
     return vms;
   }
-
+ 
   private isWithinBounds(location: GeoLocation, geoFence: GeoFence): boolean {
       return geoFence.bottomLeft.latitude <= location.latitude && 
               location.latitude <= geoFence.topRight.latitude && 
