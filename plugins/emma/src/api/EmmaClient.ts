@@ -92,12 +92,10 @@ export class EmmaClient implements EmmaApi {
   }
 
   public async addComputeEntity(entity: EmmaVm): Promise<void> {
-    // TODO: Debug JSON serialization
     await this.get(`compute/entities/add/?entity=${JSON.stringify(entity)}`);
   }
 
   public async updateComputeEntity(entity: EmmaVm): Promise<void> {
-    // TODO: Debug JSON serialization
     await this.get(`compute/entities/update/?entity=${JSON.stringify(entity)}`);
   }
 

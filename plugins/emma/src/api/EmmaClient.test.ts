@@ -1,7 +1,7 @@
 import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
 import { EmmaClient } from './EmmaClient';
-import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVolumeType, EmmaCPUType } from '@emma-community/backstage-plugin-emma-common';
 
 describe('EmmaClient', () => {
   let discoveryApi: jest.Mocked<DiscoveryApi>;
@@ -133,5 +133,12 @@ describe('EmmaClient', () => {
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
       expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?');
     });
+  });  
+
+  test('can serialize/deserialize EmmaVm type', async () => {
+    const emmaVm = { id: 1, type: EmmaComputeType.VirtualMachine, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared };
+
+    expect(JSON.stringify(emmaVm)).toEqual("{\"id\":1,\"type\":\"VirtualMachine\",\"disks\":[{\"type\":\"ssd\",\"sizeGb\":100}],\"vCpuType\":\"shared\"}");
+    expect(JSON.parse("{\"id\":1,\"type\":\"VirtualMachine\",\"disks\":[{\"type\":\"ssd\",\"sizeGb\":100}],\"vCpuType\":\"shared\"}")).toEqual(emmaVm);
   });
 });

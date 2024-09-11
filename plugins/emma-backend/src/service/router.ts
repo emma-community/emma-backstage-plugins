@@ -133,7 +133,6 @@ export async function createRouter(
   });
 
   router.post('/compute/entities/add', async (req, res) => {
-    // TODO: Debug JSON deserialization
     const entity = JSON.parse(req.query.entity!.toString()) as EmmaVm;
 
     await emmaApi.addComputeEntity(entity);
@@ -142,7 +141,6 @@ export async function createRouter(
   });
 
   router.post('/compute/entities/update', async (req, res) => {
-    // TODO: Debug JSON deserialization
     const entity = JSON.parse(req.query.entity!.toString()) as EmmaVm;
 
     await emmaApi.updateComputeEntity(entity);
