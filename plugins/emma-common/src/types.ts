@@ -74,9 +74,9 @@ export type EmmaVm = EmmaEntity<number> & {
   createdAt?: string;
   name?: string;
   status?: any;
-  provider?: any;
-  location?: any;
-  dataCenter?: any;
+  provider?: EmmaProvider;
+  location?: EmmaLocation;
+  dataCenter?: EmmaDataCenter;
   os?: any;
   vCpu?: number;
   vCpuType?: EmmaCPUType;

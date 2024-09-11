@@ -11,11 +11,11 @@ import { ComputeRowComponent } from './ComputeRowComponent';
 import { ComputeModalComponent } from './ComputeModalComponent';
 
 const initialData: EmmaVm[] = [
-  { id: 1, label: 'VM1', type: EmmaComputeType.VirtualMachine, provider: 'AWS', vCpuType: EmmaCPUType.Shared, vCpu: 32, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}] },
-  { id: 2, label: 'SpotInstance1', type: EmmaComputeType.SpotInstance, provider: 'AWS', vCpuType: EmmaCPUType.Shared, vCpu: 16, ramGb: 64, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 250}] },
-  { id: 3, label: 'K8Node1', type: EmmaComputeType.KubernetesNode, provider: 'Azure', vCpuType: EmmaCPUType.Standard, vCpu: 64, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 400}] },
-  { id: 4, label: 'VM2', type: EmmaComputeType.VirtualMachine, provider: 'GCP', vCpuType: EmmaCPUType.Hpc, vCpu: 128, ramGb: 128, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 650}] },
-  { id: 5, label: 'K8Node2', type: EmmaComputeType.KubernetesNode, provider: 'Azure', vCpuType: EmmaCPUType.Standard, vCpu: 32, ramGb: 256, disks: [{type: EmmaVolumeType.SSD, sizeGb: 125}] },
+  { id: 1, label: 'VM1', type: EmmaComputeType.VirtualMachine, provider: { name: 'AWS' }, vCpuType: EmmaCPUType.Shared, vCpu: 32, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}] },
+  { id: 2, label: 'SpotInstance1', type: EmmaComputeType.SpotInstance, provider: { name: 'AWS' }, vCpuType: EmmaCPUType.Shared, vCpu: 16, ramGb: 64, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 250}] },
+  { id: 3, label: 'K8Node1', type: EmmaComputeType.KubernetesNode, provider: { name: 'Azure' }, vCpuType: EmmaCPUType.Standard, vCpu: 64, ramGb: 32, disks: [{type: EmmaVolumeType.SSD, sizeGb: 400}] },
+  { id: 4, label: 'VM2', type: EmmaComputeType.VirtualMachine, provider: { name: 'GCP' }, vCpuType: EmmaCPUType.Hpc, vCpu: 128, ramGb: 128, disks: [{type: EmmaVolumeType.SSDPlus, sizeGb: 650}] },
+  { id: 5, label: 'K8Node2', type: EmmaComputeType.KubernetesNode, provider: { name: 'Azure' }, vCpuType: EmmaCPUType.Standard, vCpu: 32, ramGb: 256, disks: [{type: EmmaVolumeType.SSD, sizeGb: 125}] },
 ];
 
 export const ComputeGridComponent: React.FC = () => {
@@ -58,7 +58,7 @@ export const ComputeGridComponent: React.FC = () => {
   const filteredData = filter === 'All' ? data : data.filter((item) => item.type === filter);
 
   const groupedData = filteredData.reduce((acc, entry) => {
-    const provider = entry.provider || 'Unknown';
+    const provider = entry.provider?.name || 'Unknown';
     if (!acc[provider]) {
       acc[provider] = [];
     }

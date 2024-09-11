@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useApi } from '@backstage/frontend-plugin-api';
+import { emmaApiRef } from '../../plugin';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Select, MenuItem, Slider } from '@material-ui/core';
-import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaLocation, EmmaDataCenter } from '@emma-community/backstage-plugin-emma-common';
 
 interface ComputeModalProps {
   open: boolean;
@@ -10,7 +12,10 @@ interface ComputeModalProps {
 }
 
 export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry, onClose, onSave }) => {
-  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: 'AWS', vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }] });
+  const emmaApi = useApi(emmaApiRef);
+  const [locations, setLocations] = useState<EmmaLocation[]>([]);
+  const [dataCenters, setDataCenters] = useState<EmmaDataCenter[]>([]);
+  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { name: 'AWS' }, vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }] });
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 4));
   const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb! || 32));
   const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((() => {
@@ -34,7 +39,17 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
         return 200;
       }));
     }
-  }, [entry]);
+
+    const fetchLocationsAndDataCenters = async () => {
+      const fetchedLocations = await emmaApi.getLocations();
+      const fetchedDataCenters = await emmaApi.getDataCenters();
+
+      setLocations(fetchedLocations);
+      setDataCenters(fetchedDataCenters);
+    };
+  
+    fetchLocationsAndDataCenters();
+  }, [entry, emmaApi]);
 
   const handleSave = () => {
     if (currentEntry.label && currentEntry.type) {
@@ -83,8 +98,8 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           <Select
             fullWidth
             margin="dense"
-            value={currentEntry.provider! ?? 'AWS'}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, provider: e.target.value as string })}
+            value={currentEntry.provider?.name! ?? { name: 'AWS' }}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, provider: { name: e.target.value as string } })}
           >
             <MenuItem value="AWS">AWS</MenuItem>
             <MenuItem value="Azure">Azure</MenuItem>
@@ -110,23 +125,25 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
           <div>Location</div>  
           <Select
             fullWidth
-            margin="dense"
-            value={currentEntry.location! ?? 'TODO'}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, location: e.target.value as string })}
+            value={currentEntry.location?.id}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, location: { id: e.target.value as number } })}
           >
-            <MenuItem value="TODO">TODO: CALL API AND MAP LOCATIONS</MenuItem>
+            {locations.map((loc) => (
+              <MenuItem key={loc.id} value={loc.name}>{loc.name}</MenuItem>
+            ))}
           </Select>
         </div>
            
         <div style={{ margin: '20px 0' }}>
-          <div>Data Center</div>  
+          <div>Data Center</div>   
           <Select
             fullWidth
-            margin="dense"
-            value={currentEntry.dataCenter! ?? 'TODO'}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: e.target.value as string })}
+            value={currentEntry.dataCenter?.id}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, location: { longitude: 0, latitude: 0}, region_code: currentEntry.location?.region!, provider: currentEntry.provider?.name! } })}
           >
-            <MenuItem value="TODO">TODO: CALL API AND MAP DATACENTERS</MenuItem>
+            {dataCenters.map((dc) => (
+              <MenuItem key={dc.id} value={dc.name}>{dc.name}</MenuItem>
+            ))}
           </Select>
         </div>
               

@@ -223,7 +223,16 @@ describe('EmmaApiImpl', () => {
     const vms = await emmaApi.getComputeEntities();
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute entities');
-    expect(vms).toEqual([{ id: 'vm-1', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'vm-2', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'spot-1', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'spot-2', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'k8s-1', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'k8s-2', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'k8s-3', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'k8s-4', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }]);
+    expect(vms).toEqual([
+      { id: 'vm-1', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'unknown' }}, 
+      { id: 'vm-2', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'unknown' }}, 
+      { id: 'spot-1', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'unknown' }}, 
+      { id: 'spot-2', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'unknown' }}, 
+      { id: 'k8s-1', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'unknown' }}, 
+      { id: 'k8s-2', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'unknown' }}, 
+      { id: 'k8s-3', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'unknown' }}, 
+      { id: 'k8s-4', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown', provider: 'unknown' }}
+    ]);
   });
 
   test('should delete compute entity', async () => {

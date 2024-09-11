@@ -3,7 +3,7 @@ import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate } from '@emma-community/emma-typescript-sdk';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -195,7 +195,8 @@ export class EmmaApiImpl implements EmmaApi {
         return {
           ...vm,
           type: EmmaComputeType.VirtualMachine,
-          vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!
+          vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
+          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown', provider: vm.provider?.name ?? 'unknown' }
         };
       });
 
@@ -210,7 +211,8 @@ export class EmmaApiImpl implements EmmaApi {
         return {
           ...vm,
           type: EmmaComputeType.SpotInstance,
-          vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!
+          vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
+          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown', provider: vm.provider?.name ?? 'unknown' }
         };
       });
 
@@ -227,7 +229,8 @@ export class EmmaApiImpl implements EmmaApi {
             ...node,
             label: k8s.id!.toString(),
             type: EmmaComputeType.KubernetesNode,
-            vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!
+            vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
+            dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: node.location?.region ?? 'unknown', provider: node.provider?.name ?? 'unknown' }
           }))
         ) || []
       );
@@ -268,7 +271,7 @@ export class EmmaApiImpl implements EmmaApi {
         await this.apiFactory.create(VirtualMachinesApi).vmCreate({ 
           name: entity.name!,
           cloudNetworkType: entity.cloudNetworkType?.toString(),
-          dataCenterId: entity.dataCenter?.id, 
+          dataCenterId: entity.dataCenter?.id!, 
           osId: entity.os?.id, 
           ramGb: entity.ramGb!,
           vCpu: entity.vCpu!,
@@ -281,7 +284,7 @@ export class EmmaApiImpl implements EmmaApi {
         await this.apiFactory.create(SpotInstancesApi).spotCreate({ 
           name: entity.name!,
           cloudNetworkType: entity.cloudNetworkType?.toString(),
-          dataCenterId: entity.dataCenter?.id, 
+          dataCenterId: entity.dataCenter?.id!, 
           osId: entity.os?.id, 
           ramGb: entity.ramGb!,
           vCpu: entity.vCpu!,
@@ -294,11 +297,11 @@ export class EmmaApiImpl implements EmmaApi {
       case EmmaComputeType.KubernetesNode:
         await this.apiFactory.create(KubernetesClustersApi).createKubernetesCluster({ 
           name: entity.name!,
-          deploymentLocation: entity.dataCenter.id,
+          deploymentLocation: KubernetesCreate.DeploymentLocationEnum.Eu, // TODO: If this enum expands to more then one deployment location we will need another strategy to determine the location
           workerNodes: [
             { 
               name: entity.name!,
-              dataCenterId: entity.dataCenter.id, 
+              dataCenterId: entity.dataCenter?.id!, 
               ramGb: entity.ramGb!,
               vCpu: entity.vCpu!,
               vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
@@ -323,7 +326,7 @@ export class EmmaApiImpl implements EmmaApi {
           workerNodes: [
             { 
               name: entity.name!,
-              dataCenterId: entity.dataCenter?.id, 
+              dataCenterId: entity.dataCenter?.id!, 
               ramGb: entity.ramGb!,
               vCpu: entity.vCpu!,
               vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,

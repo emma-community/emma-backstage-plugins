@@ -14,7 +14,7 @@ export const ComputeRowComponent: React.FC<ComputeRowProps> = ({ entry, onEdit, 
   return (
     <TableRow>
       <TableCell style={{ width: '40%' }}>{entry.label}</TableCell>
-      <TableCell style={{ width: '20%' }}>{entry.provider}</TableCell>
+      <TableCell style={{ width: '20%' }}>{entry.provider?.name}</TableCell>
       <TableCell style={{ width: '20%' }}>{entry.type}</TableCell>
       <TableCell style={{ width: '20%' }}>
         <Tooltip title="Edit">
