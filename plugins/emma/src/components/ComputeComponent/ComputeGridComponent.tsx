@@ -42,6 +42,7 @@ export const ComputeGridComponent = () => {
 
       setData((prevData) => prevData.map((item) => (item.id === entry.id ? entry : item)));
     } else {
+      // TODO: Generate SSH key and add sshkeyid to entry
       const entityId = await emmaApi.addComputeEntity(entry);
 
       setData([...data, { ...entry, id: entityId }]);

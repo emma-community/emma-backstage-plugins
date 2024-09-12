@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApi } from '@backstage/frontend-plugin-api';
 import { emmaApiRef } from '../../plugin';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Select, MenuItem, Slider, CircularProgress } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, Button, TextField, Select, MenuItem, Slider, CircularProgress } from '@material-ui/core';
 import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaLocation, EmmaDataCenter, EmmaProvider } from '@emma-community/backstage-plugin-emma-common';
 
 interface ComputeModalProps {

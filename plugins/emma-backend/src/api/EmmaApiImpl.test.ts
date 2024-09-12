@@ -252,7 +252,7 @@ describe('EmmaApiImpl', () => {
     const disks = [{type: EmmaVolumeType.SSD, sizeGb: 100}];
     const vCpuType = EmmaCPUType.Shared;
     
-    await emmaApi.addComputeEntity({ id: entityId, type: computeType, disks: disks, vCpuType: vCpuType });
+    await emmaApi.addComputeEntity({ id: entityId, type: computeType, disks: disks, vCpuType: vCpuType, sshKeyId: 1 });
 
     expect(mockLogger.info).toHaveBeenCalledWith(`Adding compute entity with id: ${entityId} and type: ${computeType}`);
     expect(mockLogger.info).toHaveBeenCalledWith('Added compute entity');    
@@ -265,7 +265,7 @@ describe('EmmaApiImpl', () => {
     const disks = [{type: EmmaVolumeType.SSD, sizeGb: 100}];
     const vCpuType = EmmaCPUType.Shared;
     
-    await emmaApi.updateComputeEntity({ id: entityId, type: computeType, disks: disks, vCpuType: vCpuType });
+    await emmaApi.updateComputeEntity({ id: entityId, type: computeType, disks: disks, vCpuType: vCpuType, sshKeyId: 1 });
 
     expect(mockLogger.info).toHaveBeenCalledWith(`Updating compute entity with id: ${entityId} and type: ${computeType}`);
     expect(mockLogger.info).toHaveBeenCalledWith('Updated compute entity');    
@@ -278,6 +278,6 @@ describe('EmmaApiImpl', () => {
     const disks = [{type: EmmaVolumeType.SSD, sizeGb: 100}];
     const vCpuType = EmmaCPUType.Shared;
     
-    await expect(emmaApi.updateComputeEntity({ id: entityId, type: computeType, disks: disks, vCpuType: vCpuType })).rejects.toThrow(`Unsupported compute type: ${computeType}`);
+    await expect(emmaApi.updateComputeEntity({ id: entityId, type: computeType, disks: disks, vCpuType: vCpuType, sshKeyId: 1 })).rejects.toThrow(`Unsupported compute type: ${computeType}`);
   });
 });
