@@ -11,7 +11,7 @@ export class EmmaApiImpl implements EmmaApi {
   private readonly config: Config;
   private readonly authHandler: HttpBearerAuth = new HttpBearerAuth();
   private readonly apiFactory: EmmaApiFactory;   
-  // TODO: Remove once External API is updated to return geo locations.
+  // TODO: Remove synthetic data once External API is updated to return geo locations.
   private readonly knownGeoLocations: EmmaDataCenter[];
 
   private constructor(
@@ -291,7 +291,7 @@ export class EmmaApiImpl implements EmmaApi {
           vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
           volumeGb: entity.disks![0].sizeGb!, 
           volumeType: this.parseEnum(VmCreate.VolumeTypeEnum, entity.disks![0].type!)!,
-          price: entity.cost!.price!, // TODO: Test what happens if price exceeds the range of the type in a given zone
+          price: entity.cost!.price!,
           sshKeyId: entity.sshKeyId! });
         break;
       case EmmaComputeType.KubernetesNode:
