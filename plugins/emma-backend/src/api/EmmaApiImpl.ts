@@ -226,7 +226,7 @@ export class EmmaApiImpl implements EmmaApi {
         k8s.nodeGroups?.flatMap(nodeGroup =>
           nodeGroup.nodes!.map(node => ({
             ...node,
-            label: k8s.id!.toString(),
+            label: `ClusterId: ${k8s.id!.toString()}`,
             type: EmmaComputeType.KubernetesNode,
             vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
             dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: node.location?.region ?? 'unknown' }
