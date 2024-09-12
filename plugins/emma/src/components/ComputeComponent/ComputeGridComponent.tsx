@@ -107,7 +107,7 @@ export const ComputeGridComponent = () => {
           </TableRow>
         </TableHead>
         <TableBody>         
-          {Object.keys(groupedData).map((providerName) => (
+          {Object.keys(groupedData).sort((a, b) => a.localeCompare(b)).map((providerName) => (
             <React.Fragment key={providerName}>
               {/* Provider Group Header */}
               <TableRow>
