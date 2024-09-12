@@ -6,7 +6,6 @@ metadata:
   description: emma backend plugin.
   annotations:
     github.com/project-slug: emma-community/emma-backstage-plugins
-    backstage.io/techdocs-ref: dir:.
 spec:
   type: library
   owner: info@emma.ms

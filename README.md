@@ -11,6 +11,7 @@ The `emma-backstage-plugins` repository contains three main plugins: `emma`, `em
 The `emma` plugin provides the frontend components and logic for the emma application. It includes UI components for displaying data, routing, and API interactions.
 
 **Key Features:**
+
 - Main entry points for the plugin.
 - Initialization logic.
 - Routing definitions.
@@ -22,6 +23,7 @@ The `emma` plugin provides the frontend components and logic for the emma applic
 The `emma-backend` plugin provides the backend services for the emma application. It includes API implementations, routing, and testing logic.
 
 **Key Features:**
+
 - Main entry point for the backend plugin.
 - Initialization logic.
 - Backend API implementations.
@@ -33,6 +35,7 @@ The `emma-backend` plugin provides the backend services for the emma application
 The `emma-common` plugin provides shared resources such as constants, types, and API methods that are used by both the frontend and backend plugins.
 
 **Key Features:**
+
 - Shared constants and types.
 - Permission management logic.
 - API interaction methods and factory functions.
@@ -63,6 +66,7 @@ yarn install
 ```
 
 ## Running the code
+
 To start the application stay in the root directory. To start the development server for each plugin, navigate to the respective plugin directories. Then run:
 
 ```sh
@@ -70,6 +74,7 @@ yarn dev
 ```
 
 ## Testing the code
+
 To run all tests stay in the root directory. To run the tests for each plugin, navigate to the respective plugin directories. Then run:
 
 ```sh
@@ -124,4 +129,5 @@ This command will stop and remove the containers, networks, and volumes created 
 By following these steps, you can easily build and run the Backstage application using Docker Compose.
 
 ## License
+
 This project is licensed under the Apache 2.0 License.

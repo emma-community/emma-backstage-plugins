@@ -6,7 +6,6 @@ metadata:
   description: emma common library.
   annotations:
     github.com/project-slug: emma-community/emma-backstage-plugins
-    backstage.io/techdocs-ref: dir:.
 spec:
   lifecycle: experimental
   type: backstage-common-library
