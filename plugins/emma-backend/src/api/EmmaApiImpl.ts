@@ -133,7 +133,7 @@ export class EmmaApiImpl implements EmmaApi {
       
       // TODO: Check paging and fetch all results.
       if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.VirtualMachine) > -1) {
-        const vmConfigsResponse = (await api.getVmConfigs(providerId, locationId, dataCenterId)).body.content ?? [];
+        const vmConfigsResponse = (await api.getVmConfigs(providerId, locationId, dataCenterId, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, 10000)).body.content ?? [];
         
         const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
             const emmaVmConfig: EmmaVmConfiguration = {
@@ -148,7 +148,7 @@ export class EmmaApiImpl implements EmmaApi {
       }
     
       if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.SpotInstance) > -1) {
-        const vmConfigsResponse = (await api.getSpotConfigs(providerId, locationId, dataCenterId)).body.content ?? [];
+        const vmConfigsResponse = (await api.getSpotConfigs(providerId, locationId, dataCenterId, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, 10000)).body.content ?? [];
         
         const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
             const emmaVmConfig: EmmaVmConfiguration = {
@@ -163,7 +163,7 @@ export class EmmaApiImpl implements EmmaApi {
       }
     
       if (computeType.length === 0 || computeType.indexOf(EmmaComputeType.KubernetesNode) > -1) {
-        const vmConfigsResponse = (await api.getKuberNodesConfigs(providerId, locationId, dataCenterId)).body.content ?? [];
+        const vmConfigsResponse = (await api.getKuberNodesConfigs(providerId, locationId, dataCenterId, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, 10000)).body.content ?? [];
         
         const emmaVmConfigs = vmConfigsResponse.map((vmConfig: VmConfiguration) => {
             const emmaVmConfig: EmmaVmConfiguration = {
