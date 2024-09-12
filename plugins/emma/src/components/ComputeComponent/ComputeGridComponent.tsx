@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import { useApi } from '@backstage/frontend-plugin-api';
 import {
-  Table, TableBody, TableCell, TableHead, TableRow,
-  Select, MenuItem, IconButton, Tooltip, Collapse
+  Select, MenuItem, IconButton, Tooltip, Table, TableBody, TableCell, TableHead, TableRow, Collapse
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -70,25 +69,37 @@ export const ComputeGridComponent = () => {
 
   return (
     <div>
-      {/* Filter */}
-      <Select value={filter} onChange={(e) => setFilter(e.target.value as EmmaComputeType | 'All')} style={{ width: '250px' }}>
-        <MenuItem value="All">All</MenuItem>
-        <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
-        <MenuItem value={EmmaComputeType.SpotInstance}>Spot Instance</MenuItem>
-        <MenuItem value={EmmaComputeType.KubernetesNode}>Kubernetes Node</MenuItem>
-      </Select>
-
       {/* Main Table */}
       <Table>
         <TableHead>
           <TableRow>
             <TableCell style={{ width: '40%' }}><strong>Label</strong></TableCell>
             <TableCell style={{ width: '20%' }}><strong>Provider</strong></TableCell>
-            <TableCell style={{ width: '20%' }}><strong>Type</strong></TableCell>
-            <TableCell style={{ width: '20%' }}><strong>Actions</strong></TableCell>
+            <TableCell style={{ width: '20%' }}>       
+              <Tooltip title="Filter by type">
+                {/* Filter */}
+                <Select
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value as EmmaComputeType | 'All')}
+                  style={{ width: '200px' }}
+                >
+                  <MenuItem value="All">All</MenuItem>
+                  <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
+                  <MenuItem value={EmmaComputeType.SpotInstance}>Spot Instance</MenuItem>
+                  <MenuItem value={EmmaComputeType.KubernetesNode}>Kubernetes Node</MenuItem>
+                </Select>
+              </Tooltip>
+            </TableCell>
+            <TableCell style={{ width: '20%' }}><strong>Actions</strong>
+              {/* Add New Button */}
+              <Tooltip title="Add new entity">
+                <IconButton onClick={() => handleOpenModal()} style={{ color: 'gray' }}>
+                  <AddIcon />
+                </IconButton>
+              </Tooltip></TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody>         
           {Object.keys(groupedData).map((providerName) => (
             <React.Fragment key={providerName}>
               {/* Provider Group Header */}
@@ -122,17 +133,6 @@ export const ComputeGridComponent = () => {
               </TableRow>
             </React.Fragment>
           ))}
-
-          {/* Add New Button */}
-          <TableRow>
-            <TableCell colSpan={4}>
-              <Tooltip title="Add New">
-                <IconButton onClick={() => handleOpenModal()}>
-                  <AddIcon />
-                </IconButton>
-              </Tooltip>
-            </TableCell>
-          </TableRow>
         </TableBody>
       </Table>
 

@@ -80,7 +80,7 @@ const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom
                     <strong>{dataCenter.id}</strong><br />
                     {dataCenter.price !== undefined && dataCenter.price > 0 && (
                       <a href="https://www.emma.ms/pricing" target="_blank">
-                        <strong>{dataCenter.price} EUR</strong>
+                        <strong>{dataCenter.price.toFixed(2)} eur/month</strong>
                       </a>
                     )}
                   </Popup>

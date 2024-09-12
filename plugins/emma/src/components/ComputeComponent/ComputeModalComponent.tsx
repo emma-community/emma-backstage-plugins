@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import useAsync from 'react-use/lib/useAsync';
 import { useApi } from '@backstage/frontend-plugin-api';
 import { emmaApiRef } from '../../plugin';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Select, MenuItem, Slider } from '@material-ui/core';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Select, MenuItem, Slider, CircularProgress } from '@material-ui/core';
 import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaLocation, EmmaDataCenter, EmmaProvider } from '@emma-community/backstage-plugin-emma-common';
 
 interface ComputeModalProps {
@@ -17,36 +16,23 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   const [locations, setLocations] = useState<EmmaLocation[]>([]);
   const [dataCenters, setDataCenters] = useState<EmmaDataCenter[]>([]);
   const [providers, setProviders] = useState<EmmaProvider[]>([]);
-  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 75, name: 'Amazon EC2' }, vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }], location: { id: 6, name: 'London' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' } });
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || {
+    label: '',
+    type: EmmaComputeType.VirtualMachine,
+    provider: { id: 75, name: 'Amazon EC2' },
+    vCpu: 4,
+    vCpuType: EmmaCPUType.Shared,
+    ramGb: 32,
+    disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }],
+    location: { id: 6, name: 'London' },
+    dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }
+  });
+
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 4));
   const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb! || 32));
   const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
-    
-  useAsync(async (): Promise<void> => {
-    setLocations(await emmaApi.getLocations());
-    setProviders(await emmaApi.getProviders());
-    setDataCenters(await emmaApi.getDataCenters());
-  }, [setLocations, setProviders, setDataCenters]);
-
-  useEffect(() => {
-    if (entry) {
-      setCurrentEntry(entry);
-      setVCpuSliderValue(Math.log2(entry.vCpu! || 4));
-      setRamSliderValue(Math.log2(entry.ramGb! || 32));
-      setVolumeSizeSliderValue((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
-    }
-  }, [entry, emmaApi]);
-
-  const handleSave = () => {
-    if (currentEntry.label && currentEntry.type) {
-      onSave({ 
-        ...currentEntry, 
-        vCpu: Math.pow(2, vCpuSliderValue),
-        ramGb: Math.pow(2, ramSliderValue),
-        volumeGb: volumeSizeSliderValue 
-      } as EmmaVm);
-    }
-  };
 
   const vCPUMarks = [
     { value: 0, label: '1' },     // log2(1) = 0
@@ -68,6 +54,78 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     { value: 10, label: '1024' }, // log2(1024) = 10
   ];
 
+  // Fetch data dynamically from the API
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);  // Start loading state
+
+      try {
+        const [locationsData, providersData, dataCentersData] = await Promise.all([
+          emmaApi.getLocations(),
+          emmaApi.getProviders(),
+          emmaApi.getDataCenters(),
+        ]);
+
+        setLocations(locationsData);
+        setProviders(providersData);
+        setDataCenters(dataCentersData);
+        setError(null);  // Clear any previous errors
+      } catch (e) {
+        setError('Failed to load data from the API');
+      } finally {
+        setLoading(false);  // End loading state
+      }
+    };
+
+    fetchData();
+  }, [emmaApi]);
+
+  useEffect(() => {
+    if (entry) {
+      setCurrentEntry(entry);
+      setVCpuSliderValue(Math.log2(entry.vCpu! || 4));
+      setRamSliderValue(Math.log2(entry.ramGb! || 32));
+      setVolumeSizeSliderValue((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
+    }
+  }, [entry]);
+
+  const handleSave = () => {
+    if (currentEntry.label && currentEntry.type) {
+      onSave({
+        ...currentEntry,
+        vCpu: Math.pow(2, vCpuSliderValue),
+        ramGb: Math.pow(2, ramSliderValue),
+        volumeGb: volumeSizeSliderValue
+      } as EmmaVm);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Dialog open={open} onClose={onClose}>
+        <DialogContent>
+          <CircularProgress /> {/* Show spinner while loading */}
+          <p>Loading data...</p>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  if (error) {
+    return (
+      <Dialog open={open} onClose={onClose}>
+        <DialogContent>
+          <p>{error}</p> {/* Display error if loading fails */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{currentEntry?.id ? 'Edit compute entity' : 'Add compute entity'}</DialogTitle>
@@ -76,16 +134,16 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           label="Label"
           fullWidth
           margin="dense"
-          value={currentEntry.label}
+          value={currentEntry.label || ''}
           onChange={(e) => setCurrentEntry({ ...currentEntry, label: e.target.value })}
         />
 
+        {/* Dropdown for Compute Type */}
         <div style={{ margin: '20px 0' }}>
-          <div>Type</div>  
+          <div>Type</div>
           <Select
             fullWidth
-            margin="dense"
-            value={currentEntry.type}
+            value={currentEntry.type || EmmaComputeType.VirtualMachine}
             onChange={(e) => setCurrentEntry({ ...currentEntry, type: e.target.value as EmmaComputeType })}
           >
             <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
@@ -94,68 +152,54 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           </Select>
         </div>
 
+        {/* Dropdown for Providers */}
         <div style={{ margin: '20px 0' }}>
-          <div>Provider</div>  
+          <div>Provider</div>
           <Select
             fullWidth
-            margin="dense"
-            value={currentEntry.provider!.id}
+            value={currentEntry.provider!.id || 75}
             onChange={(e) => setCurrentEntry({ ...currentEntry, provider: { id: e.target.value as number, name: currentEntry.provider?.name } })}
           >
             {providers.map((provider) => (
-              <MenuItem value={provider.id}>{provider.name}</MenuItem>
-            ))}
-          </Select>
-        </div>
-           
-        <div style={{ margin: '20px 0' }}>
-          <div>Data Center</div>   
-          <Select
-            fullWidth
-            value={currentEntry.dataCenter?.id}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, name: currentEntry.dataCenter?.name, location: { longitude: 0, latitude: 0}, region_code: currentEntry.location?.region! } })}
-          >
-            {dataCenters.map((dc) => (
-              <MenuItem value={dc.id}>{dc.name}</MenuItem>
+              <MenuItem key={provider.id} value={provider.id}>{provider.name}</MenuItem>
             ))}
           </Select>
         </div>
 
+        {/* Dropdown for Data Centers */}
         <div style={{ margin: '20px 0' }}>
-          <div>Location</div>  
+          <div>Data Center</div>
           <Select
             fullWidth
-            value={currentEntry.location?.id}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, location: { id: e.target.value as number, name: currentEntry.location?.name } })}
+            value={currentEntry.dataCenter?.id || 'aws-eu-north-1'}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, name: currentEntry.dataCenter?.name, location: { longitude: 0, latitude: 0 }, region_code: currentEntry.location?.region! } })}
           >
-            {locations.map((loc) => (
-              <MenuItem value={loc.id}>{loc.name}</MenuItem>
+            {dataCenters.map((dc) => (
+              <MenuItem key={dc.id} value={dc.id}>{dc.name}</MenuItem>
             ))}
           </Select>
         </div>
-              
+
+        {/* Dropdown for Locations */}
         <div style={{ margin: '20px 0' }}>
-          <div>vCpuType</div>  
+          <div>Location</div>
           <Select
-            label="vCpuType"
             fullWidth
-            margin="dense"
-            value={currentEntry.vCpuType}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, vCpuType: e.target.value as EmmaCPUType })}
+            value={currentEntry.location?.id || 6}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, location: { id: e.target.value as number, name: currentEntry.location?.name } })}
           >
-            <MenuItem value={EmmaCPUType.Shared}>Shared</MenuItem>
-            <MenuItem value={EmmaCPUType.Standard}>Standard</MenuItem>
-            <MenuItem value={EmmaCPUType.Hpc}>Hpc</MenuItem>
+            {locations.map((loc) => (
+              <MenuItem key={loc.id} value={loc.id}>{loc.name}</MenuItem>
+            ))}
           </Select>
         </div>
-   
+
+        {/* vCPU and RAM Sliders */}
         <div style={{ margin: '20px 0' }}>
           <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label>
           <Slider
-            value={vCpuSliderValue}
-            onChange={(_: any, newValue: number | number[]) => setVCpuSliderValue(newValue as number)}
-            aria-labelledby="v-cpu-slider"
-            valueLabelDisplay="auto"
+            value={vCpuSliderValue || 4}
+            onChange={(_, newValue) => setVCpuSliderValue(newValue as number)}
             step={1}
             marks={vCPUMarks}
             min={0}
@@ -166,26 +210,22 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
         <div style={{ margin: '20px 0' }}>
           <label>RAM (GB): {Math.pow(2, ramSliderValue)}</label>
           <Slider
-            value={ramSliderValue}
-            onChange={(_: any, newValue: number | number[]) => setRamSliderValue(newValue as number)}
-            aria-labelledby="ram-size-slider"
-            valueLabelDisplay="auto"
+            value={ramSliderValue || 32}
+            onChange={(_, newValue) => setRamSliderValue(newValue as number)}
             step={1}
             marks={ramMarks}
             min={5}
             max={10}
           />
-        </div>   
+        </div>
 
+        {/* Volume Type and Size */}
         <div style={{ margin: '20px 0' }}>
-          <div>Volume Type</div>  
+          <div>Volume Type</div>
           <Select
             fullWidth
-            margin="dense"
             value={currentEntry.disks ? currentEntry.disks[0].type : EmmaVolumeType.SSD}
-            onChange={(e) => {
-              setCurrentEntry({ ...currentEntry, disks: [{ type: e.target.value as EmmaVolumeType, sizeGb: volumeSizeSliderValue }] });}
-            }
+            onChange={(e) => setCurrentEntry({ ...currentEntry, disks: [{ type: e.target.value as EmmaVolumeType, sizeGb: volumeSizeSliderValue }] })}
           >
             <MenuItem value={EmmaVolumeType.SSD}>SSD</MenuItem>
             <MenuItem value={EmmaVolumeType.SSDPlus}>SSD-Plus</MenuItem>
@@ -195,26 +235,18 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
         <div style={{ margin: '20px 0' }}>
           <label>Volume (GB): {volumeSizeSliderValue}</label>
           <Slider
-            value={volumeSizeSliderValue}
-            onChange={(_: any, newValue: number | number[]) => setVolumeSizeSliderValue(newValue as number)}
-            aria-labelledby="volume-size-slider"
-            valueLabelDisplay="auto"
+            value={volumeSizeSliderValue || 200}
+            onChange={(_, newValue) => setVolumeSizeSliderValue(newValue as number)}
             step={25}
-            marks
             min={50}
             max={1000}
           />
         </div>
 
-        {/* TODO: Add SSHKEY signature field to show generated ssh private key when creating new entities */}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">
-          Cancel
-        </Button>
-        <Button onClick={handleSave} color="primary">
-          {currentEntry?.id ? 'Save' : 'Add'}
-        </Button>
+        <Button onClick={onClose} color="primary">Cancel</Button>
+        <Button onClick={handleSave} color="primary">{currentEntry?.id ? 'Save' : 'Add'}</Button>
       </DialogActions>
     </Dialog>
   );
