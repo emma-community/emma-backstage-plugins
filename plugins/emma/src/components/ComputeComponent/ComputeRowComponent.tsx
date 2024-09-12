@@ -10,7 +10,7 @@ interface ComputeRowProps {
   onDelete: () => void;
 }
 
-export const ComputeRowComponent: React.FC<ComputeRowProps> = ({ entry, onEdit, onDelete }) => {
+export const ComputeRowComponent = ({ entry, onEdit, onDelete }: ComputeRowProps) => {
   return (
     <TableRow>
       <TableCell style={{ width: '40%' }}>{entry.label}</TableCell>

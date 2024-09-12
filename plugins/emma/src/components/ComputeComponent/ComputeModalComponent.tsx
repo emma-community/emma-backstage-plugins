@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import useAsync from 'react-use/lib/useAsync';
 import { useApi } from '@backstage/frontend-plugin-api';
 import { emmaApiRef } from '../../plugin';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField, Select, MenuItem, Slider } from '@material-ui/core';
@@ -11,7 +12,7 @@ interface ComputeModalProps {
   onSave: (entry: EmmaVm) => void;
 }
 
-export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry, onClose, onSave }) => {
+export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeModalProps) => {
   const emmaApi = useApi(emmaApiRef);
   const [locations, setLocations] = useState<EmmaLocation[]>([]);
   const [dataCenters, setDataCenters] = useState<EmmaDataCenter[]>([]);
@@ -20,7 +21,13 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 4));
   const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb! || 32));
   const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
-  
+    
+  useAsync(async (): Promise<void> => {
+    setLocations(await emmaApi.getLocations());
+    setProviders(await emmaApi.getProviders());
+    setDataCenters(await emmaApi.getDataCenters());
+  }, [setLocations, setProviders, setDataCenters]);
+
   useEffect(() => {
     if (entry) {
       setCurrentEntry(entry);
@@ -28,20 +35,7 @@ export const ComputeModalComponent: React.FC<ComputeModalProps> = ({ open, entry
       setRamSliderValue(Math.log2(entry.ramGb! || 32));
       setVolumeSizeSliderValue((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
     }
-
-    const fetchLocationsAndDataCenters = async () => {
-      if(locations.length === 0)
-        setLocations(await emmaApi.getLocations());
-
-      if(providers.length === 0)
-        setProviders(await emmaApi.getProviders());
-
-      if(dataCenters.length === 0)
-        setDataCenters(await emmaApi.getDataCenters());
-    };
-  
-    fetchLocationsAndDataCenters();
-  }, [entry, emmaApi, locations, dataCenters, providers]);
+  }, [entry, emmaApi]);
 
   const handleSave = () => {
     if (currentEntry.label && currentEntry.type) {

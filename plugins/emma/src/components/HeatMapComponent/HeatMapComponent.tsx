@@ -15,6 +15,11 @@ import 'leaflet/dist/leaflet.css';
 import { HeatmapLayer } from 'react-leaflet-heatmap-layer-v3'
 
 const { Overlay } = LayersControl;
+const heatMapIcon = new Icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
+  iconSize: [25, 41],
+  iconAnchor: [12.5, 41]
+});
 
 export type HeatMapEntity = EmmaDataCenter & {
   price: number;
@@ -34,13 +39,7 @@ export type HeatMapProps = {
   maxBounds?: [number, number][];
 };
 
-const heatMapIcon = new Icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
-  iconSize: [25, 41],
-  iconAnchor: [12.5, 41]
-});
-
-export const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, data, maxBounds }: HeatMapProps) => {
+const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, data, maxBounds }: HeatMapProps) => {
   const points = data.map((entity) => ({
     lat: entity.location.latitude,
     lng: entity.location.longitude,
