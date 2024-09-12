@@ -41,10 +41,8 @@ export const ComputeGridComponent = () => {
       await emmaApi.updateComputeEntity(entry);
 
       setData((prevData) => prevData.map((item) => (item.id === entry.id ? entry : item)));
-    } else {      
-      require('console').log('Adding', entry);
-
-      const entityId = 1000000000; // await emmaApi.addComputeEntity(entry);
+    } else {
+      const entityId = await emmaApi.addComputeEntity(entry);
 
       setData([...data, { ...entry, id: entityId }]);
     }
@@ -53,8 +51,7 @@ export const ComputeGridComponent = () => {
   };
 
   const handleDelete = async (id: number) => {    
-    require('console').log('Deleting', data.find((item) => item.id === id));
-    // await emmaApi.deleteComputeEntity(id, data.find((item) => item.id === id)!.type);
+    await emmaApi.deleteComputeEntity(id, data.find((item) => item.id === id)!.type);
 
     setData(data.filter((item) => item.id !== id));
   };

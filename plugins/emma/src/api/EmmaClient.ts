@@ -98,7 +98,7 @@ export class EmmaClient implements EmmaApi {
   }
 
   public async addComputeEntity(entity: EmmaVm): Promise<number> {
-    return await this.send<number>("compute/entities/add", entity);
+    return await this.send<number>(`compute/entities/add/`, entity);
   }
 
   public async updateComputeEntity(entity: EmmaVm): Promise<void> {
