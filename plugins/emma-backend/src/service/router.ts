@@ -123,8 +123,8 @@ export async function createRouter(
     res.status(200).json(computeEntities);
   });
 
-  router.post('/compute/entities/:entityId/delete', async (req, res) => {
-    const requestedComputeType: EmmaComputeType = EmmaComputeType[req.query.computeType as keyof typeof EmmaComputeType];
+  router.get('/compute/entities/:computeType/:entityId/delete', async (req, res) => {
+    const requestedComputeType: EmmaComputeType = EmmaComputeType[req.params.computeType as keyof typeof EmmaComputeType];
     const entityId: number = Number(req.params.entityId);;
 
     await emmaApi.deleteComputeEntity(entityId, requestedComputeType);
@@ -132,7 +132,7 @@ export async function createRouter(
     res.status(200).json({});
   });
 
-  router.post('/compute/entities/add', async (req, res) => {
+  router.post('/compute/entities/:computeType/add', async (req, res) => {
     const entity = req.body as EmmaVm;
 
     logger.info(`ENTITY: ${JSON.stringify(entity)}`);
@@ -142,7 +142,7 @@ export async function createRouter(
     res.status(200).json({entityId});
   });
 
-  router.post('/compute/entities/:entityId/update', async (req, res) => {
+  router.post('/compute/entities/:computeType/:entityId/update', async (req, res) => {
     const entity = req.body as EmmaVm;
 
     logger.info(`ENTITY: ${JSON.stringify(entity)}`);
