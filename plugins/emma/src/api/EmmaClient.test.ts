@@ -1,4 +1,4 @@
-import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
+import { DiscoveryApi, FetchApi, IdentityApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
 import { EmmaClient } from './EmmaClient';
 import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVolumeType, EmmaCPUType } from '@emma-community/backstage-plugin-emma-common';
@@ -6,6 +6,7 @@ import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EMMA_PLUGIN_ID, EmmaComp
 describe('EmmaClient', () => {
   let discoveryApi: jest.Mocked<DiscoveryApi>;
   let fetchApi: jest.Mocked<FetchApi>;
+  let identityApi: jest.Mocked<IdentityApi>;
   let emmaClient: EmmaClient;
 
   beforeEach(() => {
@@ -17,7 +18,14 @@ describe('EmmaClient', () => {
       fetch: jest.fn(),
     } as jest.Mocked<FetchApi>;
 
-    emmaClient = new EmmaClient({ discoveryApi, fetchApi });
+    identityApi = {
+      getProfileInfo: jest.fn(),
+      getBackstageIdentity: jest.fn(),
+      getCredentials: jest.fn(),
+      signOut: jest.fn(),
+    } as jest.Mocked<IdentityApi>;
+
+    emmaClient = new EmmaClient({ discoveryApi, fetchApi, identityApi });
   });
 
   describe('getDataCenters', () => {
