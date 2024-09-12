@@ -196,7 +196,7 @@ export class EmmaApiImpl implements EmmaApi {
           ...vm,
           type: EmmaComputeType.VirtualMachine,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
-          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown', provider: vm.provider?.name ?? 'unknown' }
+          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown' }
         };
       });
 
@@ -212,7 +212,7 @@ export class EmmaApiImpl implements EmmaApi {
           ...vm,
           type: EmmaComputeType.SpotInstance,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
-          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown', provider: vm.provider?.name ?? 'unknown' }
+          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown' }
         };
       });
 
@@ -230,7 +230,7 @@ export class EmmaApiImpl implements EmmaApi {
             label: k8s.id!.toString(),
             type: EmmaComputeType.KubernetesNode,
             vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
-            dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: node.location?.region ?? 'unknown', provider: node.provider?.name ?? 'unknown' }
+            dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: node.location?.region ?? 'unknown' }
           }))
         ) || []
       );
