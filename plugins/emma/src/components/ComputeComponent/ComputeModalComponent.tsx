@@ -90,14 +90,12 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   }, [entry]);
 
   const handleSave = () => {
-    if (currentEntry.label && currentEntry.type) {
-      onSave({
-        ...currentEntry,
-        vCpu: Math.pow(2, vCpuSliderValue),
-        ramGb: Math.pow(2, ramSliderValue),
-        volumeGb: volumeSizeSliderValue
-      } as EmmaVm);
-    }
+    onSave({
+      ...currentEntry,
+      vCpu: Math.pow(2, vCpuSliderValue),
+      ramGb: Math.pow(2, ramSliderValue),
+      volumeGb: volumeSizeSliderValue
+    } as EmmaVm);
   };
 
   if (loading) {

@@ -226,7 +226,7 @@ export class EmmaApiImpl implements EmmaApi {
         k8s.nodeGroups?.flatMap(nodeGroup =>
           nodeGroup.nodes!.map(node => ({
             ...node,
-            label: `ClusterId: ${k8s.id!.toString()}`,
+            label: k8s.id!.toString(),
             type: EmmaComputeType.KubernetesNode,
             vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
             dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: node.location?.region ?? 'unknown' }
@@ -262,7 +262,7 @@ export class EmmaApiImpl implements EmmaApi {
     this.logger.info('Deleted compute entity');
   }
  
-  public async addComputeEntity(entity: EmmaVm): Promise<void> {
+  public async addComputeEntity(entity: EmmaVm): Promise<number> {
     this.logger.info(`Adding compute entity with id: ${entity.id} and type: ${entity.type}`);
     
     switch(entity.type) {
@@ -314,6 +314,8 @@ export class EmmaApiImpl implements EmmaApi {
     }
 
     this.logger.info('Added compute entity');
+
+    return entity.id!;
   }
 
   public async updateComputeEntity(entity: EmmaVm): Promise<void> {

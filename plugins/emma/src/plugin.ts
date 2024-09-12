@@ -4,6 +4,7 @@ import {
   createApiFactory,
   createApiRef,
   discoveryApiRef,
+  identityApiRef,
   fetchApiRef
 } from '@backstage/core-plugin-api';
 import { rootRouteRef } from './routes';
@@ -19,9 +20,9 @@ export const emmaHeatmapPlugin = createPlugin({
   apis: [
     createApiFactory({
       api: emmaApiRef,
-      deps: { discoveryApi: discoveryApiRef, fetchApi: fetchApiRef },
-      factory: ({ discoveryApi, fetchApi }) => {
-        return new EmmaClient({ discoveryApi, fetchApi });
+      deps: { discoveryApi: discoveryApiRef, fetchApi: fetchApiRef, identityApi: identityApiRef },
+      factory: ({ discoveryApi, fetchApi, identityApi }) => {
+        return new EmmaClient({ discoveryApi, fetchApi, identityApi });
       },
     }),
   ],

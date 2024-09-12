@@ -44,7 +44,7 @@ describe('EmmaClient', () => {
       const result = await emmaClient.getDataCenters(geoFence);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/datacenters/?latMax=40&lonMax=-74&latMin=39&lonMin=-75');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/datacenters/?latMax=40&lonMax=-74&latMin=39&lonMin=-75', {});
       expect(result).toEqual(mockDataCenters);
     });
 
@@ -66,7 +66,7 @@ describe('EmmaClient', () => {
       const result = await emmaClient.getDataCenters();
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/datacenters/?');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/datacenters/?', {});
       expect(result).toEqual(mockDataCenters);
     });
 
@@ -82,7 +82,7 @@ describe('EmmaClient', () => {
       await expect(emmaClient.getDataCenters()).rejects.toThrow(ResponseError);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/datacenters/?');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/datacenters/?', {});
     });
   });
 
@@ -98,7 +98,7 @@ describe('EmmaClient', () => {
       const result = await emmaClient.getComputeConfigs(undefined, undefined, undefined, EmmaComputeType.VirtualMachine);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?computeType=VirtualMachine');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?computeType=VirtualMachine', {});
       expect(result).toEqual(mockVmConfigurations);
     });
 
@@ -113,7 +113,7 @@ describe('EmmaClient', () => {
       const result = await emmaClient.getComputeConfigs();
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?', {});
       expect(result).toEqual(mockVmConfigurations);
     });
 
@@ -129,7 +129,7 @@ describe('EmmaClient', () => {
       await expect(emmaClient.getComputeConfigs()).rejects.toThrow(ResponseError);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?');
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/configs/?', {});
     });
   });  
 

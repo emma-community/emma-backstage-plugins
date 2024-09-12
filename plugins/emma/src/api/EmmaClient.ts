@@ -1,4 +1,4 @@
-import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
+import { DiscoveryApi, FetchApi, IdentityApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
 import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation } from '@emma-community/backstage-plugin-emma-common';
 
@@ -6,10 +6,12 @@ import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, Emm
 export class EmmaClient implements EmmaApi {
   private readonly discoveryApi: DiscoveryApi;
   private readonly fetchApi: FetchApi;
+  private readonly identityApi: IdentityApi;
 
-  constructor(options: { discoveryApi: DiscoveryApi; fetchApi: FetchApi; }) {
+  constructor(options: { discoveryApi: DiscoveryApi; fetchApi: FetchApi; identityApi: IdentityApi; }) {
     this.discoveryApi = options.discoveryApi;
     this.fetchApi = options.fetchApi;
+    this.identityApi = options.identityApi;
   }
   
   public async getDataCenters(geoFence?: GeoFence): Promise<EmmaDataCenter[]> {
@@ -24,7 +26,7 @@ export class EmmaClient implements EmmaApi {
     
     const urlSegment = `datacenters/?${queryString}`;
 
-    return await this.get<EmmaDataCenter[]>(urlSegment);
+    return await this.send<EmmaDataCenter[]>(urlSegment);
   }
 
   public async getProviders(providerId?: number, providerName?: string): Promise<EmmaProvider[]> {
@@ -38,7 +40,7 @@ export class EmmaClient implements EmmaApi {
 
     const urlSegment = `providers/?${queryString}`;
 
-    return await this.get<EmmaProvider[]>(urlSegment);
+    return await this.send<EmmaProvider[]>(urlSegment);
   }
 
   public async getLocations(locationId?: number, locationName?: string): Promise<EmmaLocation[]> {
@@ -52,7 +54,7 @@ export class EmmaClient implements EmmaApi {
 
     const urlSegment = `locations/?${queryString}`;
 
-    return await this.get<EmmaLocation[]>(urlSegment);
+    return await this.send<EmmaLocation[]>(urlSegment);
   }
 
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
@@ -71,7 +73,7 @@ export class EmmaClient implements EmmaApi {
 
     const urlSegment = `compute/configs/?${queryString}`;
 
-    return await this.get<EmmaVmConfiguration[]>(urlSegment);
+    return await this.send<EmmaVmConfiguration[]>(urlSegment);
   }
 
   public async getComputeEntities(entityId?: number, ...computeType: EmmaComputeType[]): Promise<EmmaVm[]> {
@@ -84,26 +86,44 @@ export class EmmaClient implements EmmaApi {
 
     const urlSegment = `compute/entities/?${queryString}`;
 
-    return await this.get<EmmaVm[]>(urlSegment);
+    return await this.send<EmmaVm[]>(urlSegment);
   }
 
   public async deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void> {
-    await this.get(`compute/entities/${entityId}/delete/?computeType=${computeType}`);
+    const queryString = new URLSearchParams();
+
+    queryString.append('computeType', computeType);
+
+    await this.send(`compute/entities/${entityId}/delete/?${queryString}`);
   }
 
-  public async addComputeEntity(entity: EmmaVm): Promise<void> {
-    await this.get(`compute/entities/add/?entity=${JSON.stringify(entity)}`);
+  public async addComputeEntity(entity: EmmaVm): Promise<number> {
+    return await this.send<number>("compute/entities/add", entity);
   }
 
   public async updateComputeEntity(entity: EmmaVm): Promise<void> {
-    await this.get(`compute/entities/update/?entity=${JSON.stringify(entity)}`);
+    await this.send(`compute/entities/${entity.id}/update/`, entity);
   }
 
-  private async get<T>(path: string): Promise<T> {
+  private async send<T>(path: string, data?: any): Promise<T> {
     const baseUrl = `${await this.discoveryApi.getBaseUrl(EMMA_PLUGIN_ID)}/`;
     const url = new URL(path, baseUrl);
+    let requestInit: RequestInit = {};
 
-    const response = await this.fetchApi.fetch(url.toString());
+    if(data) {
+      const { token: idToken } = await this.identityApi.getCredentials();
+
+      requestInit = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(idToken && { Authorization: `Bearer ${idToken}` }),
+        },
+        body: JSON.stringify(data)
+      };
+    }
+
+    const response = await this.fetchApi.fetch(url.toString(), requestInit);
 
     if (!response.ok)
       throw await ResponseError.fromResponse(response);

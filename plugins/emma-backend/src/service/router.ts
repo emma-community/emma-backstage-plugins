@@ -129,23 +129,25 @@ export async function createRouter(
 
     await emmaApi.deleteComputeEntity(entityId, requestedComputeType);
 
-    res.status(200);
+    res.status(200).json({});
   });
 
   router.post('/compute/entities/add', async (req, res) => {
-    const entity = JSON.parse(req.query.entity!.toString()) as EmmaVm;
+    const entity = req.body as EmmaVm;
 
     await emmaApi.addComputeEntity(entity);
 
-    res.status(200);
+    res.status(200).json({});
   });
 
-  router.post('/compute/entities/update', async (req, res) => {
-    const entity = JSON.parse(req.query.entity!.toString()) as EmmaVm;
+  router.post('/compute/entities/:entityId/update', async (req, res) => {
+    const entity = req.body as EmmaVm;
+
+    logger.info(`ENTITY: ${JSON.stringify(entity)}`);
 
     await emmaApi.updateComputeEntity(entity);
 
-    res.status(200);
+    res.status(200).json({});
   });
 
   const middleware = MiddlewareFactory.create({ logger, config });

@@ -15,7 +15,7 @@ import { emmaApiRef } from '../../plugin';
 export const ComputeGridComponent = () => {  
   const emmaApi = useApi(emmaApiRef);
   const [data, setData] = useState<EmmaVm[]>([]);
-  const [filter, setFilter] = useState<EmmaComputeType | 'All'>('All');
+  const [filter, setFilter] = useState<EmmaComputeType | '*'>('*');
   const [modalOpen, setModalOpen] = useState(false);
   const [editEntry, setEditEntry] = useState<Partial<EmmaVm> | null>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<{ [key: string]: boolean }>({});
@@ -36,16 +36,26 @@ export const ComputeGridComponent = () => {
     setEditEntry(null);
   };
 
-  const handleSave = (entry: EmmaVm) => {
+  const handleSave = async (entry: EmmaVm) => {
     if (editEntry?.id) {
+      await emmaApi.updateComputeEntity(entry);
+
       setData((prevData) => prevData.map((item) => (item.id === entry.id ? entry : item)));
-    } else {
-      setData([...data, { ...entry, id: data.length + 1 }]);
+    } else {      
+      require('console').log('Adding', entry);
+
+      const entityId = 1000000000; // await emmaApi.addComputeEntity(entry);
+
+      setData([...data, { ...entry, id: entityId }]);
     }
+
     handleCloseModal();
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {    
+    require('console').log('Deleting', data.find((item) => item.id === id));
+    // await emmaApi.deleteComputeEntity(id, data.find((item) => item.id === id)!.type);
+
     setData(data.filter((item) => item.id !== id));
   };
 
@@ -56,7 +66,7 @@ export const ComputeGridComponent = () => {
     }));
   };
 
-  const filteredData = filter === 'All' ? data : data.filter((item) => item.type === filter);
+  const filteredData = filter === '*' ? data : data.filter((item) => item.type === filter);
 
   const groupedData = filteredData.reduce((acc, entry) => {
     const provider = entry.provider?.name || 'Unknown';
@@ -80,13 +90,13 @@ export const ComputeGridComponent = () => {
                 {/* Filter */}
                 <Select
                   value={filter}
-                  onChange={(e) => setFilter(e.target.value as EmmaComputeType | 'All')}
+                  onChange={(e) => setFilter(e.target.value as EmmaComputeType | '*')}
                   style={{ width: '200px' }}
                 >
-                  <MenuItem value="All">All</MenuItem>
-                  <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
-                  <MenuItem value={EmmaComputeType.SpotInstance}>Spot Instance</MenuItem>
-                  <MenuItem value={EmmaComputeType.KubernetesNode}>Kubernetes Node</MenuItem>
+                  <MenuItem value="*">Entity Type</MenuItem>
+                  <MenuItem value={EmmaComputeType.VirtualMachine}><strong>Virtual Machine</strong></MenuItem>
+                  <MenuItem value={EmmaComputeType.SpotInstance}><strong>Spot Instance</strong></MenuItem>
+                  <MenuItem value={EmmaComputeType.KubernetesNode}><strong>Kubernetes Node</strong></MenuItem>
                 </Select>
               </Tooltip>
             </TableCell>
