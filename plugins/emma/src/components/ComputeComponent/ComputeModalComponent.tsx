@@ -242,9 +242,11 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
 
       </DialogContent>
       <DialogActions>
-        {(currentEntry.type === EmmaComputeType.KubernetesNode || currentEntry.id === undefined) && (          
-          <Button onClick={handleSave} color="primary">{currentEntry?.id ? 'Update' : 'Add'}</Button>
-        )}        
+        {(currentEntry.type === EmmaComputeType.KubernetesNode || currentEntry.id === undefined) && (
+          // TODO: Re-enable the button when we have a Manage token to test add/edit backend integration logic
+          // eslint-disable-next-line 
+          <Button onClick={handleSave} color="primary" disabled={true}>{currentEntry?.id ? 'Update' : 'Add'}</Button>
+        )}
         <Button onClick={onClose} color="primary">Close</Button>
       </DialogActions>
     </Dialog>

@@ -74,9 +74,32 @@ export async function createRouter(
       locationName = req.query.locationName as string;
     }
 
-    const providers = await emmaApi.getLocations(locationId, locationName);
+    const locations = await emmaApi.getLocations(locationId, locationName);
 
-    res.status(200).json(providers);
+    res.status(200).json(locations);
+  });
+
+  router.get('/ssh-keys', async (req, res) => {
+    let sshKeyId: number | undefined;
+
+    if(req.query.sshKeyId) {
+      sshKeyId = Number(req.query.sshKeyId);
+    }
+
+    const sshKeys = await emmaApi.getSshKeys(sshKeyId);
+
+    res.status(200).json(sshKeys);
+  });
+
+  router.post('/ssh-keys/:name/add', async (req, res) => {
+    const name: string = req.params.name;
+    const key = req.body as string;
+
+    logger.info(`ENTITY: ${JSON.stringify(key)}`);
+
+    const keyId = await emmaApi.addSshKey(name, key);
+
+    res.status(200).json({keyId});
   });
 
   router.get('/compute/configs', async (req, res) => {

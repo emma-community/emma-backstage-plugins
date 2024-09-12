@@ -23,7 +23,8 @@ export const ComputeRowComponent = ({ entry, onEdit, onDelete }: ComputeRowProps
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete">
-          <IconButton onClick={onDelete}>
+          {/* eslint-disable-next-line */}
+          <IconButton disabled={true} onClick={onDelete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

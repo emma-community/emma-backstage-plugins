@@ -7,7 +7,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
 import { ComputeRowComponent } from './ComputeRowComponent';
 import { ComputeModalComponent } from './ComputeModalComponent';
 import { emmaApiRef } from '../../plugin';
@@ -37,12 +37,19 @@ export const ComputeGridComponent = () => {
   };
 
   const handleSave = async (entry: EmmaVm) => {
-    if (editEntry?.id) {
+    if (entry?.id) {
       await emmaApi.updateComputeEntity(entry);
 
       setData((prevData) => prevData.map((item) => (item.id === entry.id ? entry : item)));
-    } else {
-      // TODO: Generate SSH key and add sshkeyid to entry
+    } else {      
+      const keys = await emmaApi.getSshKeys();
+
+      if(keys.length > 0) {
+        entry.sshKeyId = keys[0].id;
+      } else {
+        entry.sshKeyId = await emmaApi.addSshKey(entry.name ?? entry.type, EmmaSshKeyType.Rsa);
+      }
+
       const entityId = await emmaApi.addComputeEntity(entry);
 
       setData([...data, { ...entry, id: entityId }]);

@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -78,7 +78,7 @@ export class EmmaApiImpl implements EmmaApi {
       dataCenters = dataCenters.filter(dataCenter => this.isWithinBounds(dataCenter.location, geoFence));
     }
 
-    this.logger.info('Returning filtered data centers');
+    this.logger.info('Returning data centers');
 
     return dataCenters;
   }
@@ -99,7 +99,7 @@ export class EmmaApiImpl implements EmmaApi {
       providers = providers.concat((await api.getProviders(providerName)).body);
     }
 
-    this.logger.info('Returning filtered providers');
+    this.logger.info('Returning providers');
 
     return providers;
   }
@@ -120,9 +120,43 @@ export class EmmaApiImpl implements EmmaApi {
       locations = locations.concat((await api.getLocations(locationName)).body);
     }
 
-    this.logger.info('Returning filtered locations');
+    this.logger.info('Returning locations');
 
     return locations;
+  }
+
+  public async getSshKeys(sshKeyId?: number): Promise<EmmaSshKey[]>
+  {
+    const api = this.apiFactory.create(SSHKeysApi);
+          
+    this.logger.info('Fetching ssh keys');
+
+    const keys: EmmaSshKey[] = (sshKeyId) ? [(await api.getSshKey(sshKeyId)).body] : (await api.sshKeys()).body;
+
+    this.logger.info('Returning ssh keys');
+
+    return keys;
+  }
+
+  public async addSshKey(name: string, keyOrkeyType: string): Promise<number>
+  {
+    const api = this.apiFactory.create(SSHKeysApi);
+    let sshKeyId: number;
+    
+    this.logger.info('Adding ssh key');
+
+    const requestedKeyTypeOrUndefined = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, keyOrkeyType);
+
+    if(requestedKeyTypeOrUndefined){
+      sshKeyId = (await api.sshKeysCreateImport({ name: name, key: keyOrkeyType, keyType: requestedKeyTypeOrUndefined })).body.id!;
+    }
+    else {
+      sshKeyId = (await api.sshKeysCreateImport({ name: name, key: keyOrkeyType, keyType: SshKeysCreateImportRequest.KeyTypeEnum.Rsa })).body.id!;
+    }
+
+    this.logger.info('Returning ssh key id');
+
+    return sshKeyId;
   }
   
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
@@ -176,7 +210,7 @@ export class EmmaApiImpl implements EmmaApi {
         vmConfigs = vmConfigs.concat(emmaVmConfigs);
       }
       
-      this.logger.info('Returning filtered compute configs');
+      this.logger.info('Returning compute configs');
 
       return vmConfigs;
   }
@@ -237,7 +271,7 @@ export class EmmaApiImpl implements EmmaApi {
       vms = vms.concat(emmaVms);
     }  
 
-    this.logger.info('Returning filtered compute entities');
+    this.logger.info('Returning compute entities');
 
     return vms;
   }

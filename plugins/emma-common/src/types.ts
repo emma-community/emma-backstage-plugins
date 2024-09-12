@@ -1,4 +1,4 @@
-import { DataCenter, VmConfiguration, Provider, Location, KubernetesNodeGroupsInnerNodesInnerDisksInner } from '@emma-community/emma-typescript-sdk';
+import { DataCenter, VmConfiguration, Provider, Location, KubernetesNodeGroupsInnerNodesInnerDisksInner, SshKey } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export enum EmmaComputeType {
@@ -35,6 +35,11 @@ export enum EmmaComputeUnit {
 }
 
 /** @public */
+export enum EmmaSshKeyType {
+  Rsa = 'Rsa'
+}
+
+/** @public */
 export type GeoLocation = {
   latitude: number;
   longitude: number;
@@ -53,6 +58,9 @@ export type EmmaEntity<T> = {
 
 /** @public */
 export type EmmaDisk = EmmaEntity<number> & KubernetesNodeGroupsInnerNodesInnerDisksInner;
+
+/** @public */
+export type EmmaSshKey = EmmaEntity<number> & SshKey;
 
 /** @public */
 export type EmmaDataCenter = EmmaEntity<string> & DataCenter & {

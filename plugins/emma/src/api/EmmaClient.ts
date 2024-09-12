@@ -1,6 +1,6 @@
 import { DiscoveryApi, FetchApi, IdentityApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
-import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export class EmmaClient implements EmmaApi {
@@ -55,6 +55,21 @@ export class EmmaClient implements EmmaApi {
     const urlSegment = `locations/?${queryString}`;
 
     return await this.send<EmmaLocation[]>(urlSegment);
+  }
+
+  public async getSshKeys(sshKeyId?: number): Promise<EmmaSshKey[]> {
+    const queryString = new URLSearchParams();
+
+    if(sshKeyId)
+      queryString.append('sshKeyId', sshKeyId.toString());
+
+    const urlSegment = `ssh-keys/?${queryString}`;
+
+    return await this.send<EmmaSshKey[]>(urlSegment);
+  }
+
+  public async addSshKey(name: string, keyOrkeyType: string): Promise<number> {
+    return await this.send<number>(`ssh-keys/${name}/add/`, keyOrkeyType);
   }
 
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
