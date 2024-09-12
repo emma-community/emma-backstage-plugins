@@ -1,8 +1,8 @@
 import React from 'react';
 import { TableCell, TableRow, IconButton, Tooltip } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import ComputerIcon from '@material-ui/icons/Computer';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { EmmaVm, EmmaComputeType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaVm } from '@emma-community/backstage-plugin-emma-common';
 
 interface ComputeRowProps {
   entry: EmmaVm;
@@ -17,9 +17,9 @@ export const ComputeRowComponent = ({ entry, onEdit, onDelete }: ComputeRowProps
       <TableCell style={{ width: '20%' }}>{entry.provider?.name}</TableCell>
       <TableCell style={{ width: '20%' }}>{entry.type}</TableCell>
       <TableCell style={{ width: '20%' }}>
-        <Tooltip title="View">
+        <Tooltip title="Manage">
           <IconButton onClick={onEdit}>
-            <EditIcon />
+            <ComputerIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete">
