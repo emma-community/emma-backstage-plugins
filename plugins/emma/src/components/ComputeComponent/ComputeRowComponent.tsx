@@ -17,13 +17,11 @@ export const ComputeRowComponent = ({ entry, onEdit, onDelete }: ComputeRowProps
       <TableCell style={{ width: '20%' }}>{entry.provider?.name}</TableCell>
       <TableCell style={{ width: '20%' }}>{entry.type}</TableCell>
       <TableCell style={{ width: '20%' }}>
-        {entry.type === EmmaComputeType.KubernetesNode && (
-          <Tooltip title="Edit">
-            <IconButton onClick={onEdit}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+        <Tooltip title="View">
+          <IconButton onClick={onEdit}>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Delete">
           <IconButton onClick={onDelete}>
             <DeleteIcon />

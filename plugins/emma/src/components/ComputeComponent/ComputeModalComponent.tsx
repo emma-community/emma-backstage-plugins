@@ -126,7 +126,6 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{currentEntry?.id ? 'Edit compute entity' : 'Add compute entity'}</DialogTitle>
       <DialogContent>
         <TextField
           label="Label"
@@ -243,8 +242,10 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
 
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="primary">Cancel</Button>
-        <Button onClick={handleSave} color="primary">{currentEntry?.id ? 'Save' : 'Add'}</Button>
+        {(currentEntry.type === EmmaComputeType.KubernetesNode || currentEntry.id === undefined) && (          
+          <Button onClick={handleSave} color="primary">{currentEntry?.id ? 'Update' : 'Add'}</Button>
+        )}        
+        <Button onClick={onClose} color="primary">Close</Button>
       </DialogActions>
     </Dialog>
   );
