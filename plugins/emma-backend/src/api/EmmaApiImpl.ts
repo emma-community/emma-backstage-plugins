@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaSshKeyType, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
 import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
@@ -131,28 +131,36 @@ export class EmmaApiImpl implements EmmaApi {
           
     this.logger.info('Fetching ssh keys');
 
-    const keys: EmmaSshKey[] = (sshKeyId) ? [(await api.getSshKey(sshKeyId)).body] : (await api.sshKeys()).body;
+    const keys = (sshKeyId) ? [(await api.getSshKey(sshKeyId)).body] : (await api.sshKeys()).body;
+    const result = keys.map(key => {
+      return {
+        ...key,
+        type: this.parseEnum(EmmaSshKeyType, key.keyType!)!
+      }
+    });
 
     this.logger.info('Returning ssh keys');
 
-    return keys;
+    return result;
   }
 
-  public async addSshKey(name: string, keyOrkeyType: string): Promise<number>
+  public async addSshKey(name: string, keyOrkeyType: EmmaSshKey | EmmaSshKeyType): Promise<number>
   {
     const api = this.apiFactory.create(SSHKeysApi);
-    let sshKeyId: number;
-    
+    let sshKeyType: SshKeysCreateImportRequest.KeyTypeEnum;
+    let sshKeyValue: string;
+
     this.logger.info('Adding ssh key');
 
-    const requestedKeyTypeOrUndefined = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, keyOrkeyType);
+    if((keyOrkeyType as EmmaSshKey).key !== undefined) {
+      sshKeyValue = (keyOrkeyType as EmmaSshKey).key!;
+      sshKeyType = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, (keyOrkeyType as EmmaSshKey).keyType!)!;
+    } else {
+      sshKeyValue = (keyOrkeyType as EmmaSshKeyType).toString();
+      sshKeyType = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, keyOrkeyType as EmmaSshKeyType)!;
+    }
 
-    if(requestedKeyTypeOrUndefined){
-      sshKeyId = (await api.sshKeysCreateImport({ name: name, key: keyOrkeyType, keyType: requestedKeyTypeOrUndefined })).body.id!;
-    }
-    else {
-      sshKeyId = (await api.sshKeysCreateImport({ name: name, key: keyOrkeyType, keyType: SshKeysCreateImportRequest.KeyTypeEnum.Rsa })).body.id!;
-    }
+    const sshKeyId = (await api.sshKeysCreateImport({ name: name, key: sshKeyValue, keyType: sshKeyType })).body.id!;
 
     this.logger.info('Returning ssh key id');
 

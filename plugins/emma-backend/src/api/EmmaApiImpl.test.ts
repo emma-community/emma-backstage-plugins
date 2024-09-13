@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { HttpBearerAuth, DataCentersApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VirtualMachinesApi, SpotInstancesApi, KubernetesClustersApi, LocationsApi, ProvidersApi, Vm } from '@emma-community/emma-typescript-sdk';
-import { EmmaApiFactory, EmmaComputeType, EmmaVolumeType, EmmaCPUType } from '@emma-community/backstage-plugin-emma-common';
+import { HttpBearerAuth, DataCentersApi, SSHKeysApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VirtualMachinesApi, SpotInstancesApi, KubernetesClustersApi, LocationsApi, ProvidersApi, Vm } from '@emma-community/emma-typescript-sdk';
+import { EmmaApiFactory, EmmaComputeType, EmmaVolumeType, EmmaCPUType, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
 import { EmmaApiImpl } from './EmmaApiImpl';
 
 jest.mock('fs');
@@ -23,6 +23,7 @@ describe('EmmaApiImpl', () => {
   let mockSpotInstancesApi: SpotInstancesApi;
   let mockVirtualMachinesapi: VirtualMachinesApi;
   let mockKubernetesClustersApi: KubernetesClustersApi;
+  let mockSshKeysApi: SSHKeysApi;
   let mockApiFactory: any;
 
   beforeEach(() => {
@@ -86,6 +87,19 @@ describe('EmmaApiImpl', () => {
         { id: 'location-2' },
       ],
     });
+
+    mockSshKeysApi = new SSHKeysApi();
+    mockSshKeysApi.getSshKey = jest.fn().mockResolvedValue({
+      body: [
+        { id: 'key-1' },
+      ],
+    });
+    mockSshKeysApi.sshKeys = jest.fn().mockResolvedValue({
+      body: [
+        { id: 'key-1' }, { id: 'key-2' },
+      ],
+    });
+    mockSshKeysApi.sshKeysCreateImport = jest.fn().mockResolvedValue({body: {id: 1}});
     
     mockProvidersApi = new ProvidersApi();
     mockProvidersApi.getProvider = jest.fn().mockResolvedValue({
@@ -153,6 +167,7 @@ describe('EmmaApiImpl', () => {
         if (apiClass === VirtualMachinesApi) return mockVirtualMachinesapi;
         if (apiClass === SpotInstancesApi) return mockSpotInstancesApi;
         if (apiClass === KubernetesClustersApi) return mockKubernetesClustersApi;
+        if (apiClass === SSHKeysApi) return mockSshKeysApi;
         return null;
       }),
     };
@@ -208,6 +223,22 @@ describe('EmmaApiImpl', () => {
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching locations');
     expect(locations).toEqual([{ id: 'location-1' }, { id: 'location-2' }]);
+  });
+
+  test('should fetch and filter ssh keys', async () => {
+    const emmaApi = EmmaApiImpl.fromConfig(mockConfig, { logger: mockLogger });
+    const keys = await emmaApi.getSshKeys();
+
+    expect(mockLogger.info).toHaveBeenCalledWith('Fetching ssh keys');
+    expect(keys).toEqual([{ id: 'key-1' }, { id: 'key-2' }]);
+  });
+
+  test('should add ssh key', async () => {
+    const emmaApi = EmmaApiImpl.fromConfig(mockConfig, { logger: mockLogger });
+    const sshKeyId = await emmaApi.addSshKey('key-1', EmmaSshKeyType.Rsa);
+
+    expect(mockLogger.info).toHaveBeenCalledWith('Adding ssh key');
+    expect(sshKeyId).toEqual(1);
   });
 
   test('should fetch compute configurations', async () => {

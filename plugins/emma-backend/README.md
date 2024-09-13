@@ -1,4 +1,4 @@
-# emma Backend Plugin
+# emma-backend plugin
 
 ## Overview
 
@@ -8,7 +8,7 @@ The `emma-backend` plugin provides the backend services for the emma application
 
 The plugin has been added to the example app in this repository, meaning you'll be able to access it by running `yarn start` in the root directory, and then navigating to [/emma/health](http://localhost:7007/api/emma/health).
 
-## Key Files
+## Key files
 
 - **`index.ts`**: Main entry point for the backend plugin.
 - **`plugin.ts`**: Contains the initialization logic for the backend plugin.

@@ -1,7 +1,7 @@
 import { DiscoveryApi, FetchApi, IdentityApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
 import { EmmaClient } from './EmmaClient';
-import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVolumeType, EmmaCPUType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EmmaProvider, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVm, EmmaLocation, EmmaSshKey, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
 
 describe('EmmaClient', () => {
   let discoveryApi: jest.Mocked<DiscoveryApi>;
@@ -37,7 +37,7 @@ describe('EmmaClient', () => {
           "longitude": -79.4209,
           "latitude": 37.4316        
         }
-    }];
+      }];
       discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
       fetchApi.fetch.mockResolvedValue({
         ok: true,
@@ -93,6 +93,164 @@ describe('EmmaClient', () => {
       expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/datacenters/?', {});
     });
   });
+  
+  describe('getLocations', () => {
+    it('should call fetch with the correct URL', async () => {
+      const mockLocations: EmmaLocation[] = [ {
+        "name": "East US",
+      }];
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockLocations,
+      } as Response);
+
+      const result = await emmaClient.getLocations();
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/locations/?', {});
+      expect(result).toEqual(mockLocations);
+    });
+
+    it('should throw a ResponseError if the fetch response is not ok', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+      } as Response);
+
+      // @ts-ignore
+      await expect(emmaClient.getLocations()).rejects.toThrow(ResponseError);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/locations/?', {});
+    });
+  });
+  
+  describe('getProviders', () => {
+    it('should call fetch with the correct URL', async () => {
+      const mockProviders: EmmaProvider[] = [ {
+        "name": "East US",
+      }];
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockProviders,
+      } as Response);
+
+      const result = await emmaClient.getProviders();
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/providers/?', {});
+      expect(result).toEqual(mockProviders);
+    });
+
+    it('should throw a ResponseError if the fetch response is not ok', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+      } as Response);
+
+      // @ts-ignore
+      await expect(emmaClient.getProviders()).rejects.toThrow(ResponseError);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/providers/?', {});
+    });
+  });
+  
+  describe('getSshKey', () => {
+    it('should call fetch with the correct URL', async () => {
+      const mockSshKeys: EmmaSshKey[] = [ {
+        id: 1,
+        type: EmmaSshKeyType.Rsa,
+      }];
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockSshKeys,
+      } as Response);
+
+      const result = await emmaClient.getSshKeys();
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/?', {});
+      expect(result).toEqual(mockSshKeys);
+    });
+
+    it('should call fetch with the correct URL and id', async () => {
+      const mockSshKeys: EmmaSshKey[] = [ {
+        id: 1,
+        type: EmmaSshKeyType.Rsa,
+      }];
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockSshKeys,
+      } as Response);
+
+      const result = await emmaClient.getSshKeys(1);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/?sshKeyId=1', {});
+      expect(result).toEqual(mockSshKeys);
+    });
+
+    it('should throw a ResponseError if the fetch response is not ok', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+      } as Response);
+
+      // @ts-ignore
+      await expect(emmaClient.getSshKeys()).rejects.toThrow(ResponseError);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/?', {});
+    });
+  });  
+  
+  describe('addSshKey', () => {
+    it('should create key with the correct URL', async () => {
+      const mockSshKeys: EmmaSshKey[] = [ {
+        id: 1,
+        type: EmmaSshKeyType.Rsa,
+      }];
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      identityApi.getCredentials.mockResolvedValue({ token: '' });
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockSshKeys,
+      } as Response);
+
+      const result = await emmaClient.addSshKey('name', EmmaSshKeyType.Rsa);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/name/add/', { body: `\"${EmmaSshKeyType.Rsa}\"`, headers: { 'Content-Type': 'application/json', 'Authorization' : 'Bearer ' }, method: 'POST' });
+      expect(result).toEqual(mockSshKeys);
+    });
+
+    it('should throw a ResponseError if the create response is not ok', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      identityApi.getCredentials.mockResolvedValue({ token: '' });
+      fetchApi.fetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+      } as Response);
+
+      // @ts-ignore      
+      await expect(emmaClient.addSshKey('name', EmmaSshKeyType.Rsa)).rejects.toThrow(ResponseError);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/name/add/', { body: `\"${EmmaSshKeyType.Rsa}\"`, headers: { 'Content-Type': 'application/json', 'Authorization' : 'Bearer ' }, method: 'POST' });
+    });
+  });
 
   describe('getComputeConfigs', () => {
     it('should call fetch with the correct URL when computeType is provided', async () => {
@@ -141,10 +299,50 @@ describe('EmmaClient', () => {
     });
   });  
 
-  test('can serialize/deserialize EmmaVm type', async () => {
-    const emmaVm = { id: 1, type: EmmaComputeType.VirtualMachine, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared };
+  describe('getComputeEntities', () => {
+    it('should call fetch with the correct URL when computeType is provided', async () => {
+      const mockVms: EmmaVm[] = [{ id: 1, label: 'default', type: EmmaComputeType.VirtualMachine }];
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockVms,
+      } as Response);
 
-    expect(JSON.stringify(emmaVm)).toEqual("{\"id\":1,\"type\":\"VirtualMachine\",\"disks\":[{\"type\":\"ssd\",\"sizeGb\":100}],\"vCpuType\":\"shared\"}");
-    expect(JSON.parse("{\"id\":1,\"type\":\"VirtualMachine\",\"disks\":[{\"type\":\"ssd\",\"sizeGb\":100}],\"vCpuType\":\"shared\"}")).toEqual(emmaVm);
+      const result = await emmaClient.getComputeEntities(undefined, EmmaComputeType.VirtualMachine);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/?computeType=VirtualMachine', {});
+      expect(result).toEqual(mockVms);
+    });
+
+    it('should call fetch with the correct URL when no computeType is provided', async () => {
+      const mockVms: EmmaVm[] = [{ id: 1, label: 'default', type: EmmaComputeType.VirtualMachine }];
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockVms,
+      } as Response);
+
+      const result = await emmaClient.getComputeEntities();
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/?', {});
+      expect(result).toEqual(mockVms);
+    });
+
+    it('should throw a ResponseError if the fetch response is not ok', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+      } as Response);
+
+      // @ts-ignore
+      await expect(emmaClient.getComputeEntities()).rejects.toThrow(ResponseError);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/?', {});
+    });
   });
 });

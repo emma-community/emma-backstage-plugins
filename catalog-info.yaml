@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: backstage-plugin-emma-docs
   title: 'backstage-plugin-emma-docs'
-  description: Docs for plugins by emma, including frontend, backend, and common libs.
+  description: Docs for plugins by emma.ms
   annotations:
     github.com/project-slug: emma-community/emma-backstage-plugins
     backstage.io/techdocs-ref: dir:.

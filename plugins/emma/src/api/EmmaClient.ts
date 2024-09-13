@@ -1,6 +1,6 @@
 import { DiscoveryApi, FetchApi, IdentityApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
-import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaSshKeyType, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export class EmmaClient implements EmmaApi {
@@ -68,7 +68,7 @@ export class EmmaClient implements EmmaApi {
     return await this.send<EmmaSshKey[]>(urlSegment);
   }
 
-  public async addSshKey(name: string, keyOrkeyType: string): Promise<number> {
+  public async addSshKey(name: string, keyOrkeyType: EmmaSshKey | EmmaSshKeyType): Promise<number> {
     return await this.send<number>(`ssh-keys/${name}/add/`, keyOrkeyType);
   }
 
@@ -122,13 +122,13 @@ export class EmmaClient implements EmmaApi {
     let requestInit: RequestInit = {};
 
     if(data) {
-      const { token: idToken } = await this.identityApi.getCredentials();
+      const token = await this.identityApi?.getCredentials();
 
       requestInit = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          ...(idToken && { Authorization: `Bearer ${idToken}` }),
+          ...(token && { Authorization: `Bearer ${token.token}` }),
         },
         body: JSON.stringify(data)
       };

@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: backstage-plugin-emma
   title: '@emma-community/backstage-plugin-emma'
-  description: emma frontend plugin.
+  description: emma plugin.
   annotations:
     github.com/project-slug: emma-community/emma-backstage-plugins
 spec:

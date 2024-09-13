@@ -36,7 +36,8 @@ export enum EmmaComputeUnit {
 
 /** @public */
 export enum EmmaSshKeyType {
-  Rsa = 'Rsa'
+  Rsa = 'Rsa',
+  Ed25519 = 'Ed25519'
 }
 
 /** @public */
@@ -60,7 +61,9 @@ export type EmmaEntity<T> = {
 export type EmmaDisk = EmmaEntity<number> & KubernetesNodeGroupsInnerNodesInnerDisksInner;
 
 /** @public */
-export type EmmaSshKey = EmmaEntity<number> & SshKey;
+export type EmmaSshKey = EmmaEntity<number> & SshKey & {
+  type: EmmaSshKeyType;
+}
 
 /** @public */
 export type EmmaDataCenter = EmmaEntity<string> & DataCenter & {

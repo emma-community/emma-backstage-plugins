@@ -1,10 +1,10 @@
-# emma Common Plugin
+# emma-common plugin
 
 ## Overview
 
 The `emma-common` plugin provides shared resources such as constants, types, and API methods that are used by both the frontend and backend plugins.
 
-## Key Files
+## Key files
 
 - **`constants.ts`**: Defines shared constants used across plugins.
 - **`types.ts`**: Defines shared types used across plugins.

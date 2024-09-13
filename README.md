@@ -1,4 +1,4 @@
-# emma Backstage Plugins
+# emma Backstage plugins
 
 ## Overview
 
@@ -6,11 +6,11 @@ The `emma-backstage-plugins` repository contains three main plugins: `emma`, `em
 
 ## Plugins
 
-### `emma` Plugin
+### `emma` plugin
 
 The `emma` plugin provides the frontend components and logic for the emma application. It includes UI components for displaying data, routing, and API interactions.
 
-**Key Features:**
+**Key features:**
 
 - Main entry points for the plugin.
 - Initialization logic.
@@ -18,11 +18,11 @@ The `emma` plugin provides the frontend components and logic for the emma applic
 - API client for backend interactions.
 - UI components for heat maps.
 
-### `emma-backend` Plugin
+### `emma-backend` plugin
 
 The `emma-backend` plugin provides the backend services for the emma application. It includes API implementations, routing, and testing logic.
 
-**Key Features:**
+**Key features:**
 
 - Main entry point for the backend plugin.
 - Initialization logic.
@@ -30,11 +30,11 @@ The `emma-backend` plugin provides the backend services for the emma application
 - Routing logic for backend services.
 - Tests for routing logic.
 
-### `emma-common` Plugin
+### `emma-common` plugin
 
 The `emma-common` plugin provides shared resources such as constants, types, and API methods that are used by both the frontend and backend plugins.
 
-**Key Features:**
+**Key features:**
 
 - Shared constants and types.
 - Permission management logic.
@@ -43,14 +43,14 @@ The `emma-common` plugin provides shared resources such as constants, types, and
 
 ## Getting started
 
-### Clone the Repository
+### Clone the repository
 
 ```sh
 git clone https://github.com/emma-community/emma-backstage-plugins.git
 cd emma-backstage-plugins
 ```
 
-### Set Environment Variables
+### Set environment variables
 
 Ensure that the environment variables `EMMA_CLIENT_ID` and `EMMA_CLIENT_SECRET` are set in your environment. You can set them in your terminal session or in a `.env` file.
 

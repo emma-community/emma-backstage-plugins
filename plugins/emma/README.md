@@ -4,7 +4,7 @@
 
 The `emma` plugin provides the frontend components and logic for the emma application. It includes UI components for displaying data, routing, and API interactions.
 
-## Key Files
+## Key files
 
 - **`index.ts` and `index.tsx`**: Main entry points for the plugin.
 - **`plugin.ts`**: Contains the initialization logic for the plugin.

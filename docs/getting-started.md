@@ -1,4 +1,4 @@
-# Integrating emma plugins into a Backstage app
+# Integrating emma Backstage plugins
 
 Backstage, an open-source platform created by Spotify, enables organizations to build custom developer portals, giving teams a unified way to manage infrastructure, services, and software catalogs. One of the most compelling features of Backstage is its ability to integrate modular plugins that extend its functionality in highly customizable ways.
 
@@ -22,7 +22,7 @@ After running this command, you’ll be prompted to give your app a name and sel
 
 This basic app structure will serve as the foundation for integrating the emma plugins.
 
-## Step 2: Install the emma frontend plugin
+## Step 2: Install the emma plugin
 
 The first plugin we’ll integrate is emma, the frontend plugin that allows you to visualize and interact with cloud service data. To install emma in your newly created app, you need to add the plugin’s package to the frontend.
 
@@ -42,13 +42,14 @@ Now that the emma plugin is installed, you need to register it in the app so tha
 - Import `EmmaHeatMapPage` from the emma plugin at the top of the file:
 
 ```typescript
-import { EmmaHeatmapPage } from '@emma-community/backstage-plugin-emma';
+import { EmmaHeatmapPage, EmmaComputePage } from '@emma-community/backstage-plugin-emma';
 ```
 
 Next, add a route for the `EmmaHeatMapPage` within the existing `<FlatRoutes>` section:
 
 ```jsx
 <Route path="/emma/heatmap" element={<EmmaHeatmapPage />} />
+<Route path="/emma/compute" element={<EmmaHeatMapPage />} />
 ```
 
 This creates a route that makes the emma plugin accessible from the path `/emma`. Once this is done, your Backstage app will be able to serve the emma frontend when navigating to that URL.
@@ -64,12 +65,14 @@ Here is how you can add a menu item for emma in the sidebar:
 
 ```typescript
 import MapIcon from '@material-ui/icons/Map';
+import ComputerIcon from '@material-ui/icons/Computer';
 ```
 
 - Add a new `SidebarItem` element within the sidebar:
 
 ```jsx
 <SidebarItem icon={MapIcon} to="emma/heatmap" text="Emma" />
+<SidebarItem icon={ComputerIcon} to="emma/compute" text="Emma" />
 ```
 
 This adds a menu item for the emma route, allowing users to navigate to the plugin directly from the sidebar.

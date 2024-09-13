@@ -3,7 +3,7 @@ import Router from 'express-promise-router';
 import { MiddlewareFactory } from '@backstage/backend-defaults/rootHttpRouter';
 import { LoggerService, RootConfigService } from '@backstage/backend-plugin-api';
 import { EmmaApiImpl } from '../api';
-import { EmmaComputeType, EmmaDataCenter, EmmaVm } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaDataCenter, EmmaSshKey, EmmaSshKeyType, EmmaVm } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export interface RouterOptions {
@@ -93,7 +93,7 @@ export async function createRouter(
 
   router.post('/ssh-keys/:name/add', async (req, res) => {
     const name: string = req.params.name;
-    const key = req.body as string;
+    const key: EmmaSshKey | EmmaSshKeyType = ((req.body as EmmaSshKey).key !== undefined) ? req.body as EmmaSshKey : req.body as EmmaSshKeyType;
 
     logger.info(`ENTITY: ${JSON.stringify(key)}`);
 
