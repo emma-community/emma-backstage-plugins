@@ -21,7 +21,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || {
     label: '',
     type: EmmaComputeType.VirtualMachine,
-    provider: { id: 75, name: 'Amazon EC2' },
+    provider: { id: 10, name: 'Amazon EC2' },
     vCpu: 4,
     vCpuType: EmmaCPUType.Shared,
     ramGb: 32,

@@ -3,7 +3,7 @@ import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaSshKeyType, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, SshKeyCreate, SshKeyImport, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, ObjectSerializer, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {

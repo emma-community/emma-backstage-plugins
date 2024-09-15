@@ -238,7 +238,7 @@ describe('EmmaApiImpl', () => {
     const sshKeyId = await emmaApi.addSshKey('key-1', EmmaSshKeyType.Rsa);
 
     expect(mockLogger.info).toHaveBeenCalledWith('Adding ssh key');
-    expect(sshKeyId).toEqual(1);
+    expect(sshKeyId).toEqual({"id": 1, "type": "Rsa"});
   });
 
   test('should fetch compute configurations', async () => {
