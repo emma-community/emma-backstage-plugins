@@ -1,7 +1,7 @@
 {
   "name": "@emma-community/backstage-plugin-emma-common",
   "description": "Common library for the emma plugin",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "backstage": {
     "role": "common-library",
     "pluginId": "emma",
@@ -43,7 +43,7 @@
   "dependencies": {
     "@backstage/plugin-catalog-common": "workspace:^",
     "@backstage/plugin-permission-common": "workspace:^",
-    "@emma-community/emma-typescript-sdk": "^1.0.1"
+    "@emma-community/emma-typescript-sdk": "^1.0.2"
   },
   "devDependencies": {
     "@backstage/cli": "workspace:^"

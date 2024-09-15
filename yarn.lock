@@ -4834,10 +4834,10 @@
     pkginfo "^0.4.1"
     uid2 "^1.0.0"
 
-"@emma-community/emma-typescript-sdk@1.0.1", "@emma-community/emma-typescript-sdk@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@emma-community/emma-typescript-sdk/-/emma-typescript-sdk-1.0.1.tgz#8fd8599880f1631b5f0868fc3a162c838d7ee64e"
-  integrity sha512-ivBQjkS6ZLIW5phFKRdKuUjQ16p8GMZBWu2/ykiDc3QPUM30/mWnsIT686Fg9SBYm71aP0exAANkt0FS6dXU6w==
+"@emma-community/emma-typescript-sdk@1.0.2", "@emma-community/emma-typescript-sdk@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@emma-community/emma-typescript-sdk/-/emma-typescript-sdk-1.0.2.tgz#2d43ac64104fe16d9dd53fb1a33a5f58c45980bd"
+  integrity sha512-Gk/svxrV6/svDxHtc/nZcNUi3hkYf4tM0rNMyvByFh1c9mpqakCUf8cWTfwSYw51yXDDwdVFw4sU6eqn/fyCRg==
   dependencies:
     bluebird "^3.7.2"
     request "^2.88.2"
@@ -10977,7 +10977,7 @@ apg-lite@^1.0.3:
     "@backstage/plugin-techdocs-react" "^1.2.7"
     "@backstage/plugin-user-settings" "^0.8.11"
     "@backstage/theme" "^0.5.6"
-    "@emma-community/backstage-plugin-emma" "^1.0.19"
+    "@emma-community/backstage-plugin-emma" "^1.0.20"
     "@material-ui/core" "^4.12.2"
     "@material-ui/icons" "^4.9.1"
     history "^5.0.0"
