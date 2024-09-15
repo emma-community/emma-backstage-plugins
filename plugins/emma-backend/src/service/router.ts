@@ -23,7 +23,6 @@ export async function createRouter(
   router.use(express.json());
 
   router.get('/health', (_, response) => {
-    logger.info('PONG!');
     response.json({ status: 'ok' });
   });
 
@@ -97,7 +96,7 @@ export async function createRouter(
 
     const keyId = await emmaApi.addSshKey(name, key);
 
-    res.status(200).json({keyId});
+    res.status(200).json(keyId);
   });
 
   router.get('/compute/configs', async (req, res) => {
@@ -156,7 +155,7 @@ export async function createRouter(
   router.post('/compute/entities/:computeType/add', async (req, res) => {
     const entity = req.body as EmmaVm;
 
-    logger.info(`ENTITY: ${JSON.stringify(entity)}`);
+    logger.info(`Adding new entity: ${JSON.stringify(entity)}`);
 
     const entityId = await emmaApi.addComputeEntity(entity);
 
@@ -165,8 +164,6 @@ export async function createRouter(
 
   router.post('/compute/entities/:computeType/:entityId/update', async (req, res) => {
     const entity = req.body as EmmaVm;
-
-    logger.info(`ENTITY: ${JSON.stringify(entity)}`);
 
     await emmaApi.updateComputeEntity(entity);
 

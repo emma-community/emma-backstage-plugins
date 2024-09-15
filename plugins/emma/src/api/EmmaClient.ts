@@ -109,11 +109,11 @@ export class EmmaClient implements EmmaApi {
   }
 
   public async addComputeEntity(entity: EmmaVm): Promise<number> {
-    return await this.send<number>(`compute/entities/${entity.type}/add/`, entity);
+    return await this.send<number>(`compute/entities/${entity.type.toLocaleLowerCase()}/add/`, entity);
   }
 
   public async updateComputeEntity(entity: EmmaVm): Promise<void> {
-    await this.send(`compute/entities/${entity.type}/${entity.id}/update/`, entity);
+    await this.send(`compute/entities/${entity.type.toLocaleLowerCase()}/${entity.id}/update/`, entity);
   }
 
   private async send<T>(path: string, data?: any): Promise<T> {
@@ -134,8 +134,6 @@ export class EmmaClient implements EmmaApi {
         body: JSON.stringify(postData)
       };
     }
-
-    require('console').log(requestInit);
 
     const response = await this.fetchApi.fetch(url.toString(), requestInit);
 

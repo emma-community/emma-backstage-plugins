@@ -162,6 +162,7 @@ export class EmmaApiImpl implements EmmaApi {
 
     this.logger.info('Calling api', { name: name, key: sshKeyValue, keyType: sshKeyType });
 
+    // TODO: Debug SDK API method to figure out why this throws an error
     const sshKeyResult = (await api.sshKeysCreateImport({ name: name, key: sshKeyValue, keyType: sshKeyType })).body;
 
     this.logger.info('Returning ssh key id');
@@ -308,20 +309,27 @@ export class EmmaApiImpl implements EmmaApi {
  
   public async addComputeEntity(entity: EmmaVm): Promise<number> {
     this.logger.info(`Adding compute entity with id: ${entity.id} and type: ${entity.type}`);
-    
+    let input: any;
+
     switch(entity.type) {
       case EmmaComputeType.VirtualMachine:
-        await this.apiFactory.create(VirtualMachinesApi).vmCreate({ 
-          name: entity.name!,
-          cloudNetworkType: entity.cloudNetworkType?.toString(),
+          input = { 
+          name: entity.name! ?? entity.label! ?? "unknown",
+          cloudNetworkType: entity.cloudNetworkType?.toString() ?? "multi-cloud",
           dataCenterId: entity.dataCenter?.id!, 
-          osId: entity.os?.id, 
+          osId: entity.os?.id ?? 5,
           ramGb: entity.ramGb!,
           vCpu: entity.vCpu!,
           vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
           volumeGb: entity.disks![0].sizeGb!,
           volumeType: this.parseEnum(VmCreate.VolumeTypeEnum, entity.disks![0].type!)!,
-          sshKeyId: entity.sshKeyId! });
+          sshKeyId: entity.sshKeyId! };
+
+          this.logger.info(`entity: ${JSON.stringify(entity)}`);
+          this.logger.info(`vmCreate: ${JSON.stringify(input)}`);
+
+        // TODO: Debug 422. Most likely the combination of ids are illigal
+        await this.apiFactory.create(VirtualMachinesApi).vmCreate(input);
         break;
       case EmmaComputeType.SpotInstance:
         await this.apiFactory.create(SpotInstancesApi).spotCreate({ 
