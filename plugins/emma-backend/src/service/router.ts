@@ -93,9 +93,7 @@ export async function createRouter(
 
   router.post('/ssh-keys/:name/add', async (req, res) => {
     const name: string = req.params.name;
-    const key: EmmaSshKey | EmmaSshKeyType = ((req.body as EmmaSshKey).key !== undefined) ? req.body as EmmaSshKey : req.body as EmmaSshKeyType;
-
-    logger.info(`ENTITY: ${JSON.stringify(key)}`);
+    const key: EmmaSshKey | EmmaSshKeyType = ((req.body as EmmaSshKey).key !== undefined) ? req.body as EmmaSshKey : EmmaSshKeyType[req.body.keyOrkeyType as keyof typeof EmmaSshKeyType];
 
     const keyId = await emmaApi.addSshKey(name, key);
 

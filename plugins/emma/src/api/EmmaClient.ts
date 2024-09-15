@@ -69,7 +69,7 @@ export class EmmaClient implements EmmaApi {
   }
 
   public async addSshKey(name: string, keyOrkeyType: EmmaSshKey | EmmaSshKeyType): Promise<number> {
-    return await this.send<number>(`ssh-keys/${name}/add/`, keyOrkeyType);
+    return await this.send<number>(`ssh-keys/${name.toLocaleLowerCase()}/add/`, { keyOrkeyType });
   }
 
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
@@ -123,6 +123,7 @@ export class EmmaClient implements EmmaApi {
 
     if(data) {
       const token = await this.identityApi?.getCredentials();
+      const postData = (data.constructor === ({}).constructor) ? data : { data };
 
       requestInit = {
         method: 'POST',
@@ -130,9 +131,11 @@ export class EmmaClient implements EmmaApi {
           'Content-Type': 'application/json',
           ...(token && { Authorization: `Bearer ${token.token}` }),
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(postData)
       };
     }
+
+    require('console').log(requestInit);
 
     const response = await this.fetchApi.fetch(url.toString(), requestInit);
 

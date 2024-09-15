@@ -156,15 +156,17 @@ export class EmmaApiImpl implements EmmaApi {
       sshKeyValue = (keyOrkeyType as EmmaSshKey).key!;
       sshKeyType = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, (keyOrkeyType as EmmaSshKey).keyType!)!;
     } else {
-      sshKeyValue = (keyOrkeyType as EmmaSshKeyType).toString();
+      sshKeyValue = "";
       sshKeyType = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, keyOrkeyType as EmmaSshKeyType)!;
     }
 
-    const sshKeyId = (await api.sshKeysCreateImport({ name: name, key: sshKeyValue, keyType: sshKeyType })).body.id!;
+    this.logger.info('Calling api', { name: name, key: sshKeyValue, keyType: sshKeyType });
+
+    const sshKeyResult = (await api.sshKeysCreateImport({ name: name, key: sshKeyValue, keyType: sshKeyType })).body;
 
     this.logger.info('Returning ssh key id');
 
-    return sshKeyId;
+    return sshKeyResult.id!;
   }
   
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {

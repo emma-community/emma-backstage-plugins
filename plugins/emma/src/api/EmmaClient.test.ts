@@ -231,7 +231,7 @@ describe('EmmaClient', () => {
       const result = await emmaClient.addSshKey('name', EmmaSshKeyType.Rsa);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/name/add/', { body: `\"${EmmaSshKeyType.Rsa}\"`, headers: { 'Content-Type': 'application/json', 'Authorization' : 'Bearer ' }, method: 'POST' });
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/name/add/', { body: `{\"keyOrkeyType\":\"${EmmaSshKeyType.Rsa}\"}`, headers: { 'Content-Type': 'application/json', 'Authorization' : 'Bearer ' }, method: 'POST' });
       expect(result).toEqual(mockSshKeys);
     });
 
@@ -248,7 +248,7 @@ describe('EmmaClient', () => {
       await expect(emmaClient.addSshKey('name', EmmaSshKeyType.Rsa)).rejects.toThrow(ResponseError);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/name/add/', { body: `\"${EmmaSshKeyType.Rsa}\"`, headers: { 'Content-Type': 'application/json', 'Authorization' : 'Bearer ' }, method: 'POST' });
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/ssh-keys/name/add/', { body: `{\"keyOrkeyType\":\"${EmmaSshKeyType.Rsa}\"}`, headers: { 'Content-Type': 'application/json', 'Authorization' : 'Bearer ' }, method: 'POST' });
     });
   });
 
