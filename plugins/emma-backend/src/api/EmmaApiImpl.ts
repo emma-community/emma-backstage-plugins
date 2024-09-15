@@ -160,9 +160,7 @@ export class EmmaApiImpl implements EmmaApi {
       sshKeyType = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, keyOrkeyType as EmmaSshKeyType)!;
     }
 
-    this.logger.info('Calling api', { name: name, key: sshKeyValue, keyType: sshKeyType });
-
-    // TODO: Debug SDK API method to figure out why this throws an error
+    // TODO: Talk with George about possibility of ignoring an empty key input field in the SDK request body due to the fact that the choice element seems to confuse openapi-generator
     const sshKeyResult = (await api.sshKeysCreateImport({ name: name, key: sshKeyValue, keyType: sshKeyType })).body;
 
     this.logger.info('Returning ssh key id');
