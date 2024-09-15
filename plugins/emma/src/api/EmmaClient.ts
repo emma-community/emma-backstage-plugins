@@ -68,8 +68,8 @@ export class EmmaClient implements EmmaApi {
     return await this.send<EmmaSshKey[]>(urlSegment);
   }
 
-  public async addSshKey(name: string, keyOrkeyType: EmmaSshKey | EmmaSshKeyType): Promise<number> {
-    return await this.send<number>(`ssh-keys/${name.toLocaleLowerCase()}/add/`, { keyOrkeyType });
+  public async addSshKey(name: string, keyOrkeyType: EmmaSshKey | EmmaSshKeyType): Promise<EmmaSshKey> {
+    return await this.send<EmmaSshKey>(`ssh-keys/${name.toLocaleLowerCase()}/add/`, { keyOrkeyType });
   }
 
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {

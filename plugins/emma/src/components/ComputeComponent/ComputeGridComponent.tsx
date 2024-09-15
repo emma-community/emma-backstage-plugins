@@ -27,7 +27,7 @@ export const ComputeGridComponent = () => {
   }, [setData]);
 
   const handleOpenModal = (entry?: Partial<EmmaVm>) => {
-    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 75, name: 'Amazon EC2' }, vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }], location: { id: 6, name: 'London' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' } });
+    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }], location: { id: 6, name: 'London' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' } });
     setModalOpen(true);
   };
 
@@ -47,7 +47,8 @@ export const ComputeGridComponent = () => {
       if(keys.length > 0) {
         entry.sshKeyId = keys[0].id;
       } else {
-        entry.sshKeyId = await emmaApi.addSshKey(entry.name ?? entry.type, EmmaSshKeyType.Rsa);
+        const key = await emmaApi.addSshKey(entry.name ?? entry.type, EmmaSshKeyType.Rsa);
+        entry.sshKeyId = key.id;
       }
 
       const entityId = await emmaApi.addComputeEntity(entry);

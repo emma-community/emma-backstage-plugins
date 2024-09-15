@@ -154,7 +154,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           <div>Provider</div>
           <Select
             fullWidth
-            value={currentEntry.provider!.id || 75}
+            value={currentEntry.provider!.id || 10}
             onChange={(e) => setCurrentEntry({ ...currentEntry, provider: { id: e.target.value as number, name: currentEntry.provider?.name } })}
           >
             {providers.map((provider) => (

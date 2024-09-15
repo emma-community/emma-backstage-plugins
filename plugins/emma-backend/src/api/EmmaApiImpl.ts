@@ -3,7 +3,7 @@ import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaSshKeyType, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, SshKeyCreate, SshKeyImport, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, ObjectSerializer, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -144,27 +144,27 @@ export class EmmaApiImpl implements EmmaApi {
     return result;
   }
 
-  public async addSshKey(name: string, keyOrkeyType: EmmaSshKey | EmmaSshKeyType): Promise<number>
+  public async addSshKey(name: string, keyOrkeyType: EmmaSshKey | EmmaSshKeyType): Promise<EmmaSshKey>
   {
     const api = this.apiFactory.create(SSHKeysApi);
-    let sshKeyType: SshKeysCreateImportRequest.KeyTypeEnum;
+    let sshKeyType: EmmaSshKeyType;
     let sshKeyValue: string;
 
     this.logger.info('Adding ssh key');
 
-    if((keyOrkeyType as EmmaSshKey).key !== undefined) {
+    if((keyOrkeyType as EmmaSshKey)?.key !== undefined) {
       sshKeyValue = (keyOrkeyType as EmmaSshKey).key!;
-      sshKeyType = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, (keyOrkeyType as EmmaSshKey).keyType!)!;
+      sshKeyType = this.parseEnum(EmmaSshKeyType, (keyOrkeyType as EmmaSshKey).keyType!)!;
     } else {
       sshKeyValue = "";
-      sshKeyType = this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, keyOrkeyType as EmmaSshKeyType)!;
-    }
+      sshKeyType = this.parseEnum(EmmaSshKeyType, (keyOrkeyType as EmmaSshKeyType))!;
+    }   
 
-    const sshKeyResult = (await api.sshKeysCreateImport({ name: name, key: sshKeyValue, keyType: sshKeyType })).body;
+    const sshKeyResult = {...(await api.sshKeysCreateImport({ name: name, key: sshKeyValue, keyType: this.parseEnum(SshKeysCreateImportRequest.KeyTypeEnum, sshKeyType.toString().toUpperCase())! })).body, type: sshKeyType };
 
-    this.logger.info('Returning ssh key id');
+    this.logger.info('Added ssh key');
 
-    return sshKeyResult.id!;
+    return sshKeyResult;
   }
   
   public async getComputeConfigs(providerId?: number, locationId?: number, dataCenterId?: string, ...computeType: EmmaComputeType[]): Promise<EmmaVmConfiguration[]> {
