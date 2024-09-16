@@ -236,6 +236,7 @@ export class EmmaApiImpl implements EmmaApi {
         return {
           ...vm,
           type: EmmaComputeType.VirtualMachine,
+          label: vm.name,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
           dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown' }
         };
@@ -252,6 +253,7 @@ export class EmmaApiImpl implements EmmaApi {
         return {
           ...vm,
           type: EmmaComputeType.SpotInstance,
+          label: vm.name,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
           dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown' }
         };
@@ -330,11 +332,12 @@ export class EmmaApiImpl implements EmmaApi {
             volumeType: this.parseEnum(VmCreate.VolumeTypeEnum, entity.disks![0].type!)!
           }]
         });
+
         break;
       default:
         throw new Error(`Unsupported compute type: ${entity.type}`);
     }
-
+    
     this.logger.info('Added compute entity');
 
     return entity.id!;

@@ -11,7 +11,6 @@ interface ComputeModalProps {
   onSave: (entry: EmmaVm) => void;
 }
 
-// TODO: Add price field to modal when compute type is spot instance
 export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeModalProps) => {
   const emmaApi = useApi(emmaApiRef);
   const [locations, setLocations] = useState<EmmaLocation[]>([]);
@@ -29,7 +28,8 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }],
     location: { id: 3, name: 'Stockholm' },
     dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' },
-    status: 'BUSY'
+    status: 'BUSY',
+    cost: { currency: 'EUR', amount: 0.0 },
   });
 
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 2));
@@ -37,35 +37,33 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 16);
 
   const vCPUMarks = [
-    { value: 0, label: '1' },     // log2(1) = 0
-    { value: 1, label: '2' },     // log2(2) = 1
-    { value: 2, label: '4' },     // log2(4) = 2
-    { value: 3, label: '8' },     // log2(8) = 3
-    { value: 4, label: '16' },    // log2(16) = 4
-    { value: 5, label: '32' },    // log2(32) = 5
-    { value: 6, label: '64' },    // log2(64) = 6
-    { value: 7, label: '128' }    // log2(128) = 7
+    { value: 0, label: '1' },
+    { value: 1, label: '2' },
+    { value: 2, label: '4' },
+    { value: 3, label: '8' },
+    { value: 4, label: '16' },
+    { value: 5, label: '32' },
+    { value: 6, label: '64' },
+    { value: 7, label: '128' },
   ];
 
   const ramMarks = [
-    { value: 0, label: '1' },    // log2(1) = 0
-    { value: 1, label: '2' },    // log2(2) = 1
-    { value: 2, label: '4' },    // log2(4) = 2
-    { value: 3, label: '8' },    // log2(8) = 3
-    { value: 4, label: '16' },    // log2(16) = 4
-    { value: 5, label: '32' },    // log2(32) = 5
-    { value: 6, label: '64' },    // log2(64) = 6
-    { value: 7, label: '128' },   // log2(128) = 7
-    { value: 8, label: '256' },   // log2(256) = 8    
-    { value: 9, label: '512' },   // log2(512) = 9
-    { value: 10, label: '1024' }, // log2(1024) = 10
+    { value: 0, label: '1' },
+    { value: 1, label: '2' },
+    { value: 2, label: '4' },
+    { value: 3, label: '8' },
+    { value: 4, label: '16' },
+    { value: 5, label: '32' },
+    { value: 6, label: '64' },
+    { value: 7, label: '128' },
+    { value: 8, label: '256' },
+    { value: 9, label: '512' },
+    { value: 10, label: '1024' },
   ];
 
-  // Fetch data dynamically from the API
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);  // Start loading state
-
+      setLoading(true);
       try {
         const [locationsData, providersData, dataCentersData] = await Promise.all([
           emmaApi.getLocations(),
@@ -76,11 +74,11 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
         setLocations(locationsData);
         setProviders(providersData);
         setDataCenters(dataCentersData);
-        setError(null);  // Clear any previous errors
+        setError(null);
       } catch (e) {
         setError('Failed to load data from the API');
       } finally {
-        setLoading(false);  // End loading state
+        setLoading(false);
       }
     };
 
@@ -97,11 +95,16 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   }, [entry]);
 
   const handleSave = () => {
+    if (!currentEntry.label || !currentEntry.provider || !currentEntry.location || !currentEntry.dataCenter) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
     onSave({
       ...currentEntry,
       vCpu: Math.pow(2, vCpuSliderValue),
       ramGb: Math.pow(2, ramSliderValue),
-      volumeGb: volumeSizeSliderValue
+      volumeGb: volumeSizeSliderValue,
     } as EmmaVm);
   };
 
@@ -109,7 +112,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     return (
       <Dialog open={open} onClose={onClose}>
         <DialogContent>
-          <CircularProgress /> {/* Show spinner while loading */}
+          <CircularProgress />
           <p>Loading data...</p>
         </DialogContent>
       </Dialog>
@@ -120,12 +123,10 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     return (
       <Dialog open={open} onClose={onClose}>
         <DialogContent>
-          <p>{error}</p> {/* Display error if loading fails */}
+          <p>{error}</p>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="primary">
-            Close
-          </Button>
+          <Button onClick={onClose} color="primary">Close</Button>
         </DialogActions>
       </Dialog>
     );
@@ -133,16 +134,18 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogContent>
-        <TextField
-          label="Label"
-          fullWidth
-          margin="dense"
-          value={currentEntry.label || ''}
-          onChange={(e) => setCurrentEntry({ ...currentEntry, label: e.target.value })}
-        />
+      <DialogContent>        
+        <div style={{ margin: '20px 0' }}>
+          <div>Label</div>
+          <TextField
+            label="Label"
+            fullWidth
+            margin="dense"
+            value={currentEntry.label || ''}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, label: e.target.value })}
+          />
+        </div>
 
-        {/* Dropdown for Compute Type */}
         <div style={{ margin: '20px 0' }}>
           <div>Type</div>
           <Select
@@ -156,7 +159,21 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           </Select>
         </div>
 
-        {/* Dropdown for Providers */}
+        {currentEntry.type === EmmaComputeType.SpotInstance && (          
+          <div style={{ margin: '20px 0' }}>
+            <div>Price ({currentEntry.cost?.currency || "EUR"})</div>
+            <TextField
+              label="Price"
+              fullWidth
+              margin="dense"
+              type="number"
+              inputProps={{ min: "0", step: "0.01" }}
+              value={currentEntry.cost?.price! || 0.0}
+              onChange={(e) => setCurrentEntry({ ...currentEntry, cost: { price: parseFloat(e.target.value) } })}
+            />
+          </div>
+        )}
+
         <div style={{ margin: '20px 0' }}>
           <div>Provider</div>
           <Select
@@ -170,7 +187,6 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           </Select>
         </div>
 
-        {/* Dropdown for Data Centers */}
         <div style={{ margin: '20px 0' }}>
           <div>Data Center</div>
           <Select
@@ -184,7 +200,6 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           </Select>
         </div>
 
-        {/* Dropdown for Locations */}
         <div style={{ margin: '20px 0' }}>
           <div>Location</div>
           <Select
@@ -198,7 +213,6 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           </Select>
         </div>
 
-        {/* vCPU and RAM Sliders */}
         <div style={{ margin: '20px 0' }}>
           <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label>
           <Slider
@@ -223,7 +237,6 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           />
         </div>
 
-        {/* Volume Type and Size */}
         <div style={{ margin: '20px 0' }}>
           <div>Volume Type</div>
           <Select
@@ -246,8 +259,8 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
             max={1000}
           />
         </div>
-
       </DialogContent>
+
       <DialogActions>
         {(currentEntry.type === EmmaComputeType.KubernetesNode || currentEntry.id === undefined) && (
           <Button onClick={handleSave} color="primary">{currentEntry?.id ? 'Update' : 'Add'}</Button>

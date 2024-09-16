@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import { useApi } from '@backstage/frontend-plugin-api';
+import { ResponseError } from '@backstage/errors';
 import {
   Select, MenuItem, IconButton, Tooltip, Table, TableBody, TableCell, TableHead, TableRow, Collapse, Modal, Box, Typography, Button
 } from '@material-ui/core';
@@ -12,7 +13,6 @@ import { ComputeRowComponent } from './ComputeRowComponent';
 import { ComputeModalComponent } from './ComputeModalComponent';
 import { emmaApiRef } from '../../plugin';
 
-// TODO: Figure out how to filter modal values based on compute types to avoid 422 errors due to misconfiguration
 export const ComputeGridComponent = () => {  
   const emmaApi = useApi(emmaApiRef);
   const [data, setData] = useState<EmmaVm[]>([]);
@@ -22,6 +22,8 @@ export const ComputeGridComponent = () => {
   const [collapsedGroups, setCollapsedGroups] = useState<{ [key: string]: boolean }>({});
   const [newPrivateKey, setNewPrivateKey] = useState<string | null>(null);
   const [privateKeyModalOpen, setPrivateKeyModalOpen] = useState(false);
+  const [errorModalOpen, setErrorModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   
   useAsync(async (): Promise<void> => {
     const vms = (await emmaApi.getComputeEntities());
@@ -29,12 +31,13 @@ export const ComputeGridComponent = () => {
   }, [setData]);
 
   const handleOpenModal = (entry?: Partial<EmmaVm>) => {
-    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }, status: 'BUSY' });
+    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }, status: 'BUSY', cost: { currency: 'EUR', amount: 0.0 }, });
     setModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
+    setNewPrivateKey("");
     setEditEntry(null);
   };
 
@@ -55,8 +58,15 @@ export const ComputeGridComponent = () => {
         setPrivateKeyModalOpen(true);
       }
 
-      const entityId = await emmaApi.addComputeEntity(entry);
-      setData([...data, { ...entry, id: entityId }]);
+      try {
+        const entityId = await emmaApi.addComputeEntity(entry);
+        setData([...data, { ...entry, id: entityId }]);        
+      } catch (error) {
+        const message = (error as ResponseError).body?.error?.message || 'An error occurred';
+
+        setErrorMessage(message);
+        setErrorModalOpen(true);
+      }
     }
 
     handleCloseModal();
@@ -189,6 +199,38 @@ export const ComputeGridComponent = () => {
             color="primary"
             style={{ marginTop: '16px' }}
             onClick={() => setPrivateKeyModalOpen(false)}
+          >
+            Close
+          </Button>
+        </Box>
+      </Modal>
+
+      {/* Modal for Error Message */}
+      <Modal
+        open={errorModalOpen}
+        onClose={() => setErrorModalOpen(false)}
+      >
+        <Box style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          backgroundColor: 'white',
+          padding: '20px',
+          boxShadow: '24px',
+        }}>
+          <Typography variant="h6" component="h2">
+            Error
+          </Typography>
+          <Typography style={{ marginTop: '16px', wordWrap: 'break-word' }}>
+            {errorMessage}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginTop: '16px' }}
+            onClick={() => setErrorModalOpen(false)}
           >
             Close
           </Button>
