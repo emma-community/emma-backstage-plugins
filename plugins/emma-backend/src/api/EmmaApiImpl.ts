@@ -270,6 +270,7 @@ export class EmmaApiImpl implements EmmaApi {
             ...node,
             label: k8s.id!.toString(),
             type: EmmaComputeType.KubernetesNode,
+            status: k8s.status,
             vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
             dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: node.location?.region ?? 'unknown' }
           }))
