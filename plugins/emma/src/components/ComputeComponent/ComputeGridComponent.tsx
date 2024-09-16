@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import { useApi } from '@backstage/frontend-plugin-api';
 import {
-  Select, MenuItem, IconButton, Tooltip, Table, TableBody, TableCell, TableHead, TableRow, Collapse
+  Select, MenuItem, IconButton, Tooltip, Table, TableBody, TableCell, TableHead, TableRow, Collapse, Modal, Box, Typography, Button
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -12,8 +12,7 @@ import { ComputeRowComponent } from './ComputeRowComponent';
 import { ComputeModalComponent } from './ComputeModalComponent';
 import { emmaApiRef } from '../../plugin';
 
-// TODO: Figure out how to filter modal values based on compute types to avoid 422 errors
-// TODO: Add logic to show popup with private key when creating a new entity and no keys are available
+// TODO: Figure out how to filter modal values based on compute types to avoid 422 errors due to misconfiguration
 export const ComputeGridComponent = () => {  
   const emmaApi = useApi(emmaApiRef);
   const [data, setData] = useState<EmmaVm[]>([]);
@@ -21,15 +20,16 @@ export const ComputeGridComponent = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editEntry, setEditEntry] = useState<Partial<EmmaVm> | null>(null);
   const [collapsedGroups, setCollapsedGroups] = useState<{ [key: string]: boolean }>({});
+  const [newPrivateKey, setNewPrivateKey] = useState<string | null>(null);
+  const [privateKeyModalOpen, setPrivateKeyModalOpen] = useState(false);
   
   useAsync(async (): Promise<void> => {
     const vms = (await emmaApi.getComputeEntities());
-
     setData(vms);
   }, [setData]);
 
   const handleOpenModal = (entry?: Partial<EmmaVm>) => {
-    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' } });
+    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }, status: 'BUSY' });
     setModalOpen(true);
   };
 
@@ -41,7 +41,6 @@ export const ComputeGridComponent = () => {
   const handleSave = async (entry: EmmaVm) => {
     if (entry?.id) {
       await emmaApi.updateComputeEntity(entry);
-
       setData((prevData) => prevData.map((item) => (item.id === entry.id ? entry : item)));
     } else {      
       const keys = await emmaApi.getSshKeys();
@@ -51,10 +50,12 @@ export const ComputeGridComponent = () => {
       } else {
         const key = await emmaApi.addSshKey(entry.name ?? entry.type, EmmaSshKeyType.Rsa);
         entry.sshKeyId = key.id;
+
+        setNewPrivateKey(key.key!);
+        setPrivateKeyModalOpen(true);
       }
 
       const entityId = await emmaApi.addComputeEntity(entry);
-
       setData([...data, { ...entry, id: entityId }]);
     }
 
@@ -63,7 +64,6 @@ export const ComputeGridComponent = () => {
 
   const handleDelete = async (id: number) => {    
     await emmaApi.deleteComputeEntity(id, data.find((item) => item.id === id)!.type);
-
     setData(data.filter((item) => item.id !== id));
   };
 
@@ -91,8 +91,9 @@ export const ComputeGridComponent = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell style={{ width: '40%' }}><strong>Label</strong></TableCell>
+            <TableCell style={{ width: '20%' }}><strong>Label</strong></TableCell>
             <TableCell style={{ width: '20%' }}><strong>Provider</strong></TableCell>
+            <TableCell style={{ width: '20%' }}><strong>Status</strong></TableCell>
             <TableCell style={{ width: '20%' }}>       
               <Tooltip title="Filter by type">
                 {/* Filter */}
@@ -101,7 +102,7 @@ export const ComputeGridComponent = () => {
                   onChange={(e) => setFilter(e.target.value as EmmaComputeType | '*')}
                   style={{ width: '200px' }}
                 >
-                  <MenuItem value="*">Entity Type</MenuItem>
+                  <MenuItem value="*">Compute Type</MenuItem>
                   <MenuItem value={EmmaComputeType.VirtualMachine}><strong>Virtual Machine</strong></MenuItem>
                   <MenuItem value={EmmaComputeType.SpotInstance}><strong>Spot Instance</strong></MenuItem>
                   <MenuItem value={EmmaComputeType.KubernetesNode}><strong>Kubernetes Node</strong></MenuItem>
@@ -122,7 +123,7 @@ export const ComputeGridComponent = () => {
             <React.Fragment key={providerName}>
               {/* Provider Group Header */}
               <TableRow>
-                <TableCell colSpan={4}>
+                <TableCell colSpan={5}>
                   <IconButton onClick={() => toggleGroupCollapse(providerName)}>
                     {collapsedGroups[providerName] ? <ExpandMoreIcon /> : <ExpandLessIcon />}
                   </IconButton>
@@ -132,7 +133,7 @@ export const ComputeGridComponent = () => {
 
               {/* Collapsible Entries */}
               <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                   <Collapse in={!collapsedGroups[providerName]} timeout="auto" unmountOnExit>
                     <Table>
                       <TableBody>
@@ -161,6 +162,38 @@ export const ComputeGridComponent = () => {
         onClose={handleCloseModal}
         onSave={handleSave}
       />
+
+      {/* Modal for Private SSH Key */}
+      <Modal
+        open={privateKeyModalOpen}
+        onClose={() => setPrivateKeyModalOpen(false)}
+      >
+        <Box style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          backgroundColor: 'white',
+          padding: '20px',
+          boxShadow: '24px',
+        }}>
+          <Typography variant="h6" component="h2">
+            SSH Private Key
+          </Typography>
+          <Typography style={{ marginTop: '16px', wordWrap: 'break-word' }}>
+            {newPrivateKey}
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginTop: '16px' }}
+            onClick={() => setPrivateKeyModalOpen(false)}
+          >
+            Close
+          </Button>
+        </Box>
+      </Modal>
     </div>
   );
 };

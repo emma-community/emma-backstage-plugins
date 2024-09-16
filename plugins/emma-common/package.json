@@ -1,7 +1,7 @@
 {
   "name": "@emma-community/backstage-plugin-emma-common",
   "description": "Common library for the emma plugin",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "backstage": {
     "role": "common-library",
     "pluginId": "emma",

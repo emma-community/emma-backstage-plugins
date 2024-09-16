@@ -1,6 +1,6 @@
-# Integrating emma Backstage plugins
+# Integrating emma plugins
 
-Backstage, an open-source platform created by Spotify, enables organizations to build custom developer portals, giving teams a unified way to manage infrastructure, services, and software catalogs. One of the most compelling features of Backstage is its ability to integrate modular plugins that extend its functionality in highly customizable ways.
+[Backstage](https://backstage.io), an open-source platform created by Spotify, enables organizations to build custom developer portals, giving teams a unified way to manage infrastructure, services, and software catalogs. One of the most compelling features of Backstage is its ability to integrate modular plugins that extend its functionality in highly customizable ways.
 
 Among the plugins being built by the emma community, `emma` and `emma-backend`, designed for managing and visualizing cloud compute pricing, are particularly powerful for helping your organization take advantage of the best CPU prices in the market. In this detailed guide, we will walk you through the entire process of integrating these plugins into a newly created Backstage app, so that by the end, you will have a developer portal equipped with emma visualization tools, seamlessly integrated into both the frontend and backend.
 

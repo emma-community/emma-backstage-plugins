@@ -11,6 +11,7 @@ interface ComputeModalProps {
   onSave: (entry: EmmaVm) => void;
 }
 
+// TODO: Add price field to modal when compute type is spot instance
 export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeModalProps) => {
   const emmaApi = useApi(emmaApiRef);
   const [locations, setLocations] = useState<EmmaLocation[]>([]);
@@ -27,7 +28,8 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     ramGb: 1,
     disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }],
     location: { id: 3, name: 'Stockholm' },
-    dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }
+    dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' },
+    status: 'BUSY'
   });
 
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 2));

@@ -1,4 +1,4 @@
-# emma Backstage plugins
+# emma plugins for [Backstage](https://backstage.io)
 
 ## Overview
 

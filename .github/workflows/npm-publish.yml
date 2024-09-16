@@ -1,4 +1,4 @@
-name: Build and Publish NPM Packages
+name: Build and publish NPM packages
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org/'
           always-auth: true
