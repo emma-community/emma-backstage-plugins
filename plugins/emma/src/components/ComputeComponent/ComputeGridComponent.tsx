@@ -62,7 +62,7 @@ export const ComputeGridComponent = () => {
         const entityId = await emmaApi.addComputeEntity(entry);
         setData([...data, { ...entry, id: entityId }]);        
       } catch (error) {
-        const message = (error as ResponseError).body?.error?.message || 'An error occurred';
+        const message = ((error as ResponseError).body.error?.body as any).message || 'An error occurred';
 
         setErrorMessage(message);
         setErrorModalOpen(true);
