@@ -66,7 +66,8 @@ export type EmmaSshKey = EmmaEntity<number> & SshKey & {
 }
 
 /** @public */
-export type EmmaDataCenter = EmmaEntity<string> & DataCenter & {
+export type EmmaDataCenter = EmmaEntity<string> & DataCenter & {  
+  // TODO: Remove synthetic data once External API is updated to return geo locations.
   location: GeoLocation
   region_code: string;
 }
