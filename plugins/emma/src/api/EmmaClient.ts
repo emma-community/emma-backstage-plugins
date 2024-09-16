@@ -105,15 +105,15 @@ export class EmmaClient implements EmmaApi {
   }
 
   public async deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void> {
-    await this.send(`compute/entities/${computeType.toLocaleLowerCase()}/${entityId}/delete/`);
+    await this.send(`compute/entities/${computeType}/${entityId}/delete/`);
   }
 
   public async addComputeEntity(entity: EmmaVm): Promise<number> {
-    return await this.send<number>(`compute/entities/${entity.type.toLocaleLowerCase()}/add/`, entity);
+    return await this.send<number>(`compute/entities/${entity.type}/add/`, entity);
   }
 
   public async updateComputeEntity(entity: EmmaVm): Promise<void> {
-    await this.send(`compute/entities/${entity.type.toLocaleLowerCase()}/${entity.id}/update/`, entity);
+    await this.send(`compute/entities/${entity.type}/${entity.id}/update/`, entity);
   }
 
   private async send<T>(path: string, data?: any): Promise<T> {

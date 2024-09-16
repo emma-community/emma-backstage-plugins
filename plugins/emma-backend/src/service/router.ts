@@ -145,7 +145,7 @@ export async function createRouter(
 
   router.get('/compute/entities/:computeType/:entityId/delete', async (req, res) => {
     const requestedComputeType: EmmaComputeType = EmmaComputeType[req.params.computeType as keyof typeof EmmaComputeType];
-    const entityId: number = Number(req.params.entityId);;
+    const entityId: number = Number(req.params.entityId);
 
     await emmaApi.deleteComputeEntity(entityId, requestedComputeType);
 

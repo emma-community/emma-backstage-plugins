@@ -357,7 +357,7 @@ describe('EmmaClient', () => {
       await emmaClient.deleteComputeEntity(1, EmmaComputeType.VirtualMachine);
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/virtualmachine/1/delete/', {});
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/VirtualMachine/1/delete/', {});
     });
   });
 
@@ -372,7 +372,7 @@ describe('EmmaClient', () => {
       const result = await emmaClient.addComputeEntity({ type: EmmaComputeType.VirtualMachine });
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/virtualmachine/add/', { body: "{\"type\":\"VirtualMachine\"}", headers: { 'Content-Type': 'application/json' }, method: 'POST' });
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/VirtualMachine/add/', { body: "{\"type\":\"VirtualMachine\"}", headers: { 'Content-Type': 'application/json' }, method: 'POST' });
       expect(result).toEqual(1);
     });
   });
@@ -388,7 +388,7 @@ describe('EmmaClient', () => {
       await emmaClient.updateComputeEntity({ id: 1, type: EmmaComputeType.VirtualMachine });
 
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
-      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/virtualmachine/1/update/', { body: "{\"id\":1,\"type\":\"VirtualMachine\"}", headers: { 'Content-Type': 'application/json' }, method: 'POST' });
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/VirtualMachine/1/update/', { body: "{\"id\":1,\"type\":\"VirtualMachine\"}", headers: { 'Content-Type': 'application/json' }, method: 'POST' });
     });
   });
 });
