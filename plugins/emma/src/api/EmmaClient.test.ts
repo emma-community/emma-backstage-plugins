@@ -344,5 +344,51 @@ describe('EmmaClient', () => {
       expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
       expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/?', {});
     });
+  }); 
+
+  describe('deleteComputeEntity', () => {
+    it('should call fetch with the correct URL', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => Promise<void>,
+      } as Response);
+
+      await emmaClient.deleteComputeEntity(1, EmmaComputeType.VirtualMachine);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/virtualmachine/1/delete/', {});
+    });
+  });
+
+  describe('addComputeEntity', () => {
+    it('should call fetch with the correct URL', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => 1,
+      } as Response);
+
+      const result = await emmaClient.addComputeEntity({ type: EmmaComputeType.VirtualMachine });
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/virtualmachine/add/', { body: "{\"type\":\"VirtualMachine\"}", headers: { 'Content-Type': 'application/json' }, method: 'POST' });
+      expect(result).toEqual(1);
+    });
+  });
+
+  describe('updateComputeEntity', () => {
+    it('should call fetch with the correct URL', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => Promise<void>,
+      } as Response);
+
+      await emmaClient.updateComputeEntity({ id: 1, type: EmmaComputeType.VirtualMachine });
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/compute/entities/virtualmachine/1/update/', { body: "{\"id\":1,\"type\":\"VirtualMachine\"}", headers: { 'Content-Type': 'application/json' }, method: 'POST' });
+    });
   });
 });

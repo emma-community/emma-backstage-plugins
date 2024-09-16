@@ -6,7 +6,7 @@ createDevApp()
   .registerPlugin(emmaHeatmapPlugin)
   .addPage({
     element: <EmmaHeatmapPage />,
-    title: 'Root Page',
+    title: 'Heatmap Page',
     path: '/emma',
   })
   .render();
