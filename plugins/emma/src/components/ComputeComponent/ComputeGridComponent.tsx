@@ -15,6 +15,7 @@ import { emmaApiRef } from '../../plugin';
 // TODO: Figure out what to do with entities that have been deleted, but are still in the process of being deleted and thus still show up in the list
 // TODO: Figure out how to filter modal values based on compute types to avoid 422 errors
 // TODO: Figure out why k8s delete is not working when given the correct id
+// TODO: Add logic to show popup with private key when creating a new entity and no keys are available
 export const ComputeGridComponent = () => {  
   const emmaApi = useApi(emmaApiRef);
   const [data, setData] = useState<EmmaVm[]>([]);
@@ -48,7 +49,7 @@ export const ComputeGridComponent = () => {
       const keys = await emmaApi.getSshKeys();
 
       if(keys.length > 0) {
-        entry.sshKeyId = keys[0].id;
+        entry.sshKeyId = keys.find(value => value.name === entry.name)?.id ?? keys[0].id;
       } else {
         const key = await emmaApi.addSshKey(entry.name ?? entry.type, EmmaSshKeyType.Rsa);
         entry.sshKeyId = key.id;
