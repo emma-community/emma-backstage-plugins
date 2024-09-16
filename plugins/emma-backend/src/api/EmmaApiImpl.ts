@@ -284,33 +284,13 @@ export class EmmaApiImpl implements EmmaApi {
     return vms;
   }
  
-  public async deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void> {
-    this.logger.info(`Deleting compute entity with id: ${entityId} and type: ${computeType}`);
-
-    switch(computeType) {
-      case EmmaComputeType.VirtualMachine:
-        await this.apiFactory.create(VirtualMachinesApi).vmDelete(entityId);
-        break;
-      case EmmaComputeType.SpotInstance:
-        await this.apiFactory.create(SpotInstancesApi).spotDelete(entityId);
-        break;
-      case EmmaComputeType.KubernetesNode:
-        await this.apiFactory.create(KubernetesClustersApi).deleteKubernetesCluster(entityId);
-        break;
-      default:
-        throw new Error(`Unsupported compute type: ${computeType}`);
-    }
-
-    this.logger.info('Deleted compute entity');
-  }
- 
   public async addComputeEntity(entity: EmmaVm): Promise<number> {
-    this.logger.info(`Adding compute entity with id: ${entity.id} and type: ${entity.type}`);
+    this.logger.info(`Adding compute entity with type: ${entity.type}`);
 
     switch(entity.type) {
       case EmmaComputeType.VirtualMachine:
         await this.apiFactory.create(VirtualMachinesApi).vmCreate({ 
-          name: entity.name! ?? entity.label! ?? "unknown",
+          name: entity.name! ?? entity.label! ?? "default-vm-1",
           cloudNetworkType: entity.cloudNetworkType?.toString() ?? "multi-cloud",
           dataCenterId: entity.dataCenter?.id!, 
           osId: entity.os?.id ?? 5,
@@ -323,33 +303,32 @@ export class EmmaApiImpl implements EmmaApi {
         break;
       case EmmaComputeType.SpotInstance:
         await this.apiFactory.create(SpotInstancesApi).spotCreate({ 
-          name: entity.name! ?? entity.label! ?? "unknown",
+          name: entity.name! ?? entity.label! ?? "default-spot-1",
           cloudNetworkType: entity.cloudNetworkType?.toString() ?? "multi-cloud",
           dataCenterId: entity.dataCenter?.id!, 
-          osId: entity.os?.id ?? 5, 
+          osId: entity.os?.id ?? 35, 
           ramGb: entity.ramGb!,
           vCpu: entity.vCpu!,
           vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
           volumeGb: entity.disks![0].sizeGb!, 
           volumeType: this.parseEnum(VmCreate.VolumeTypeEnum, entity.disks![0].type!)!,
-          price: entity.cost!.price!,
+          price: entity.cost?.price! ?? 0.002635,
           sshKeyId: entity.sshKeyId! });
         break;
       case EmmaComputeType.KubernetesNode:
         await this.apiFactory.create(KubernetesClustersApi).createKubernetesCluster({ 
-          name: entity.name! ?? entity.label! ?? "unknown",
+          name: entity.name! ?? entity.label! ?? "default-k8s-managed-cluster-name",
           deploymentLocation: KubernetesCreate.DeploymentLocationEnum.Eu,
-          workerNodes: [
-            { 
-              name: entity.name! ?? entity.label! ?? "unknown",
-              dataCenterId: entity.dataCenter?.id!, 
-              ramGb: entity.ramGb!,
-              vCpu: entity.vCpu!,
-              vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
-              volumeGb: entity.disks![0].sizeGb!, 
-              volumeType: this.parseEnum(VmCreate.VolumeTypeEnum, entity.disks![0].type!)!
-            }
-          ]});
+          workerNodes: [{ 
+            name: entity.name! ?? entity.label! ?? "default-node-1",
+            dataCenterId: entity.dataCenter?.id!,
+            ramGb: entity.ramGb!,
+            vCpu: entity.vCpu!,
+            vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
+            volumeGb: entity.disks![0].sizeGb!, 
+            volumeType: this.parseEnum(VmCreate.VolumeTypeEnum, entity.disks![0].type!)!
+          }]
+        });
         break;
       default:
         throw new Error(`Unsupported compute type: ${entity.type}`);
@@ -383,6 +362,26 @@ export class EmmaApiImpl implements EmmaApi {
     }
 
     this.logger.info('Updated compute entity');
+  }
+ 
+  public async deleteComputeEntity(entityId: number, computeType: EmmaComputeType): Promise<void> {
+    this.logger.info(`Deleting compute entity with id: ${entityId} and type: ${computeType}`);
+
+    switch(computeType) {
+      case EmmaComputeType.VirtualMachine:
+        await this.apiFactory.create(VirtualMachinesApi).vmDelete(entityId);
+        break;
+      case EmmaComputeType.SpotInstance:
+        await this.apiFactory.create(SpotInstancesApi).spotDelete(entityId);
+        break;
+      case EmmaComputeType.KubernetesNode:
+        await this.apiFactory.create(KubernetesClustersApi).deleteKubernetesCluster(entityId);
+        break;
+      default:
+        throw new Error(`Unsupported compute type: ${computeType}`);
+    }
+
+    this.logger.info('Deleted compute entity');
   }
 
   private isWithinBounds(location: GeoLocation, geoFence: GeoFence): boolean {

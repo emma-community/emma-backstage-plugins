@@ -216,7 +216,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
             onChange={(_, newValue) => setRamSliderValue(newValue as number)}
             step={1}
             marks={ramMarks}
-            min={5}
+            min={0}
             max={10}
           />
         </div>

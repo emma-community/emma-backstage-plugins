@@ -155,8 +155,6 @@ export async function createRouter(
   router.post('/compute/entities/:computeType/add', async (req, res) => {
     const entity = req.body as EmmaVm;
 
-    logger.info(`Adding new entity: ${JSON.stringify(entity)}`);
-
     const entityId = await emmaApi.addComputeEntity(entity);
 
     res.status(200).json({entityId});

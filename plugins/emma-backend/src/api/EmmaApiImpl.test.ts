@@ -285,7 +285,7 @@ describe('EmmaApiImpl', () => {
     
     await emmaApi.addComputeEntity({ id: entityId, type: computeType, disks: disks, vCpuType: vCpuType, sshKeyId: 1 });
 
-    expect(mockLogger.info).toHaveBeenCalledWith(`Adding compute entity with id: ${entityId} and type: ${computeType}`);
+    expect(mockLogger.info).toHaveBeenCalledWith(`Adding compute entity with type: ${computeType}`);
     expect(mockLogger.info).toHaveBeenCalledWith('Added compute entity');    
   });
 
