@@ -27,7 +27,7 @@ export const ComputeGridComponent = () => {
   }, [setData]);
 
   const handleOpenModal = (entry?: Partial<EmmaVm>) => {
-    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 4, vCpuType: EmmaCPUType.Shared, ramGb: 32, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }], location: { id: 6, name: 'London' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' } });
+    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' } });
     setModalOpen(true);
   };
 
@@ -75,7 +75,7 @@ export const ComputeGridComponent = () => {
   const filteredData = filter === '*' ? data : data.filter((item) => item.type === filter);
 
   const groupedData = filteredData.reduce((acc, entry) => {
-    const provider = entry.provider?.name || 'Unknown';
+    const provider = entry.provider?.name || 'Amazon EC2';
     if (!acc[provider]) {
       acc[provider] = [];
     }

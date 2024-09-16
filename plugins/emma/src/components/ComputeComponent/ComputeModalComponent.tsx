@@ -22,17 +22,17 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     label: '',
     type: EmmaComputeType.VirtualMachine,
     provider: { id: 10, name: 'Amazon EC2' },
-    vCpu: 4,
+    vCpu: 2,
     vCpuType: EmmaCPUType.Shared,
-    ramGb: 32,
-    disks: [{ type: EmmaVolumeType.SSD, sizeGb: 100 }],
-    location: { id: 6, name: 'London' },
+    ramGb: 1,
+    disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }],
+    location: { id: 3, name: 'Stockholm' },
     dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }
   });
 
-  const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 4));
-  const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb! || 32));
-  const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
+  const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 2));
+  const [ramSliderValue, setRamSliderValue] = useState<number>(Math.log2(entry?.ramGb! || 1));
+  const [volumeSizeSliderValue, setVolumeSizeSliderValue] = useState<number>((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 16);
 
   const vCPUMarks = [
     { value: 0, label: '1' },     // log2(1) = 0
@@ -46,6 +46,11 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   ];
 
   const ramMarks = [
+    { value: 0, label: '1' },    // log2(1) = 0
+    { value: 1, label: '2' },    // log2(2) = 1
+    { value: 2, label: '4' },    // log2(4) = 2
+    { value: 3, label: '8' },    // log2(8) = 3
+    { value: 4, label: '16' },    // log2(16) = 4
     { value: 5, label: '32' },    // log2(32) = 5
     { value: 6, label: '64' },    // log2(64) = 6
     { value: 7, label: '128' },   // log2(128) = 7
@@ -83,9 +88,9 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   useEffect(() => {
     if (entry) {
       setCurrentEntry(entry);
-      setVCpuSliderValue(Math.log2(entry.vCpu! || 4));
-      setRamSliderValue(Math.log2(entry.ramGb! || 32));
-      setVolumeSizeSliderValue((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 200);
+      setVCpuSliderValue(Math.log2(entry.vCpu! || 2));
+      setRamSliderValue(Math.log2(entry.ramGb! || 1));
+      setVolumeSizeSliderValue((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 16);
     }
   }, [entry]);
 
@@ -155,7 +160,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           <Select
             fullWidth
             value={currentEntry.provider!.id || 10}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, provider: { id: e.target.value as number, name: currentEntry.provider?.name } })}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, provider: { id: e.target.value as number, name: currentEntry.provider?.name ?? 'Amazon EC2' } })}
           >
             {providers.map((provider) => (
               <MenuItem key={provider.id} value={provider.id}>{provider.name}</MenuItem>
@@ -169,7 +174,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           <Select
             fullWidth
             value={currentEntry.dataCenter?.id || 'aws-eu-north-1'}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, name: currentEntry.dataCenter?.name, location: { longitude: 0, latitude: 0 }, region_code: currentEntry.location?.region! } })}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, name: currentEntry.dataCenter?.name ?? 'aws-eu-north-1', location: { longitude: 0, latitude: 0 }, region_code: currentEntry.location?.region! } })}
           >
             {dataCenters.map((dc) => (
               <MenuItem key={dc.id} value={dc.id}>{dc.name}</MenuItem>
@@ -182,8 +187,8 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           <div>Location</div>
           <Select
             fullWidth
-            value={currentEntry.location?.id || 6}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, location: { id: e.target.value as number, name: currentEntry.location?.name } })}
+            value={currentEntry.location?.id || 3}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, location: { id: e.target.value as number, name: currentEntry.location?.name ?? "Stockholm" } })}
           >
             {locations.map((loc) => (
               <MenuItem key={loc.id} value={loc.id}>{loc.name}</MenuItem>
@@ -195,7 +200,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
         <div style={{ margin: '20px 0' }}>
           <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label>
           <Slider
-            value={vCpuSliderValue || 4}
+            value={vCpuSliderValue || 2}
             onChange={(_, newValue) => setVCpuSliderValue(newValue as number)}
             step={1}
             marks={vCPUMarks}
@@ -207,7 +212,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
         <div style={{ margin: '20px 0' }}>
           <label>RAM (GB): {Math.pow(2, ramSliderValue)}</label>
           <Slider
-            value={ramSliderValue || 32}
+            value={ramSliderValue || 1}
             onChange={(_, newValue) => setRamSliderValue(newValue as number)}
             step={1}
             marks={ramMarks}
@@ -232,7 +237,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
         <div style={{ margin: '20px 0' }}>
           <label>Volume (GB): {volumeSizeSliderValue}</label>
           <Slider
-            value={volumeSizeSliderValue || 200}
+            value={volumeSizeSliderValue || 16}
             onChange={(_, newValue) => setVolumeSizeSliderValue(newValue as number)}
             step={25}
             min={50}

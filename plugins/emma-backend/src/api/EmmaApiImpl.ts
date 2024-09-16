@@ -306,11 +306,10 @@ export class EmmaApiImpl implements EmmaApi {
  
   public async addComputeEntity(entity: EmmaVm): Promise<number> {
     this.logger.info(`Adding compute entity with id: ${entity.id} and type: ${entity.type}`);
-    let input: any;
 
     switch(entity.type) {
       case EmmaComputeType.VirtualMachine:
-          input = { 
+        await this.apiFactory.create(VirtualMachinesApi).vmCreate({ 
           name: entity.name! ?? entity.label! ?? "unknown",
           cloudNetworkType: entity.cloudNetworkType?.toString() ?? "multi-cloud",
           dataCenterId: entity.dataCenter?.id!, 
@@ -320,20 +319,14 @@ export class EmmaApiImpl implements EmmaApi {
           vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
           volumeGb: entity.disks![0].sizeGb!,
           volumeType: this.parseEnum(VmCreate.VolumeTypeEnum, entity.disks![0].type!)!,
-          sshKeyId: entity.sshKeyId! };
-
-          this.logger.info(`entity: ${JSON.stringify(entity)}`);
-          this.logger.info(`vmCreate: ${JSON.stringify(input)}`);
-
-        // TODO: Debug 422. Most likely the combination of ids are illigal
-        await this.apiFactory.create(VirtualMachinesApi).vmCreate(input);
+          sshKeyId: entity.sshKeyId! });
         break;
       case EmmaComputeType.SpotInstance:
         await this.apiFactory.create(SpotInstancesApi).spotCreate({ 
-          name: entity.name!,
-          cloudNetworkType: entity.cloudNetworkType?.toString(),
+          name: entity.name! ?? entity.label! ?? "unknown",
+          cloudNetworkType: entity.cloudNetworkType?.toString() ?? "multi-cloud",
           dataCenterId: entity.dataCenter?.id!, 
-          osId: entity.os?.id, 
+          osId: entity.os?.id ?? 5, 
           ramGb: entity.ramGb!,
           vCpu: entity.vCpu!,
           vCpuType: this.parseEnum(VmCreate.VCpuTypeEnum, entity.vCpuType!.toString())!,
@@ -344,11 +337,11 @@ export class EmmaApiImpl implements EmmaApi {
         break;
       case EmmaComputeType.KubernetesNode:
         await this.apiFactory.create(KubernetesClustersApi).createKubernetesCluster({ 
-          name: entity.name!,
+          name: entity.name! ?? entity.label! ?? "unknown",
           deploymentLocation: KubernetesCreate.DeploymentLocationEnum.Eu,
           workerNodes: [
             { 
-              name: entity.name!,
+              name: entity.name! ?? entity.label! ?? "unknown",
               dataCenterId: entity.dataCenter?.id!, 
               ramGb: entity.ramGb!,
               vCpu: entity.vCpu!,
