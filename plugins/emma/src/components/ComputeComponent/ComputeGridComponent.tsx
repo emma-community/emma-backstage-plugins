@@ -12,7 +12,6 @@ import { ComputeRowComponent } from './ComputeRowComponent';
 import { ComputeModalComponent } from './ComputeModalComponent';
 import { emmaApiRef } from '../../plugin';
 
-// TODO: Figure out what to do with entities that have been deleted, but are still in the process of being deleted and thus still show up in the list
 // TODO: Figure out how to filter modal values based on compute types to avoid 422 errors
 // TODO: Figure out why k8s delete is not working when given the correct id
 // TODO: Add logic to show popup with private key when creating a new entity and no keys are available
@@ -25,7 +24,7 @@ export const ComputeGridComponent = () => {
   const [collapsedGroups, setCollapsedGroups] = useState<{ [key: string]: boolean }>({});
   
   useAsync(async (): Promise<void> => {
-    const vms = await emmaApi.getComputeEntities();
+    const vms = (await emmaApi.getComputeEntities());
 
     setData(vms);
   }, [setData]);
