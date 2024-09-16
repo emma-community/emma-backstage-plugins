@@ -1,2 +1,2 @@
 export { emmaHeatmapPlugin, EmmaHeatmapPage, EmmaComputePage, emmaApiRef } from './plugin';
-export * from './api';
+export { EmmaClient } from './api';

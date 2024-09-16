@@ -1,4 +1,4 @@
-site_name: emma-backstage-plugin docs
+site_name: emma-backstage-plugin TechDocs
 
 nav:
   - Home: index.md

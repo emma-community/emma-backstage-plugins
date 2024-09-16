@@ -1,1 +1,1 @@
-export * from './EmmaClient';
+export { EmmaClient } from './EmmaClient';
