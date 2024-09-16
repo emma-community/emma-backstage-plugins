@@ -12,6 +12,7 @@ import { ComputeRowComponent } from './ComputeRowComponent';
 import { ComputeModalComponent } from './ComputeModalComponent';
 import { emmaApiRef } from '../../plugin';
 
+// TODO: Figure out what to do with entities that have been deleted, but are still in the process of being deleted and thus still show up in the list
 // TODO: Figure out how to filter modal values based on compute types to avoid 422 errors
 export const ComputeGridComponent = () => {  
   const emmaApi = useApi(emmaApiRef);
