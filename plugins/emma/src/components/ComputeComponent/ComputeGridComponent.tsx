@@ -13,7 +13,6 @@ import { ComputeModalComponent } from './ComputeModalComponent';
 import { emmaApiRef } from '../../plugin';
 
 // TODO: Figure out how to filter modal values based on compute types to avoid 422 errors
-// TODO: Figure out why k8s delete is not working when given the correct id
 // TODO: Add logic to show popup with private key when creating a new entity and no keys are available
 export const ComputeGridComponent = () => {  
   const emmaApi = useApi(emmaApiRef);
