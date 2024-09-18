@@ -27,7 +27,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     ramGb: 1,
     disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }],
     location: { id: 3, name: 'Stockholm' },
-    dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 }, region_code: 'unknown' },
+    dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 } },
     status: 'BUSY',
     cost: { currency: 'EUR', amount: 0.0 },
   });
@@ -192,7 +192,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           <Select
             fullWidth
             value={currentEntry.dataCenter?.id || 'aws-eu-north-1'}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, name: currentEntry.dataCenter?.name ?? 'aws-eu-north-1', location: { longitude: 0, latitude: 0 }, region_code: currentEntry.location?.region! } })}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, dataCenter: { id: e.target.value as string, name: currentEntry.dataCenter?.name ?? 'aws-eu-north-1', location: { longitude: 0, latitude: 0 } } })}
           >
             {dataCenters.map((dc) => (
               <MenuItem key={dc.id} value={dc.id}>{dc.name}</MenuItem>

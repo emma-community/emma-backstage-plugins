@@ -20,7 +20,6 @@ describe('HeatMapComponent', () => {
         "name": "China (Beijing)",
         "address": "Beijing, China",
         "country_code": "CN",
-        "region_code": "cn-north-1",
         "location": {
         "longitude": 116.4074,
         "latitude": 39.9042

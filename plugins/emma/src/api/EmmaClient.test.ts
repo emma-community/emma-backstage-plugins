@@ -32,7 +32,6 @@ describe('EmmaClient', () => {
     it('should call fetch with the correct URL when geoFence is provided', async () => {
       const mockDataCenters: EmmaDataCenter[] = [ {
         "name": "East US",
-        "region_code": "eastus",
         "location": {
           "longitude": -79.4209,
           "latitude": 37.4316        
@@ -59,7 +58,6 @@ describe('EmmaClient', () => {
     it('should call fetch with the correct URL when geoFence is not provided', async () => {
       const mockDataCenters: EmmaDataCenter[] = [ {
         "name": "East US",
-        "region_code": "eastus",
         "location": {
           "longitude": -79.4209,
           "latitude": 37.4316        

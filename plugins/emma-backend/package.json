@@ -1,7 +1,7 @@
 {
   "name": "@emma-community/backstage-plugin-emma-backend",
   "description": "Backend for the emma plugin",
-  "version": "1.0.24",
+  "version": "1.1.0",
   "backstage": {
     "role": "backend-plugin",
     "pluginId": "emma",
@@ -36,7 +36,7 @@
     "lint": "backstage-cli package lint",
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
-    "prepack": "backstage-cli package prepack && node copy-knownGeoLocations.js",
+    "prepack": "backstage-cli package prepack",
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
@@ -51,8 +51,8 @@
     "express-promise-router": "^4.1.0",
     "uuid": "^9.0.0",
     "yn": "^4.0.0",
-    "@emma-community/backstage-plugin-emma-common": "^1.0.24",
-    "@emma-community/emma-typescript-sdk": "1.0.2"
+    "@emma-community/backstage-plugin-emma-common": "^1.1.0",
+    "@emma-community/emma-typescript-sdk": "1.0.3"
   },
   "devDependencies": {
     "@backstage/backend-defaults": "workspace:^",

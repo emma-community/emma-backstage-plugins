@@ -1,13 +1,9 @@
-import fs from 'fs';
-import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { HttpBearerAuth, DataCentersApi, SSHKeysApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VirtualMachinesApi, SpotInstancesApi, KubernetesClustersApi, LocationsApi, ProvidersApi, Vm } from '@emma-community/emma-typescript-sdk';
 import { EmmaApiFactory, EmmaComputeType, EmmaVolumeType, EmmaCPUType, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
 import { EmmaApiImpl } from './EmmaApiImpl';
 
-jest.mock('fs');
-jest.mock('path');
 jest.mock('@emma-community/emma-typescript-sdk');
 jest.mock('@emma-community/backstage-plugin-emma-common');
 
@@ -54,10 +50,6 @@ describe('EmmaApiImpl', () => {
       child: jest.fn()
     };
 
-    // Mock the fs and path operations
-    fs.readFileSync = jest.fn().mockReturnValue(JSON.stringify([{ region_code: 'us-west', location: { latitude: 37.7749, longitude: -122.4194 } }]));
-    path.resolve = jest.fn().mockReturnValue('knownGeoLocations.json');
-
     // Instantiate and mock HttpBearerAuth
     mockAuthHandler = new HttpBearerAuth();
     mockAuthHandler.accessToken = 'dummy-token';
@@ -71,7 +63,7 @@ describe('EmmaApiImpl', () => {
     mockDataCentersApi = new DataCentersApi();
     mockDataCentersApi.getDataCenters = jest.fn().mockResolvedValue({
       body: [
-        { id: 'us-west-1', region_code: 'us-west' },
+        { id: 'us-west-1' },
       ],
     });
     
@@ -180,13 +172,6 @@ describe('EmmaApiImpl', () => {
     jest.clearAllMocks();
   });
 
-  test('should load known geo locations from file', () => {
-    const emmaApi = EmmaApiImpl.fromConfig(mockConfig, { logger: mockLogger });
-    expect(fs.readFileSync).toHaveBeenCalledWith('knownGeoLocations.json', 'utf-8');
-    // eslint-disable-next-line
-    expect(emmaApi['knownGeoLocations']).toEqual([{ region_code: 'us-west', location: { latitude: 37.7749, longitude: -122.4194 } }]);
-  });
-
   test('should issue token and set access token', async () => {
     const emmaApi = EmmaApiImpl.fromConfig(mockConfig, { logger: mockLogger });
 
@@ -206,7 +191,7 @@ describe('EmmaApiImpl', () => {
     const dataCenters = await emmaApi.getDataCenters();
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching data centers');
-    expect(dataCenters).toEqual([{ id: 'us-west-1', region_code: 'us-west', location: { latitude: 37.7749, longitude: -122.4194 } }]);
+    expect(dataCenters).toEqual([{ id: 'us-west-1', location: { latitude: 0, longitude: 0 } }]);
   });
 
   test('should fetch and filter providers', async () => {
@@ -255,14 +240,14 @@ describe('EmmaApiImpl', () => {
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute entities');
     expect(vms).toEqual([
-      { id: 'vm-1', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }}, 
-      { id: 'vm-2', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }}, 
-      { id: 'spot-1', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }}, 
-      { id: 'spot-2', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }}, 
-      { id: 'k8s-1', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }}, 
-      { id: 'k8s-2', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }}, 
-      { id: 'k8s-3', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }}, 
-      { id: 'k8s-4', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 }, region_code: 'unknown' }}
+      { id: 'vm-1', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
+      { id: 'vm-2', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
+      { id: 'spot-1', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
+      { id: 'spot-2', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
+      { id: 'k8s-1', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
+      { id: 'k8s-2', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
+      { id: 'k8s-3', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
+      { id: 'k8s-4', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}
     ]);
   });
 

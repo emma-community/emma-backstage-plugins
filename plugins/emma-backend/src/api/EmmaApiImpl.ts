@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaSshKeyType, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
@@ -10,9 +8,7 @@ export class EmmaApiImpl implements EmmaApi {
   private readonly logger: LoggerService;
   private readonly config: Config;
   private readonly authHandler: HttpBearerAuth = new HttpBearerAuth();
-  private readonly apiFactory: EmmaApiFactory;   
-  // TODO: Remove synthetic data once External API is updated to return geo locations.
-  private readonly knownGeoLocations: EmmaDataCenter[];
+  private readonly apiFactory: EmmaApiFactory;
 
   private constructor(
     config: Config,
@@ -21,7 +17,6 @@ export class EmmaApiImpl implements EmmaApi {
     this.logger = logger;
     this.config = config;
     this.apiFactory = new EmmaApiFactory(this.authHandler);
-    this.knownGeoLocations = this.loadKnownGeoLocations();
 
     this.issueToken().then((token) => {
       if(token.accessToken !== undefined) 
@@ -38,14 +33,6 @@ export class EmmaApiImpl implements EmmaApi {
       options.logger
     );
   }
-  
-  private loadKnownGeoLocations(): EmmaDataCenter[] {
-    // eslint-disable-next-line
-    const filePath = path.resolve(__dirname, 'knownGeoLocations.json');
-    const data = fs.readFileSync(filePath, 'utf-8');
-
-    return JSON.parse(data);
-  }
 
   private async issueToken(): Promise<Token> {
     const api = this.apiFactory.create(AuthenticationApi);
@@ -61,12 +48,13 @@ export class EmmaApiImpl implements EmmaApi {
     this.logger.info('Fetching data centers');
 
     let dataCenters = (await api.getDataCenters()).body as EmmaDataCenter[];
+    const locations = await this.getLocations();
 
     dataCenters.forEach(dataCenter => {
-        const matchedGeoLocation = this.knownGeoLocations.find(emmaDC => dataCenter.id?.indexOf(emmaDC.region_code) !== -1);
+        const matchedGeoLocation = locations.find(location => dataCenter.locationId === location.id);
 
         if(matchedGeoLocation) {
-          dataCenter.location = matchedGeoLocation.location;
+          dataCenter.location = { latitude: matchedGeoLocation.latitude!, longitude: matchedGeoLocation.longitude! };
         } else {
           dataCenter.location = { latitude: 0, longitude: 0 };
         }
@@ -238,7 +226,7 @@ export class EmmaApiImpl implements EmmaApi {
           type: EmmaComputeType.VirtualMachine,
           label: vm.name,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
-          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown' }
+          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 } }
         };
       });
 
@@ -255,7 +243,7 @@ export class EmmaApiImpl implements EmmaApi {
           type: EmmaComputeType.SpotInstance,
           label: vm.name,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
-          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: vm.location?.region ?? 'unknown' }
+          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 } }
         };
       });
 
@@ -274,7 +262,7 @@ export class EmmaApiImpl implements EmmaApi {
             type: EmmaComputeType.KubernetesNode,
             status: k8s.status,
             vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
-            dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 }, region_code: node.location?.region ?? 'unknown' }
+            dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 } }
           }))
         ) || []
       );
