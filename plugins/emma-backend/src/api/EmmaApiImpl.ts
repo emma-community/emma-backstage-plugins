@@ -279,9 +279,8 @@ export class EmmaApiImpl implements EmmaApi {
   }
  
   public async addComputeEntity(entity: EmmaVm): Promise<number> {
-    this.logger.info(`Adding compute entity with type: ${entity.type}`);    
-    this.logger.info(`Adding compute entity with network: ${entity.cloudNetworkType}`);
-
+    this.logger.info(`Adding compute entity with type: ${entity.type}`);
+    
     switch(entity.type) {
       case EmmaComputeType.VirtualMachine:
         await this.apiFactory.create(VirtualMachinesApi).vmCreate({ 
