@@ -8,7 +8,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaNetworkType, EmmaVolumeType, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
 import { ComputeRowComponent } from './ComputeRowComponent';
 import { ComputeModalComponent } from './ComputeModalComponent';
 import { emmaApiRef } from '../../plugin';
@@ -31,7 +31,7 @@ export const ComputeGridComponent = () => {
   }, [setData]);
 
   const handleOpenModal = (entry?: Partial<EmmaVm>) => {
-    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 } }, status: 'BUSY', cost: { currency: 'EUR', amount: 0.0 }, });
+    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 } }, status: 'BUSY', cost: { currency: 'EUR', amount: 0.0 }, cloudNetworkType: EmmaNetworkType.Default, });
     setModalOpen(true);
   };
 
@@ -72,9 +72,10 @@ export const ComputeGridComponent = () => {
     handleCloseModal();
   };
 
-  const handleDelete = async (id: number) => {    
-    await emmaApi.deleteComputeEntity(id, data.find((item) => item.id === id)!.type);
-    setData(data.filter((item) => item.id !== id));
+  const handleDelete = async (entry: EmmaVm) => {
+    await emmaApi.deleteComputeEntity(entry.type === EmmaComputeType.KubernetesNode ? parseInt(entry.label!, 10) : entry.id!, entry.type);
+
+    setData(data.filter((item) => item.id !== entry.id!));
   };
 
   const toggleGroupCollapse = (providerName: string) => {
@@ -125,7 +126,8 @@ export const ComputeGridComponent = () => {
                 <IconButton onClick={() => handleOpenModal()} style={{ color: 'gray' }}>
                   <AddIcon />
                 </IconButton>
-              </Tooltip></TableCell>
+              </Tooltip>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>         
@@ -152,7 +154,7 @@ export const ComputeGridComponent = () => {
                             key={entry.id}
                             entry={entry}
                             onEdit={() => handleOpenModal(entry)}
-                            onDelete={() => handleDelete(entry.id!)}
+                            onDelete={() => handleDelete(entry)}
                           />
                         ))}
                       </TableBody>

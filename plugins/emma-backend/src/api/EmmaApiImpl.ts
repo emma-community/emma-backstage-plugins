@@ -1,6 +1,6 @@
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaVmConfiguration, EmmaVm, EmmaSshKeyType, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaNetworkType, EmmaVmConfiguration, EmmaVm, EmmaSshKeyType, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
 import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
@@ -226,7 +226,8 @@ export class EmmaApiImpl implements EmmaApi {
           type: EmmaComputeType.VirtualMachine,
           label: vm.name,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
-          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 } }
+          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 } },
+          cloudNetworkType: this.parseEnum(EmmaNetworkType, vm.cloudNetworkType!.toString())!
         };
       });
 
@@ -243,7 +244,8 @@ export class EmmaApiImpl implements EmmaApi {
           type: EmmaComputeType.SpotInstance,
           label: vm.name,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
-          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 } }
+          dataCenter: { ...vm.dataCenter, location: { latitude: 0, longitude: 0 } },
+          cloudNetworkType: this.parseEnum(EmmaNetworkType, vm.cloudNetworkType!.toString())!
         };
       });
 
@@ -262,7 +264,8 @@ export class EmmaApiImpl implements EmmaApi {
             type: EmmaComputeType.KubernetesNode,
             status: k8s.status,
             vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
-            dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 } }
+            dataCenter: { ...node.dataCenter, location: { latitude: 0, longitude: 0 } },            
+            cloudNetworkType: this.parseEnum(EmmaNetworkType, node.cloudNetworkType!.toString())!
           }))
         ) || []
       );
@@ -276,13 +279,14 @@ export class EmmaApiImpl implements EmmaApi {
   }
  
   public async addComputeEntity(entity: EmmaVm): Promise<number> {
-    this.logger.info(`Adding compute entity with type: ${entity.type}`);
+    this.logger.info(`Adding compute entity with type: ${entity.type}`);    
+    this.logger.info(`Adding compute entity with network: ${entity.cloudNetworkType}`);
 
     switch(entity.type) {
       case EmmaComputeType.VirtualMachine:
         await this.apiFactory.create(VirtualMachinesApi).vmCreate({ 
           name: entity.name! ?? entity.label! ?? "default-vm-1",
-          cloudNetworkType: entity.cloudNetworkType?.toString() ?? "multi-cloud",
+          cloudNetworkType: this.parseEnum(VmCreate.CloudNetworkTypeEnum, entity.cloudNetworkType?.toString()!)!,
           dataCenterId: entity.dataCenter?.id!, 
           osId: entity.os?.id ?? 5,
           ramGb: entity.ramGb!,
@@ -295,7 +299,7 @@ export class EmmaApiImpl implements EmmaApi {
       case EmmaComputeType.SpotInstance:
         await this.apiFactory.create(SpotInstancesApi).spotCreate({ 
           name: entity.name! ?? entity.label! ?? "default-spot-1",
-          cloudNetworkType: entity.cloudNetworkType?.toString() ?? "multi-cloud",
+          cloudNetworkType: this.parseEnum(VmCreate.CloudNetworkTypeEnum, entity.cloudNetworkType?.toString()!)!,
           dataCenterId: entity.dataCenter?.id!, 
           osId: entity.os?.id ?? 35, 
           ramGb: entity.ramGb!,
@@ -381,7 +385,7 @@ export class EmmaApiImpl implements EmmaApi {
               location.latitude <= geoFence.topRight.latitude && 
               geoFence.bottomLeft.longitude <= location.longitude && 
               location.longitude <= geoFence.topRight.longitude;
-  }
+  } 
 
   private parseEnum<T>(enumObj: T, value: string): T[keyof T] | undefined {
     if (enumObj && Object.values(enumObj).includes(value as T[keyof T])) {

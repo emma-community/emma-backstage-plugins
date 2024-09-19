@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApi } from '@backstage/frontend-plugin-api';
 import { emmaApiRef } from '../../plugin';
 import { Dialog, DialogActions, DialogContent, Button, TextField, Select, MenuItem, Slider, CircularProgress } from '@material-ui/core';
-import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaLocation, EmmaDataCenter, EmmaProvider } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaLocation, EmmaDataCenter, EmmaProvider, EmmaNetworkType } from '@emma-community/backstage-plugin-emma-common';
 
 interface ComputeModalProps {
   open: boolean;
@@ -30,6 +30,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 } },
     status: 'BUSY',
     cost: { currency: 'EUR', amount: 0.0 },
+    cloudNetworkType: EmmaNetworkType.Default,
   });
 
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 2));
@@ -212,6 +213,21 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
             ))}
           </Select>
         </div>
+                    
+        {(currentEntry.type === EmmaComputeType.VirtualMachine || currentEntry.type === EmmaComputeType.SpotInstance) && (          
+          <div style={{ margin: '20px 0' }}>
+            <div>Cloud Network Type</div>
+            <Select
+              fullWidth
+              value={currentEntry.cloudNetworkType ? currentEntry.cloudNetworkType : EmmaNetworkType.Default}
+              onChange={(e) => setCurrentEntry({ ...currentEntry, cloudNetworkType: e.target.value as EmmaNetworkType })}
+            >
+              <MenuItem value={EmmaNetworkType.Default}>Default</MenuItem>
+              <MenuItem value={EmmaNetworkType.Isolated}>Isolated</MenuItem>
+              <MenuItem value={EmmaNetworkType.MultiCloud}>Multi-Cloud</MenuItem>
+            </Select>
+          </div>
+        )}
 
         <div style={{ margin: '20px 0' }}>
           <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label>

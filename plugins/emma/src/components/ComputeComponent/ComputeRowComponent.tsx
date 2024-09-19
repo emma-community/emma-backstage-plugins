@@ -19,14 +19,18 @@ export const ComputeRowComponent = ({ entry, onEdit, onDelete }: ComputeRowProps
       <TableCell style={{ width: '20%' }}>{entry.type}</TableCell>
       <TableCell style={{ width: '20%' }}>
         <Tooltip title="Manage">
-          <IconButton onClick={onEdit} disabled={entry.status === 'BUSY' || entry.status === 'ENV_DEPLOYMENT'}>
-            <ComputerIcon />
-          </IconButton>
+          <span>
+            <IconButton onClick={onEdit} disabled={entry.status === 'BUSY'}>
+              <ComputerIcon />
+            </IconButton>
+          </span>
         </Tooltip>
         <Tooltip title="Delete">
-          <IconButton onClick={onDelete} disabled={entry.status === 'BUSY' || entry.status === 'ENV_DEPLOYMENT'}>
-            <DeleteIcon />
-          </IconButton>
+          <span>
+            <IconButton onClick={onDelete} disabled={entry.status === 'BUSY'}>
+             <DeleteIcon />
+            </IconButton>
+          </span>
         </Tooltip>
       </TableCell>
     </TableRow>

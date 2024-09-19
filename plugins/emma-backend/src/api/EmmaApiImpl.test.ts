@@ -1,7 +1,7 @@
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
 import { HttpBearerAuth, DataCentersApi, SSHKeysApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VirtualMachinesApi, SpotInstancesApi, KubernetesClustersApi, LocationsApi, ProvidersApi, Vm } from '@emma-community/emma-typescript-sdk';
-import { EmmaApiFactory, EmmaComputeType, EmmaVolumeType, EmmaCPUType, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApiFactory, EmmaComputeType, EmmaVolumeType, EmmaCPUType, EmmaSshKeyType, EmmaNetworkType } from '@emma-community/backstage-plugin-emma-common';
 import { EmmaApiImpl } from './EmmaApiImpl';
 
 jest.mock('@emma-community/emma-typescript-sdk');
@@ -119,30 +119,30 @@ describe('EmmaApiImpl', () => {
     
     mockVirtualMachinesapi = new VirtualMachinesApi();
     mockVirtualMachinesapi.getVm = jest.fn().mockResolvedValue({
-      body: { id: 'vm-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared },
+      body: { id: 'vm-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default },
     });
     mockVirtualMachinesapi.getVms = jest.fn().mockResolvedValue({
-      body: [{ id: 'vm-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: Vm.VCpuTypeEnum.Shared}, { id: 'vm-2', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }],
+      body: [{ id: 'vm-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: Vm.VCpuTypeEnum.Shared, cloudNetworkType: EmmaNetworkType.Default }, { id: 'vm-2', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default }],
     });
     mockVirtualMachinesapi.vmCreate = jest.fn().mockResolvedValue({});
     mockVirtualMachinesapi.vmDelete = jest.fn().mockResolvedValue({});
     
     mockSpotInstancesApi = new SpotInstancesApi();
     mockSpotInstancesApi.getSpot = jest.fn().mockResolvedValue({
-      body: { id: 'spot-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared },
+      body: { id: 'spot-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default },
     });
     mockSpotInstancesApi.getSpots = jest.fn().mockResolvedValue({
-      body: [{ id: 'spot-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'spot-2', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }],
+      body: [{ id: 'spot-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default }, { id: 'spot-2', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default }],
     });
     mockSpotInstancesApi.spotCreate = jest.fn().mockResolvedValue({});
     mockSpotInstancesApi.spotDelete = jest.fn().mockResolvedValue({});
     
     mockKubernetesClustersApi = new KubernetesClustersApi();
     mockKubernetesClustersApi.getKubernetesCluster = jest.fn().mockResolvedValue({
-      body: { id: 'k8s-1', nodeGroups: [{ id: 'nodeGroup-1', nodes: [ { id: 'k8s-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'k8s-2', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared } ] }] },
+      body: { id: 'k8s-1', nodeGroups: [{ id: 'nodeGroup-1', nodes: [ { id: 'k8s-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default }, { id: 'k8s-2', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default } ] }] },
     });
     mockKubernetesClustersApi.getKubernetesClusters = jest.fn().mockResolvedValue({
-      body: [{ id: 'k8s-1', nodeGroups: [{ id: 'nodeGroup-1', nodes: [ { id: 'k8s-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'k8s-2', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared } ] }] }, { id: 'k8s-2', nodeGroups: [{ id: 'nodeGroup-2', nodes: [ { id: 'k8s-3', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared }, { id: 'k8s-4', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared } ] }] }],
+      body: [{ id: 'k8s-1', nodeGroups: [{ id: 'nodeGroup-1', nodes: [ { id: 'k8s-1', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default }, { id: 'k8s-2', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default } ] }] }, { id: 'k8s-2', nodeGroups: [{ id: 'nodeGroup-2', nodes: [ { id: 'k8s-3', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default }, { id: 'k8s-4', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, cloudNetworkType: EmmaNetworkType.Default } ] }] }],
     });
     mockKubernetesClustersApi.createKubernetesCluster = jest.fn().mockResolvedValue({});
     mockKubernetesClustersApi.editKubernetesCluster = jest.fn().mockResolvedValue({});
@@ -240,14 +240,14 @@ describe('EmmaApiImpl', () => {
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute entities');
     expect(vms).toEqual([
-      { id: 'vm-1', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
-      { id: 'vm-2', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
-      { id: 'spot-1', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
-      { id: 'spot-2', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
-      { id: 'k8s-1', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
-      { id: 'k8s-2', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
-      { id: 'k8s-3', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}, 
-      { id: 'k8s-4', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }}
+      { id: 'vm-1', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'vm-2', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'spot-1', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'spot-2', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'k8s-1', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'k8s-2', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'k8s-3', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'k8s-4', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}
     ]);
   });
 

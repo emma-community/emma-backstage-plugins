@@ -89,7 +89,7 @@ export type EmmaVm = EmmaEntity<number> & {
   os?: any;
   vCpu?: number;
   vCpuType?: EmmaCPUType;
-  cloudNetworkType?: any;
+  cloudNetworkType?: EmmaNetworkType;
   ramGb?: number;
   disks?: Array<EmmaDisk>;
   networks?: Array<any>;
