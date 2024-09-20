@@ -18,10 +18,7 @@ export class EmmaApiImpl implements EmmaApi {
     this.config = config;
     this.apiFactory = new EmmaApiFactory(this.authHandler);
 
-    this.issueToken().then((token) => {
-      if(token.accessToken !== undefined) 
-        this.authHandler.accessToken = token.accessToken;
-    });
+    this.refreshToken();
   }
 
   static fromConfig(
@@ -39,6 +36,17 @@ export class EmmaApiImpl implements EmmaApi {
     const token = await api.issueToken({ clientId: this.config.getString(EMMA_CLIENT_ID_KEY), clientSecret: this.config.getString(EMMA_CLIENT_SECRET_KEY) });
 
     return token.body;
+  }
+
+  private refreshToken(){
+    this.issueToken().then((token) => {
+      this.logger.info(`Refreshed token: ${JSON.stringify(token)}`);
+      
+      if(token.accessToken !== undefined) 
+        this.authHandler.accessToken = token.accessToken;
+
+      setTimeout(() => { this.refreshToken(); }, (token.expiresIn! - 25) * 1000);
+    });
   }
 
   public async getDataCenters(geoFence?: GeoFence): Promise<EmmaDataCenter[]> 
