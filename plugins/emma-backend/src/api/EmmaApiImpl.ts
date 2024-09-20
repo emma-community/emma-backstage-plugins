@@ -1,7 +1,7 @@
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaNetworkType, EmmaVmConfiguration, EmmaVm, EmmaSshKeyType, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
-import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
+import { EmmaApi, EmmaApiFactory, EmmaDataCenter, EmmaNetworkType, EmmaVmConfiguration, EmmaVm, EmmaSshKeyType, EmmaVmOs, EmmaProvider, EmmaLocation, GeoFence, GeoLocation, EmmaComputeType, EMMA_CLIENT_ID_KEY, EMMA_CLIENT_SECRET_KEY, EmmaCPUType, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
+import { HttpBearerAuth, Token, DataCentersApi, AuthenticationApi, SSHKeysApi, SshKeysCreateImportRequest, OperatingSystemsApi, ComputeInstancesConfigurationsApi, LocationsApi, VmConfiguration, Vm, SpotInstancesApi, KubernetesClustersApi, VirtualMachinesApi, ProvidersApi, VmCreate, KubernetesCreate } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export class EmmaApiImpl implements EmmaApi {
@@ -111,6 +111,21 @@ export class EmmaApiImpl implements EmmaApi {
     this.logger.info('Returning locations');
 
     return locations;
+  }
+
+  public async getOperatingSystems(type?: string, architecture?: string, version?: string): Promise<EmmaVmOs[]>
+  {
+    const api = this.apiFactory.create(OperatingSystemsApi);
+          
+    this.logger.info('Fetching operating systems');
+
+    let operatingSystems: EmmaVmOs[] = [];
+
+    operatingSystems = (await api.getOperatingSystems(type, architecture, version)).body.map(os => { return os });
+
+    this.logger.info('Returning operating systems');
+
+    return operatingSystems;
   }
 
   public async getSshKeys(sshKeyId?: number): Promise<EmmaSshKey[]>

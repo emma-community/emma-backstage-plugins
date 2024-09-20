@@ -1,7 +1,7 @@
 import { DiscoveryApi, FetchApi, IdentityApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
 import { EmmaClient } from './EmmaClient';
-import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EmmaProvider, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVm, EmmaLocation, EmmaSshKey, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaDataCenter, EmmaVmConfiguration, GeoFence, EmmaProvider, EmmaVmOs, EMMA_PLUGIN_ID, EmmaComputeType, EmmaVm, EmmaLocation, EmmaSshKey, EmmaSshKeyType } from '@emma-community/backstage-plugin-emma-common';
 
 describe('EmmaClient', () => {
   let discoveryApi: jest.Mocked<DiscoveryApi>;
@@ -126,6 +126,40 @@ describe('EmmaClient', () => {
     });
   });
   
+  describe('getOperatingSystems', () => {
+    it('should call fetch with the correct URL', async () => {
+      const mockOperatingSystems: EmmaVmOs[] = [ {
+        id: 1,
+      }];
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: true,
+        json: async () => mockOperatingSystems,
+      } as Response);
+
+      const result = await emmaClient.getOperatingSystems();
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/operating-systems/?', {});
+      expect(result).toEqual(mockOperatingSystems);
+    });
+
+    it('should throw a ResponseError if the fetch response is not ok', async () => {
+      discoveryApi.getBaseUrl.mockResolvedValue('http://localhost:7000');
+      fetchApi.fetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+      } as Response);
+
+      // @ts-ignore
+      await expect(emmaClient.getLocations()).rejects.toThrow(ResponseError);
+
+      expect(discoveryApi.getBaseUrl).toHaveBeenCalledWith(EMMA_PLUGIN_ID);
+      expect(fetchApi.fetch).toHaveBeenCalledWith('http://localhost:7000/locations/?', {});
+    });
+  });
+
   describe('getProviders', () => {
     it('should call fetch with the correct URL', async () => {
       const mockProviders: EmmaProvider[] = [ {

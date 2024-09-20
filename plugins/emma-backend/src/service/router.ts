@@ -78,6 +78,28 @@ export async function createRouter(
     res.status(200).json(locations);
   });
 
+  router.get('/operating-systems', async (req, res) => {
+    let type: string | undefined;
+    let architecture: string | undefined;
+    let version: string | undefined;
+
+    if(req.query.type) {
+      type = req.query.type as string;
+    }
+
+    if(req.query.architecture) {
+      architecture = req.query.architecture as string;
+    }
+
+    if(req.query.version) {
+      version = req.query.version as string;
+    }
+
+    const operatingSystems = await emmaApi.getOperatingSystems(type, architecture, version);
+
+    res.status(200).json(operatingSystems);
+  });
+
   router.get('/ssh-keys', async (req, res) => {
     let sshKeyId: number | undefined;
 

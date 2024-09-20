@@ -17,6 +17,9 @@ describe('createRouter', () => {
   beforeAll(async () => {
     emmaApi = {
       getDataCenters: jest.fn(),
+      getLocations: jest.fn(),
+      getProviders: jest.fn(),
+      getOperatingSystems: jest.fn(),
       getComputeConfigs: jest.fn(),
       getComputeEntities: jest.fn(),
       getSshKeys: jest.fn(),
@@ -61,6 +64,30 @@ describe('createRouter', () => {
   describe('GET /datacenters', () => {
     it('returns ok', async () => {
       const response = await request(app).get('/datacenters');
+
+      expect(response.status).toEqual(200);
+    });
+  });
+
+  describe('GET /locations', () => {
+    it('returns ok', async () => {
+      const response = await request(app).get('/locations');
+
+      expect(response.status).toEqual(200);
+    });
+  });
+
+  describe('GET /providers', () => {
+    it('returns ok', async () => {
+      const response = await request(app).get('/providers');
+
+      expect(response.status).toEqual(200);
+    });
+  });
+
+  describe('GET /operating-systems', () => {
+    it('returns ok', async () => {
+      const response = await request(app).get('/operating-systems');
 
       expect(response.status).toEqual(200);
     });

@@ -1,6 +1,6 @@
 import { DiscoveryApi, FetchApi, IdentityApi } from '@backstage/core-plugin-api';
 import { ResponseError } from '@backstage/errors';
-import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaSshKeyType, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, EmmaSshKey } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaApi, EmmaDataCenter, GeoFence, EMMA_PLUGIN_ID, EmmaComputeType, EmmaSshKeyType, EmmaVmConfiguration, EmmaVm, EmmaProvider, EmmaLocation, EmmaSshKey, EmmaVmOs } from '@emma-community/backstage-plugin-emma-common';
 
 /** @public */
 export class EmmaClient implements EmmaApi {
@@ -55,6 +55,23 @@ export class EmmaClient implements EmmaApi {
     const urlSegment = `locations/?${queryString}`;
 
     return await this.send<EmmaLocation[]>(urlSegment);
+  }
+
+  public async getOperatingSystems(type?: string, architecture?: string, version?: string): Promise<EmmaVmOs[]> {
+    const queryString = new URLSearchParams();
+
+    if(type)
+      queryString.append('type', type);
+
+    if(architecture)
+      queryString.append('architecture', architecture);
+
+    if(version)
+      queryString.append('version', version);
+
+    const urlSegment = `operating-systems/?${queryString}`;
+
+    return await this.send<EmmaVmOs[]>(urlSegment);
   }
 
   public async getSshKeys(sshKeyId?: number): Promise<EmmaSshKey[]> {

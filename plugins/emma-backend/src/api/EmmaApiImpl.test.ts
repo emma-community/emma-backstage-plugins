@@ -1,6 +1,6 @@
 import { Config } from '@backstage/config';
 import { LoggerService } from '@backstage/backend-plugin-api';
-import { HttpBearerAuth, DataCentersApi, SSHKeysApi, AuthenticationApi, ComputeInstancesConfigurationsApi, VirtualMachinesApi, SpotInstancesApi, KubernetesClustersApi, LocationsApi, ProvidersApi, Vm } from '@emma-community/emma-typescript-sdk';
+import { HttpBearerAuth, DataCentersApi, SSHKeysApi, AuthenticationApi, ComputeInstancesConfigurationsApi, OperatingSystemsApi, VirtualMachinesApi, SpotInstancesApi, KubernetesClustersApi, LocationsApi, ProvidersApi, Vm } from '@emma-community/emma-typescript-sdk';
 import { EmmaApiFactory, EmmaComputeType, EmmaVolumeType, EmmaCPUType, EmmaSshKeyType, EmmaNetworkType } from '@emma-community/backstage-plugin-emma-common';
 import { EmmaApiImpl } from './EmmaApiImpl';
 
@@ -20,6 +20,7 @@ describe('EmmaApiImpl', () => {
   let mockVirtualMachinesapi: VirtualMachinesApi;
   let mockKubernetesClustersApi: KubernetesClustersApi;
   let mockSshKeysApi: SSHKeysApi;
+  let mockOperatingSystemsApi: OperatingSystemsApi;
   let mockApiFactory: any;
 
   beforeEach(() => {
@@ -77,6 +78,13 @@ describe('EmmaApiImpl', () => {
       body: [
         { id: 'location-1' },
         { id: 'location-2' },
+      ],
+    });
+
+    mockOperatingSystemsApi = new OperatingSystemsApi();
+    mockOperatingSystemsApi.getOperatingSystems = jest.fn().mockResolvedValue({
+      body: [
+        { id: 'os-1' },
       ],
     });
 
@@ -159,6 +167,7 @@ describe('EmmaApiImpl', () => {
         if (apiClass === VirtualMachinesApi) return mockVirtualMachinesapi;
         if (apiClass === SpotInstancesApi) return mockSpotInstancesApi;
         if (apiClass === KubernetesClustersApi) return mockKubernetesClustersApi;
+        if (apiClass === OperatingSystemsApi) return mockOperatingSystemsApi;
         if (apiClass === SSHKeysApi) return mockSshKeysApi;
         return null;
       }),
@@ -208,6 +217,14 @@ describe('EmmaApiImpl', () => {
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching locations');
     expect(locations).toEqual([{ id: 'location-1' }, { id: 'location-2' }]);
+  });
+
+  test('should fetch and filter operating systems', async () => {
+    const emmaApi = EmmaApiImpl.fromConfig(mockConfig, { logger: mockLogger });
+    const operatingSystems = await emmaApi.getOperatingSystems();
+
+    expect(mockLogger.info).toHaveBeenCalledWith('Fetching operating systems');
+    expect(operatingSystems).toEqual([{ id: 'os-1' }]);
   });
 
   test('should fetch and filter ssh keys', async () => {

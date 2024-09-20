@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useApi } from '@backstage/frontend-plugin-api';
 import { emmaApiRef } from '../../plugin';
 import { Dialog, DialogActions, DialogContent, Button, TextField, Select, MenuItem, Slider, CircularProgress } from '@material-ui/core';
-import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaLocation, EmmaDataCenter, EmmaProvider, EmmaNetworkType } from '@emma-community/backstage-plugin-emma-common';
+import { EmmaComputeType, EmmaVm, EmmaCPUType, EmmaVolumeType, EmmaLocation, EmmaDataCenter, EmmaVmOs, EmmaProvider, EmmaNetworkType } from '@emma-community/backstage-plugin-emma-common';
 
 interface ComputeModalProps {
   open: boolean;
@@ -16,6 +16,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   const [locations, setLocations] = useState<EmmaLocation[]>([]);
   const [dataCenters, setDataCenters] = useState<EmmaDataCenter[]>([]);
   const [providers, setProviders] = useState<EmmaProvider[]>([]);
+  const [operatingSystems, setOperatingSystems] = useState<EmmaVmOs[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentEntry, setCurrentEntry] = useState<Partial<EmmaVm>>(entry || {
@@ -31,6 +32,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     status: 'BUSY',
     cost: { currency: 'EUR', price: 0.0 },
     cloudNetworkType: EmmaNetworkType.Default,
+    os: { id: 5 },
   });
 
   const [vCpuSliderValue, setVCpuSliderValue] = useState<number>(Math.log2(entry?.vCpu! || 2));
@@ -66,15 +68,17 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [locationsData, providersData, dataCentersData] = await Promise.all([
+        const [locationsData, providersData, dataCentersData, operatingSystemsData] = await Promise.all([
           emmaApi.getLocations(),
           emmaApi.getProviders(),
           emmaApi.getDataCenters(),
+          emmaApi.getOperatingSystems(),
         ]);
 
         setLocations(locationsData);
         setProviders(providersData);
         setDataCenters(dataCentersData);
+        setOperatingSystems(operatingSystemsData.sort((a, b) => a.type!.localeCompare(b.type!)).sort((a, b) => a.version!.localeCompare(b.version!)));
         setError(null);
       } catch (e) {
         setError('Failed to load data from the API');
@@ -238,6 +242,19 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
             </Select>
           </div>
         )}
+
+        <div style={{ margin: '20px 0' }}>
+          <div>Operating System</div>
+          <Select
+            fullWidth
+            value={currentEntry.os ? currentEntry.os.id : 5 }
+            onChange={(e) => setCurrentEntry({ ...currentEntry, os: { id: e.target.value as number } })}
+          >            
+            {operatingSystems.map((os) => (
+              <MenuItem key={os.id} value={os.id}>{os.type} - {os.version}</MenuItem>
+            ))}
+          </Select>
+        </div>
 
         <div style={{ margin: '20px 0' }}>
           <label>vCpu: {Math.pow(2, vCpuSliderValue)}</label>
