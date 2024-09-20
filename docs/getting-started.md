@@ -39,7 +39,7 @@ When asked to select package versions, simply opt for the latest one. This insta
 Now that the emma plugin is installed, you need to register it in the app so that users can access it. This is done by adding a new route to the App.tsx file, which controls your app’s navigation.
 
 - Open the `App.tsx` file located in `packages/app/src/App.tsx`.
-- Import `EmmaHeatMapPage` from the emma plugin at the top of the file:
+- Import `EmmaHeatMapPage` and `EmmaComputePage` from the emma plugin at the top of the file:
 
 ```typescript
 import { EmmaHeatmapPage, EmmaComputePage } from '@emma-community/backstage-plugin-emma';
@@ -49,7 +49,7 @@ Next, add a route for the `EmmaHeatMapPage` within the existing `<FlatRoutes>` s
 
 ```jsx
 <Route path="/emma/heatmap" element={<EmmaHeatmapPage />} />
-<Route path="/emma/compute" element={<EmmaHeatMapPage />} />
+<Route path="/emma/compute" element={<EmmaComputePage />} />
 ```
 
 This creates a route that makes the emma plugin accessible from the path `/emma`. Once this is done, your Backstage app will be able to serve the emma frontend when navigating to that URL.
