@@ -1,6 +1,6 @@
 {
   "name": "@emma-community/backstage-plugin-emma",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "backstage": {
     "role": "frontend-plugin",
     "pluginId": "emma",
@@ -54,7 +54,7 @@
     "heatmap.js": "^2.0.5",
     "react-leaflet": "^3.1.0",
     "react-leaflet-heatmap-layer-v3": "^3.0.3-beta-1",
-    "@emma-community/backstage-plugin-emma-common": "^1.1.2"
+    "@emma-community/backstage-plugin-emma-common": "^1.1.3"
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0",

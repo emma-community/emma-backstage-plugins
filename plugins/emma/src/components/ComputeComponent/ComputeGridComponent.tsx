@@ -31,7 +31,7 @@ export const ComputeGridComponent = () => {
   }, [setData]);
 
   const handleOpenModal = (entry?: Partial<EmmaVm>) => {
-    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 } }, status: 'BUSY', cost: { currency: 'EUR', amount: 0.0 }, cloudNetworkType: EmmaNetworkType.Default, });
+    setEditEntry(entry || { label: '', type: EmmaComputeType.VirtualMachine, provider: { id: 10, name: 'Amazon EC2' }, vCpu: 2, vCpuType: EmmaCPUType.Shared, ramGb: 1, disks: [{ type: EmmaVolumeType.SSD, sizeGb: 16 }], location: { id: 3, name: 'Stockholm' }, dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 } }, status: 'BUSY', cost: { currency: 'EUR', price: 0.0 }, cloudNetworkType: EmmaNetworkType.Default, });
     setModalOpen(true);
   };
 

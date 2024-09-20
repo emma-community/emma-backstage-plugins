@@ -29,7 +29,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     location: { id: 3, name: 'Stockholm' },
     dataCenter: { id: 'aws-eu-north-1', name: 'aws-eu-north-1', location: { latitude: 0, longitude: 0 } },
     status: 'BUSY',
-    cost: { currency: 'EUR', amount: 0.0 },
+    cost: { currency: 'EUR', price: 0.0 },
     cloudNetworkType: EmmaNetworkType.Default,
   });
 
@@ -90,7 +90,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     if (entry) {
       setCurrentEntry(entry);
       setVCpuSliderValue(Math.log2(entry.vCpu! || 2));
-      setRamSliderValue(Math.log2(entry.ramGb! || 1));
+      setRamSliderValue(Math.log2(entry.ramGb! || (entry.type === EmmaComputeType.KubernetesNode) ? 2 : 1));
       setVolumeSizeSliderValue((entry?.disks && entry.disks[0].sizeGb) ? entry.disks[0].sizeGb : 16);
     }
   }, [entry]);
@@ -152,7 +152,17 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
           <Select
             fullWidth
             value={currentEntry.type || EmmaComputeType.VirtualMachine}
-            onChange={(e) => setCurrentEntry({ ...currentEntry, type: e.target.value as EmmaComputeType })}
+            onChange={(e) => {
+              if (currentEntry.id === undefined) {
+                if((e.target.value as EmmaComputeType) === EmmaComputeType.KubernetesNode) {
+                  setRamSliderValue(2);
+                  setCurrentEntry(prev => ({ ...prev, type: (e.target.value as EmmaComputeType), ramGb: 4 }));
+                } else {
+                  setRamSliderValue(1);
+                  setCurrentEntry(prev => ({ ...prev, type: (e.target.value as EmmaComputeType), ramGb: 2 }));
+                }
+              }
+            }}
           >
             <MenuItem value={EmmaComputeType.VirtualMachine}>Virtual Machine</MenuItem>
             <MenuItem value={EmmaComputeType.SpotInstance}>Spot Instance</MenuItem>
