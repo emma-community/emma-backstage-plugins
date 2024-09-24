@@ -156,8 +156,8 @@ export const HeatMapComponent = () => {
         });
 
         price = computeConfigs[0].cost?.pricePerUnit as number
-        intensity = price / globalMedianPrice;
-        radius = price / globalMedianPrice;
+        intensity = price / globalMedianPrice * computeConfigs.length;
+        radius = price / globalMedianPrice * computeConfigs.length;
       }
       
       return {...dataCenter, price, intensity, radius};

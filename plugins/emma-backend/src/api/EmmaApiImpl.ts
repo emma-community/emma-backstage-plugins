@@ -39,9 +39,7 @@ export class EmmaApiImpl implements EmmaApi {
   }
 
   private refreshToken(){
-    this.issueToken().then((token) => {
-      this.logger.info(`Refreshed token: ${JSON.stringify(token)}`);
-      
+    this.issueToken().then((token) => {      
       if(token.accessToken !== undefined) 
         this.authHandler.accessToken = token.accessToken;
 

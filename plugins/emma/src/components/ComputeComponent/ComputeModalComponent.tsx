@@ -67,6 +67,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+
       try {
         const [locationsData, providersData, dataCentersData, operatingSystemsData] = await Promise.all([
           emmaApi.getLocations(),
@@ -113,9 +114,14 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
     } as EmmaVm);
   };
 
+  const handleClose = () => {
+    setError(null);
+    onClose();
+  }
+
   if (loading) {
     return (
-      <Dialog open={open} onClose={onClose}>
+      <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <CircularProgress />
           <p>Loading data...</p>
@@ -126,19 +132,19 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
 
   if (error) {
     return (
-      <Dialog open={open} onClose={onClose}>
+      <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <p>{error}</p>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose} color="primary">Close</Button>
+          <Button onClick={handleClose} color="primary">Close</Button>
         </DialogActions>
       </Dialog>
     );
   }
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={handleClose}>
       <DialogContent>        
         <div style={{ margin: '20px 0' }}>
           <div>Label</div>
@@ -308,7 +314,7 @@ export const ComputeModalComponent = ({ open, entry, onClose, onSave }: ComputeM
         {(currentEntry.type === EmmaComputeType.KubernetesNode || currentEntry.id === undefined) && (
           <Button onClick={handleSave} color="primary">{currentEntry?.id ? 'Update' : 'Add'}</Button>
         )}
-        <Button onClick={onClose} color="primary">Close</Button>
+        <Button onClick={handleClose} color="primary">Close</Button>
       </DialogActions>
     </Dialog>
   );

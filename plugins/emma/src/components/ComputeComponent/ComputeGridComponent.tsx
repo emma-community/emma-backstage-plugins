@@ -36,14 +36,17 @@ export const ComputeGridComponent = () => {
   };
 
   const handleCloseModal = () => {
-    setModalOpen(false);
     setNewPrivateKey("");
+    setPrivateKeyModalOpen(false);
+    setErrorModalOpen(false)
+    setModalOpen(false);
     setEditEntry(null);
   };
 
   const handleSave = async (entry: EmmaVm) => {
     if (entry?.id) {
       await emmaApi.updateComputeEntity(entry);
+
       setData((prevData) => prevData.map((item) => (item.id === entry.id ? entry : item)));
     } else {      
       const keys = await emmaApi.getSshKeys();
@@ -60,6 +63,7 @@ export const ComputeGridComponent = () => {
 
       try {
         const entityId = await emmaApi.addComputeEntity(entry);
+
         setData([...data, { ...entry, id: entityId }]);        
       } catch (error) {
         const message = ((error as ResponseError).body.error?.body as any).message || 'An error occurred';
@@ -86,7 +90,6 @@ export const ComputeGridComponent = () => {
   };
 
   const filteredData = filter === '*' ? data : data.filter((item) => item.type === filter);
-
   const groupedData = filteredData.reduce((acc, entry) => {
     const provider = entry.provider?.name || 'Amazon EC2';
     if (!acc[provider]) {
