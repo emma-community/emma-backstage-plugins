@@ -77,7 +77,7 @@ export const ComputeGridComponent = () => {
   };
 
   const handleDelete = async (entry: EmmaVm) => {
-    await emmaApi.deleteComputeEntity(entry.type === EmmaComputeType.KubernetesNode ? parseInt(entry.label!, 10) : entry.id!, entry.type);
+    await emmaApi.deleteComputeEntity(entry.type === EmmaComputeType.KubernetesNode ? entry.clusterId! : entry.id!, entry.type);
 
     setData(data.filter((item) => item.id !== entry.id!));
   };
@@ -92,10 +92,13 @@ export const ComputeGridComponent = () => {
   const filteredData = filter === '*' ? data : data.filter((item) => item.type === filter);
   const groupedData = filteredData.reduce((acc, entry) => {
     const provider = entry.provider?.name || 'Amazon EC2';
+
     if (!acc[provider]) {
       acc[provider] = [];
     }
+
     acc[provider].push(entry);
+    
     return acc;
   }, {} as { [key: string]: EmmaVm[] });
 

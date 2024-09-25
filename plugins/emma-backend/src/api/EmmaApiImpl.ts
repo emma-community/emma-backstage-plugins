@@ -289,12 +289,14 @@ export class EmmaApiImpl implements EmmaApi {
             
             return ({
               ...node,
-              label: k8s.id!.toString(),
+              label: node.name,
               type: EmmaComputeType.KubernetesNode,
-              status: k8s.status,
+              status: node.status,
               vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
               dataCenter: { ...node.dataCenter, location: { latitude: location?.latitude! ?? 0, longitude: location?.longitude! ?? 0 } },            
-              cloudNetworkType: this.parseEnum(EmmaNetworkType, node.cloudNetworkType!.toString())!
+              cloudNetworkType: this.parseEnum(EmmaNetworkType, node.cloudNetworkType!.toString())!,
+              clusterId: k8s.id,
+              clusterStatus: k8s.status,
             })
           })
         ) || []

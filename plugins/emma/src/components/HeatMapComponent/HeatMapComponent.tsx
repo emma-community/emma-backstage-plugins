@@ -28,19 +28,22 @@ export type HeatMapEntity = EmmaDataCenter & {
 }
 
 export type HeatMapProps = {
-  width: string;
-  height: string;
-  center: LatLngTuple;
-  zoom: number;
-  minZoom: number;
-  maxZoom: number;
-  scrollWheelZoom: boolean;
-  data: HeatMapEntity[];
+  width?: string;
+  height?: string;
+  center?: LatLngTuple;
+  zoom?: number;
+  minZoom?: number;
+  maxZoom?: number;
+  scrollWheelZoom?: boolean;
+  data?: HeatMapEntity[];
   maxBounds?: [number, number][];
+  defaultProviders?: string[];
 };
 
-const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, data, maxBounds }: HeatMapProps) => {
-  const points = data.map((entity) => ({
+const HeatMap = ({ width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, data, maxBounds, defaultProviders }: HeatMapProps) => {
+  require('console').log(width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, data, maxBounds, defaultProviders);
+  
+  const points = data?.map((entity) => ({
     lat: entity.location.latitude,
     lng: entity.location.longitude,
     intensity: entity.intensity,
@@ -48,8 +51,8 @@ const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom
     providerName: entity.providerName
   }));
 
-  const providers = [...new Set(data.map(entity => entity.providerName))];
-  const preselectedProviders: (string | undefined)[] = providers.filter(provider => provider === 'Amazon EC2' || provider === 'Azure' || provider === 'GCP');
+  const providers = [...new Set(data?.map(entity => entity.providerName))];
+  const preselectedProviders: (string | undefined)[] = providers.filter(provider => provider && defaultProviders && defaultProviders.indexOf(provider) > -1);
 
   return (
     <MapContainer style={{height: height, width: width}} center={center} zoom={zoom} minZoom={minZoom} maxZoom={maxZoom} maxBoundsViscosity={1.0} maxBounds={maxBounds} scrollWheelZoom={scrollWheelZoom}>
@@ -64,13 +67,13 @@ const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom
               <HeatmapLayer
                 fitBoundsOnLoad
                 fitBoundsOnUpdate
-                points={points.filter(point => point.providerName === provider)}
+                points={points?.filter(point => point.providerName === provider)}
                 longitudeExtractor={(point: any) => point.lng}
                 latitudeExtractor={(point: any) => point.lat}
                 intensityExtractor={(point: any) => point.intensity}
                 radiusExtractor={(point: any) => point.radius}
               />
-              {data.filter(entity => entity.providerName === provider).map(dataCenter => (
+              {data?.filter(entity => entity.providerName === provider).map(dataCenter => (
                 <Marker
                   key={dataCenter.id}
                   position={[dataCenter.location.latitude, dataCenter.location.longitude]}
@@ -94,7 +97,7 @@ const HeatMap = ({width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom
   );
 };
 
-export const HeatMapComponent = () => {
+export const HeatMapComponent = ({ width, height, zoom, minZoom, maxZoom, scrollWheelZoom, defaultProviders }: HeatMapProps) => {
   const emmaApi = useApi(emmaApiRef);
 
   const { value, loading, error } = useAsync(async (): Promise<HeatMapEntity[]> => {
@@ -173,5 +176,5 @@ export const HeatMapComponent = () => {
   }
 
   // eslint-disable-next-line
-  return (<HeatMap width="1025px" height="550px" center={[0, 0]} zoom={2} minZoom={2} maxZoom={18} scrollWheelZoom={true} data={value || []} maxBounds={[[-90, -180], [90, 180] ]} />);
+  return (<HeatMap width={width ?? "1025px"} height={height ?? "550px"} center={[0, 0]} zoom={zoom ?? 2} minZoom={minZoom ?? 2} maxZoom={maxZoom ?? 18} scrollWheelZoom={scrollWheelZoom ?? true} data={value || []} maxBounds={[[-90, -180], [90, 180] ]} defaultProviders={defaultProviders ?? ['Amazon EC2', 'Azure', 'GCP']} />);
 };

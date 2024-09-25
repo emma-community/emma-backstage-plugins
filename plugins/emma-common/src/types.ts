@@ -102,6 +102,8 @@ export type EmmaVm = EmmaEntity<number> & {
   securityGroup?: any;
   cost?: EmmaVmCost;
   sshKeyId?: number;
+  clusterId?: number;
+  clusterStatus?: any;
 };
 
 /** @public */

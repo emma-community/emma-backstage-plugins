@@ -27,7 +27,7 @@ export const ComputeRowComponent = ({ entry, onEdit, onDelete }: ComputeRowProps
         </Tooltip>
         <Tooltip title="Delete">
           <span>
-            <IconButton onClick={onDelete} disabled={entry.status === 'BUSY'}>
+            <IconButton onClick={onDelete} disabled={(entry.status === 'BUSY' && entry.clusterStatus === undefined) || entry.clusterStatus === 'BUSY'}>
              <DeleteIcon />
             </IconButton>
           </span>
