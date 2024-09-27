@@ -41,8 +41,6 @@ export type HeatMapProps = {
 };
 
 const HeatMap = ({ width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, data, maxBounds, defaultProviders }: HeatMapProps) => {
-  require('console').log(width, height, center, zoom, minZoom, maxZoom, scrollWheelZoom, data, maxBounds, defaultProviders);
-  
   const points = data?.map((entity) => ({
     lat: entity.location.latitude,
     lng: entity.location.longitude,

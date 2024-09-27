@@ -1,4 +1,4 @@
-import { DataCenter, VmConfiguration, Provider, Location, KubernetesNodeGroupsInnerNodesInnerDisksInner, SshKey, VmCost, VmOs } from '@emma-community/emma-typescript-sdk';
+import { DataCenter, VmConfiguration, Provider, Location, KubernetesNodeGroupsInnerNodesInnerDisksInner, SshKey, VmCost, VmOs, SecurityGroup, KubernetesNodeGroupsInnerNodesInnerNetworksInner } from '@emma-community/emma-typescript-sdk';
 
 /** @public */
 export enum EmmaComputeType {
@@ -61,6 +61,12 @@ export type EmmaEntity<T> = {
 export type EmmaDisk = EmmaEntity<number> & KubernetesNodeGroupsInnerNodesInnerDisksInner;
 
 /** @public */
+export type EmmaNetwork = EmmaEntity<number> & KubernetesNodeGroupsInnerNodesInnerNetworksInner;
+
+/** @public */
+export type EmmaSecurityGroup = EmmaEntity<number> & SecurityGroup;
+
+/** @public */
 export type EmmaSshKey = EmmaEntity<number> & SshKey & {
   type: EmmaSshKeyType;
 }
@@ -88,7 +94,7 @@ export type EmmaVm = EmmaEntity<number> & {
   label?: string;
   createdAt?: string;
   name?: string;
-  status?: any;
+  status?: string;
   provider?: EmmaProvider;
   location?: EmmaLocation;
   dataCenter?: EmmaDataCenter;
@@ -98,12 +104,12 @@ export type EmmaVm = EmmaEntity<number> & {
   cloudNetworkType?: EmmaNetworkType;
   ramGb?: number;
   disks?: Array<EmmaDisk>;
-  networks?: Array<any>;
-  securityGroup?: any;
+  networks?: Array<EmmaNetwork>;
+  securityGroup?: SecurityGroup;
   cost?: EmmaVmCost;
   sshKeyId?: number;
   clusterId?: number;
-  clusterStatus?: any;
+  clusterStatus?: string;
 };
 
 /** @public */

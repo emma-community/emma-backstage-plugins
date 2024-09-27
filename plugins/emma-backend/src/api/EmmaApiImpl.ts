@@ -251,7 +251,8 @@ export class EmmaApiImpl implements EmmaApi {
           label: vm.name,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
           dataCenter: { ...vm.dataCenter, location: { latitude: location?.latitude! ?? 0, longitude: location?.longitude! ?? 0 } },
-          cloudNetworkType: this.parseEnum(EmmaNetworkType, vm.cloudNetworkType!.toString())!
+          cloudNetworkType: this.parseEnum(EmmaNetworkType, vm.cloudNetworkType!.toString())!,
+          status: vm.status?.toString()
         };
       });
 
@@ -271,7 +272,8 @@ export class EmmaApiImpl implements EmmaApi {
           label: vm.name,
           vCpuType: this.parseEnum(EmmaCPUType, vm.vCpuType!.toString())!,
           dataCenter: { ...vm.dataCenter, location: { latitude: location?.latitude! ?? 0, longitude: location?.longitude! ?? 0 } },
-          cloudNetworkType: this.parseEnum(EmmaNetworkType, vm.cloudNetworkType!.toString())!
+          cloudNetworkType: this.parseEnum(EmmaNetworkType, vm.cloudNetworkType!.toString())!,
+          status: vm.status?.toString()
         };
       });
 
@@ -291,7 +293,7 @@ export class EmmaApiImpl implements EmmaApi {
               ...node,
               label: node.name,
               type: EmmaComputeType.KubernetesNode,
-              status: node.status,
+              status: node.status?.toString(),
               vCpuType: this.parseEnum(EmmaCPUType, node.vCpuType!.toString())!,
               dataCenter: { ...node.dataCenter, location: { latitude: location?.latitude! ?? 0, longitude: location?.longitude! ?? 0 } },            
               cloudNetworkType: this.parseEnum(EmmaNetworkType, node.cloudNetworkType!.toString())!,

@@ -257,14 +257,14 @@ describe('EmmaApiImpl', () => {
 
     expect(mockLogger.info).toHaveBeenCalledWith('Fetching compute entities');
     expect(vms).toEqual([
-      { id: 'vm-1', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
-      { id: 'vm-2', type: 'VirtualMachine', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
-      { id: 'spot-1', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
-      { id: 'spot-2', type: 'SpotInstance', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
-      { id: 'k8s-1', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
-      { id: 'k8s-2', label: 'k8s-1', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
-      { id: 'k8s-3', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
-      { id: 'k8s-4', label: 'k8s-2', type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}
+      { id: 'vm-1', type: 'VirtualMachine', label: undefined, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'vm-2', type: 'VirtualMachine', label: undefined, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'spot-1', type: 'SpotInstance', label: undefined, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'spot-2', type: 'SpotInstance', label: undefined, disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default}, 
+      { id: 'k8s-1', label: undefined, type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default, clusterId: 'k8s-1', clusterStatus: undefined}, 
+      { id: 'k8s-2', label: undefined, type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default, clusterId: 'k8s-1', clusterStatus: undefined}, 
+      { id: 'k8s-3', label: undefined, type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default, clusterId: 'k8s-2', clusterStatus: undefined}, 
+      { id: 'k8s-4', label: undefined, type: 'KubernetesNode', disks: [{type: EmmaVolumeType.SSD, sizeGb: 100}], vCpuType: EmmaCPUType.Shared, dataCenter: { location: { latitude: 0, longitude: 0 } }, cloudNetworkType: EmmaNetworkType.Default, clusterId: 'k8s-2', clusterStatus: undefined}
     ]);
   });
 
